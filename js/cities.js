@@ -795,5 +795,38 @@ const CITIES = [
       "Best time": "May–June, September–October",
       "Order this": "Khachapuri adjaruli"
     }
+  },
+  {
+    id: "toronto",
+    name: "Toronto",
+    country: "Canada",
+    region: "Ontario",
+    accent: "#5ba06b",
+    tagline: "A city assembled out of everywhere else",
+    intro:
+      "Toronto is one of the most diverse cities on earth — around half its residents were born outside Canada, and more than 180 languages are spoken in it. That shows up as neighbourhoods rather than monuments: the city is a patchwork of them, stitched together by streetcars and split open by 300 kilometres of wooded ravines running right through the middle.",
+    famousFor: ["CN Tower", "180 languages", "Film festival", "Streetcars", "Ravine system"],
+    thingsToDo: [
+      { title: "Take the ferry to the Islands", text: "Fifteen minutes across the harbour to a car-free archipelago of beaches, lagoons and boardwalks. The skyline view from Olympic Island is the one on every postcard, and the ferry is city transit fare." },
+      { title: "Eat through Kensington Market", text: "A few blocks of Victorian houses turned into Jamaican patty shops, Chilean bakeries, cheese mongers and taquerias. On pedestrian Sundays in summer the cars are banned and the street furniture comes out." },
+      { title: "Walk a ravine", text: "The city is cut by wooded river valleys most visitors never notice. Enter at the Brick Works or Cedarvale and you are in forest within minutes, still inside the city, with no traffic audible." },
+      { title: "Get a peameal bacon sandwich", text: "Cornmeal-crusted back bacon on a kaiser roll — Toronto's own sandwich. The counters at the south building of St. Lawrence Market do it, and the queue moves fast." }
+    ],
+    gallery: [
+      { article: "Toronto", caption: "Toronto sits on Lake Ontario; the skyline is best seen from the Islands, offshore." },
+      { article: "Toronto Islands", caption: "The Islands are largely car-free and hold a community of about 700 residents." },
+      { article: "Distillery District", caption: "The Distillery District was the largest whisky distillery in the world in the 1860s." },
+      { article: "Kensington Market", caption: "Kensington Market has absorbed Jewish, Portuguese, Caribbean and Latin American waves in turn." },
+      { article: "Royal Ontario Museum", caption: "The ROM's crystalline 2007 addition by Daniel Libeskind has no right angles in its facade." },
+      { article: "Toronto ravine system", caption: "Around 300 km of wooded ravines run through the city — an accident of glacial river valleys." }
+    ],
+    facts: {
+      Population: "2.8 million (6.4m metro)",
+      Founded: "1793 (as York)",
+      Language: "English (180+ spoken)",
+      Currency: "Dollar (C$)",
+      "Best time": "May–June, September–October",
+      "Order this": "Peameal bacon sandwich"
+    }
   }
 ];
