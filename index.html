@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Somewhere Else — a random city, every time you load</title>
+<meta name="description" content="Loads a random city from around the world and showcases it: photographs, what it's famous for, and what to do there.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+<link rel="preconnect" href="https://upload.wikimedia.org">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip" href="#dossier">Skip to city</a>
+
+<header class="topbar">
+  <span class="wordmark">Somewhere <em>Else</em></span>
+  <button id="shuffle" class="shuffle" type="button">
+    <span class="shuffle__icon" aria-hidden="true">↻</span>
+    <span class="shuffle__label">New city</span>
+    <kbd aria-hidden="true">R</kbd>
+  </button>
+</header>
+
+<p id="announcer" class="visually-hidden" role="status" aria-live="polite"></p>
+
+<main>
+
+  <!-- ── Hero ─────────────────────────────────────────────── -->
+  <section class="hero" id="hero">
+    <div class="hero__media">
+      <img id="hero-img" class="hero__img" alt="">
+    </div>
+    <div class="hero__scrim"></div>
+    <div class="hero__body">
+      <p class="hero__eyebrow"><span id="hero-country"></span><span class="dot" aria-hidden="true">·</span><span id="hero-region"></span></p>
+      <h1 class="hero__name" id="hero-name">&nbsp;</h1>
+      <p class="hero__tagline" id="hero-tagline"></p>
+    </div>
+    <a class="hero__cue" href="#dossier" aria-label="Scroll to the city dossier">
+      <span aria-hidden="true">↓</span>
+    </a>
+  </section>
+
+  <!-- ── Intro + famous for ───────────────────────────────── -->
+  <section class="band" id="dossier" tabindex="-1">
+    <div class="wrap intro">
+      <div class="intro__text">
+        <h2 class="kicker">The place</h2>
+        <p class="lede" id="intro-text"></p>
+      </div>
+      <aside class="intro__aside">
+        <h2 class="kicker">Famous for</h2>
+        <ul class="chips" id="famous-for"></ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ── Things to do ─────────────────────────────────────── -->
+  <section class="band band--alt">
+    <div class="wrap">
+      <h2 class="kicker kicker--section">Things to do</h2>
+      <ol class="todo" id="things-to-do"></ol>
+    </div>
+  </section>
+
+  <!-- ── Gallery ──────────────────────────────────────────── -->
+  <section class="band">
+    <div class="wrap">
+      <h2 class="kicker kicker--section">In pictures</h2>
+      <div class="gallery" id="gallery"></div>
+    </div>
+  </section>
+
+  <!-- ── Fast facts ───────────────────────────────────────── -->
+  <section class="band band--alt">
+    <div class="wrap">
+      <h2 class="kicker kicker--section">Fast facts</h2>
+      <dl class="facts" id="facts"></dl>
+    </div>
+  </section>
+
+  <!-- ── Outro ────────────────────────────────────────────── -->
+  <section class="band outro">
+    <div class="wrap outro__inner">
+      <p class="outro__count"><span id="city-count"></span> cities in the deck.</p>
+      <button id="shuffle-2" class="btn-big" type="button">Send me somewhere else</button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Photographs from Wikimedia Commons via the Wikipedia API, fetched live. Text written by hand.</p>
+    <p class="foot__meta">Press <kbd>R</kbd> for a new city · link to a specific one with <code id="foot-hash">#city</code></p>
+  </div>
+</footer>
+
+<script src="js/cities.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
