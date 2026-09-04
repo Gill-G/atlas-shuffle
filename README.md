@@ -1,4 +1,4 @@
-# Somewhere Else
+# Atlas Shuffle
 
 A single-page site that picks a **random city** each time it loads and showcases it:
 photographs with captions, what the city is famous for, things to do there, and a
@@ -44,7 +44,10 @@ If the request fails — offline, blocked, rate-limited — every word on the pa
 still renders and the image slots fall back to a coloured wash. The site is never
 blank.
 
-All 144 image slots were checked against the live API and resolve to a photo.
+All 144 image slots are checked against the live API — every one resolves, and
+every one is an actual photograph. That second check matters: plenty of articles
+lead with a locator map, a logo or a coat of arms instead (`Old Havana` and
+`Van Gogh Museum` both did), which looks broken in a gallery.
 
 ## Adding a city
 
@@ -75,8 +78,10 @@ curl -s "https://en.wikipedia.org/w/api.php?action=query&format=json&redirects=1
 &prop=pageimages&piprop=thumbnail&pithumbsize=800&titles=Porto"
 ```
 
-A `"missing"` key means the title is wrong; no `thumbnail` key means the article
-has no lead image.
+A `"missing"` key means the title is wrong, and no `thumbnail` key means the
+article has no lead image. Also **look at the filename in the URL** — if it
+contains `map`, `locator`, `logo`, `coat_of_arms` or ends in `.svg`, the article
+leads with a diagram rather than a photograph, so pick a different article.
 
 ## Interaction
 

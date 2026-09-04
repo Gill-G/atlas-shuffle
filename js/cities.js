@@ -124,7 +124,7 @@ const CITIES = [
       { article: "Sultan Ahmed Mosque", caption: "The Blue Mosque takes its name from 20,000 hand-painted İznik tiles lining the interior." },
       { article: "Grand Bazaar, Istanbul", caption: "The Grand Bazaar is one of the world's oldest covered markets — 61 streets under one roof." },
       { article: "Topkapı Palace", caption: "Topkapı was the Ottoman court for 400 years and housed up to 4,000 people at a time." },
-      { article: "Bosporus", caption: "The Bosphorus is 31 km long and separates Europe from Asia — around 40,000 ships pass yearly." },
+      { article: "Bosphorus Bridge", caption: "The Bosphorus separates Europe from Asia; this 1973 span was the first bridge ever built across it." },
       { article: "Basilica Cistern", caption: "The 6th-century Basilica Cistern held 80,000 m³ of water on 336 recycled marble columns." }
     ],
     facts: {
@@ -518,7 +518,7 @@ const CITIES = [
     gallery: [
       { article: "Canals of Amsterdam", caption: "Amsterdam has 165 canals and roughly 1,500 bridges over about 100 km of water." },
       { article: "Rijksmuseum", caption: "The Rijksmuseum holds 8,000 objects on display out of a collection of about a million." },
-      { article: "Van Gogh Museum", caption: "The Van Gogh Museum has 200 paintings and 500 drawings — the largest collection anywhere." },
+      { article: "Magere Brug", caption: "The Magere Brug over the Amstel is still opened by hand to let boats through." },
       { article: "Anne Frank House", caption: "The Franks hid behind a bookcase in this canal house for 761 days." },
       { article: "Jordaan", caption: "The Jordaan was built for workers and immigrants and is now the city's most expensive quarter." },
       { article: "Vondelpark", caption: "Vondelpark takes around 10 million visits a year in a park of just 47 hectares." }
@@ -747,7 +747,7 @@ const CITIES = [
       { title: "Stay in a casa particular", text: "Licensed rooms in private homes. Cheaper than hotels, and the reason most people come away understanding anything about the city." }
     ],
     gallery: [
-      { article: "Old Havana", caption: "Old Havana holds around 900 protected buildings across five centuries of architecture." },
+      { article: "Havana", caption: "Havana wraps around one of the great natural harbours of the Caribbean; the old city holds some 900 protected buildings." },
       { article: "Malecón", caption: "The Malecón took 50 years to build and now runs 8 km along the seafront." },
       { article: "El Capitolio", caption: "El Capitolio was completed in 1929 and is slightly taller than the US Capitol it resembles." },
       { article: "Plaza Vieja, Havana", caption: "Plaza Vieja was a residential square, never military — hence the balconies on every side." },

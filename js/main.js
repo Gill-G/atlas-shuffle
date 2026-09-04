@@ -1,5 +1,5 @@
 /* ============================================================
-   Somewhere Else — picks a random city and builds the page.
+   Atlas Shuffle — picks a random city and builds the page.
 
    Photos are not stored in this repo. Each gallery entry names an
    English Wikipedia article; at render time we ask the MediaWiki
@@ -181,7 +181,7 @@ function renderFacts(city) {
 async function show(city, { scroll = true } = {}) {
   document.body.classList.add("is-loading");
   document.documentElement.style.setProperty("--accent", city.accent);
-  document.title = `${city.name}, ${city.country} — Somewhere Else`;
+  document.title = `${city.name}, ${city.country} — Atlas Shuffle`;
   el("foot-hash").textContent = `#${city.id}`;
 
   // Ask for every photo this city needs in one round trip.

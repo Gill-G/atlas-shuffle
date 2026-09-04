@@ -5,5 +5,5 @@
 set -euo pipefail
 PORT="${1:-8000}"
 cd "$(dirname "$0")"
-echo "Somewhere Else -> http://localhost:${PORT}"
+echo "Atlas Shuffle -> http://localhost:${PORT}"
 exec python3 -m http.server "$PORT"
