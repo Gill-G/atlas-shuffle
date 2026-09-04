@@ -236,6 +236,13 @@ el("city-count").textContent = CITIES.length;
 el("shuffle").addEventListener("click", shuffle);
 el("shuffle-2").addEventListener("click", shuffle);
 
+// A button rather than <a href="#top">: the fragment holds the current city,
+// so an anchor would overwrite #toronto and break the deep link.
+el("to-top").addEventListener("click", () => {
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  window.scrollTo({ top: 0, behavior: reduced ? "instant" : "smooth" });
+});
+
 document.addEventListener("keydown", (e) => {
   const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable;
   if (typing || e.metaKey || e.ctrlKey || e.altKey) return;
