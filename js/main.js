@@ -178,14 +178,17 @@ function renderFacts(city) {
 
 /* ── Orchestration ───────────────────────────────────────── */
 
-async function show(city, { scroll = true } = {}) {
+async function show(city, { scroll = true, warmed = null } = {}) {
   document.body.classList.add("is-loading");
   document.documentElement.style.setProperty("--accent", city.accent);
   document.title = `${city.name}, ${city.country} — Atlas Shuffle`;
   el("foot-hash").textContent = `#${city.id}`;
 
-  // Ask for every photo this city needs in one round trip.
+  // Ask for every photo this city needs in one round trip. If this city was
+  // warmed up in the background, that promise has already done the work and
+  // fetchImages() below is a no-op; if the warm-up failed, it retries here.
   try {
+    if (warmed) await warmed;
     await fetchImages(city.gallery.map((g) => g.article));
   } catch (err) {
     console.warn("Could not load photos — showing text only.", err);
@@ -204,6 +207,52 @@ async function show(city, { scroll = true } = {}) {
 
   document.body.classList.remove("is-loading", "is-swapping");
   el("announcer").textContent = `Now showing ${city.name}, ${city.country}. ${city.tagline}.`;
+
+  queueNext(city.id);
+}
+
+/* ── Looking ahead ───────────────────────────────────────── */
+
+/* Shuffling used to block on a Wikipedia round trip every time. Since the
+   next city is picked at random anyway, we may as well pick it early and
+   resolve its photos while the current one is still being read — by the time
+   anyone presses R the work is usually already done. */
+
+let nextCity = null;   // the city shuffle() will show next
+let nextWarm = null;   // promise resolving when that city's photos are cached
+
+const whenIdle = (fn) =>
+  window.requestIdleCallback ? window.requestIdleCallback(fn, { timeout: 2000 }) : setTimeout(fn, 400);
+
+/** Don't spend someone else's data plan guessing what they'll do next. */
+function prefetchAllowed() {
+  const c = navigator.connection;
+  return !c || (!c.saveData && !/(^|-)2g$/.test(c.effectiveType || ""));
+}
+
+/**
+ * Choose the city after this one and warm its photos in the background.
+ * Never rejects: a failed warm-up just leaves the cache empty and show()
+ * fetches again in the foreground, exactly as it did before.
+ */
+function queueNext(afterId) {
+  nextCity = pickCity(afterId);
+  nextWarm = null;
+  if (!prefetchAllowed()) return;
+
+  const city = nextCity;
+  whenIdle(() => {
+    if (nextCity !== city) return; // a deep link overtook us
+
+    nextWarm = fetchImages(city.gallery.map((g) => g.article))
+      .then(() => {
+        // The hero is the one photo shown at full size straight away, and
+        // renderHero waits on it decoding, so pull the bytes down too.
+        const lead = imageCache.get(city.gallery[0].article);
+        if (lead) new Image().src = lead;
+      })
+      .catch(() => {});
+  });
 }
 
 /** Random city, never the one already on screen. */
@@ -217,12 +266,13 @@ let current = null;
 async function shuffle() {
   if (document.body.classList.contains("is-loading")) return;
   document.body.classList.add("is-swapping");
-  const next = pickCity(current && current.id);
+  const next = nextCity || pickCity(current && current.id);
+  const warmed = next === nextCity ? nextWarm : null;
   // Let the fade-out land before the DOM changes underneath it.
   await new Promise((r) => setTimeout(r, 220));
   current = next;
   history.replaceState(null, "", `#${next.id}`);
-  await show(next);
+  await show(next, { warmed });
 }
 
 /* ── Boot ────────────────────────────────────────────────── */
