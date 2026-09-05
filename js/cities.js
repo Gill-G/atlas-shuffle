@@ -960,5 +960,104 @@ const CITIES = [
       "Best time": "December–March",
       "Order this": "Flat white"
     }
+  },
+  {
+    id: "nice",
+    name: "Nice",
+    country: "France",
+    region: "Côte d'Azur",
+    accent: "#e2794e",
+    tagline: "French since 1860, Italian for centuries before",
+    intro:
+      "Nice spent most of its history looking towards Turin rather than Paris, and only voted itself into France in 1860. The old town still shows it — tall ochre houses on Genoese lines, ravioli on the menus, a dialect closer to Ligurian than French. The English aristocracy wintering here paid for the seafront promenade in the 1820s, which is why it carries their name, and the painters who followed came for a quality of light that Matisse said he could not find anywhere else.",
+    famousFor: ["Promenade des Anglais", "Socca", "The Baroque old town", "Carnival", "The light"],
+    thingsToDo: [
+      { title: "Climb Castle Hill first", text: "There has been no castle since Louis XIV demolished it in 1706, but the park on top gives you the whole Baie des Anges in one look. There is a lift at the eastern end if the stairs don't appeal." },
+      { title: "Do Cours Saleya in the morning", text: "Flowers and produce every day except Monday, when it turns into an antiques market instead. It empties out by early afternoon, so this is not a lie-in." },
+      { title: "Eat socca standing up", text: "A chickpea-flour pancake baked in a copper pan, scraped off in ragged pieces and eaten hot with black pepper. It must be eaten within minutes of leaving the oven, which is why nobody sells it to take away." },
+      { title: "Go up to Cimiez for Matisse", text: "The museum sits in a red villa on the hill, next to the ruins of the Roman town and the olive grove where the jazz festival happens. Matisse is buried in the cemetery next door." }
+    ],
+    gallery: [
+      { article: "Promenade des Anglais", caption: "The Promenade des Anglais runs seven kilometres along the bay, paid for by English winter residents in the 1820s." },
+      { article: "Place Masséna", caption: "Place Masséna is paved in checkerboard and lined with the red-ochre arcades of the Turin school." },
+      { article: "Nice Cathedral", caption: "Sainte-Réparate, in the middle of the old town, was finished in 1699 in full Baroque." },
+      { article: "Hotel Negresco", caption: "The Negresco opened in 1913; its pink dome was reportedly modelled on a dancer's breast." },
+      { article: "Musée Matisse (Nice)", caption: "The Matisse museum occupies a 17th-century villa in Cimiez, on the hill above the city." },
+      { article: "Nice Carnival", caption: "Nice Carnival runs for two weeks before Lent and is among the largest in the world." }
+    ],
+    facts: {
+      Population: "350,000",
+      Founded: "c. 350 BC (Greek Nikaia)",
+      Language: "French (Niçard)",
+      Currency: "Euro (€)",
+      "Best time": "May–June, September–October",
+      "Order this": "Socca"
+    }
+  },
+  {
+    id: "le-havre",
+    name: "Le Havre",
+    country: "France",
+    region: "Normandy",
+    accent: "#7f93a6",
+    tagline: "A city cast in concrete, on purpose",
+    intro:
+      "In September 1944 Allied bombing destroyed about eighty per cent of central Le Havre in two days. Auguste Perret, then in his seventies, was handed the whole of it and rebuilt from nothing in reinforced concrete — a grid of wide streets, a module of 6.24 metres, light and air where the slums had been. It is the only reconstructed European city centre on the UNESCO list, and it divides people instantly: either the coldest place in France or the most coherent piece of 20th-century urbanism in it.",
+    famousFor: ["Perret's concrete city", "UNESCO listed", "Where Impressionism got its name", "France's largest port", "St Joseph's tower"],
+    thingsToDo: [
+      { title: "Visit the show flat", text: "The tourist office keeps an Appartement Témoin furnished exactly as a 1950s family would have had it, fitted kitchen and all. It explains the whole project better than any amount of looking at facades." },
+      { title: "Stand inside St Joseph's at midday", text: "The 107-metre tower is hollow all the way up and glazed with some 13,000 coloured panels by Marguerite Huré, arranged so the colour changes with the compass direction the sun is coming from." },
+      { title: "See where the word came from", text: "Monet painted the harbour here in 1872 and called it Impression, Sunrise; a critic took the title and made an insult of it. The MuMa on the seafront holds the second-largest Impressionist collection in France." },
+      { title: "Walk out to Sainte-Adresse", text: "Forty minutes north along the shore, up onto the cliffs the painters worked from. There is a beach the whole way and the container ships pass close in." }
+    ],
+    gallery: [
+      { article: "Le Havre", caption: "The centre was rebuilt between 1945 and 1964 on Perret's grid, and UNESCO listed it in 2005." },
+      { article: "St. Joseph's Church, Le Havre", caption: "St Joseph's tower rises 107 metres and works as a lantern, lit from inside by coloured glass." },
+      { article: "Hôtel de Ville, Le Havre", caption: "Perret's town hall closes the main square with a long low block and a single tower." },
+      { article: "Le Havre Cathedral", caption: "Notre-Dame survived the bombing badly damaged, and was kept as a scar among the new blocks." },
+      { article: "Port of Le Havre", caption: "Le Havre is France's largest container port and its second-largest port overall." },
+      { article: "Pont de Normandie", caption: "The Pont de Normandie held the record for the longest cable-stayed span when it opened in 1995." }
+    ],
+    facts: {
+      Population: "170,000",
+      Founded: "1517 (by François I)",
+      Language: "French",
+      Currency: "Euro (€)",
+      "Best time": "May–September",
+      "Order this": "Teurgoule"
+    }
+  },
+  {
+    id: "montpellier",
+    name: "Montpellier",
+    country: "France",
+    region: "Occitanie",
+    accent: "#b8536f",
+    tagline: "A medieval university town that never got old",
+    intro:
+      "Montpellier has no Roman layer at all — it simply appears in the record in 985 and grows rich on the spice trade, then on a medical school that has been teaching without a break since 1220 and is the oldest still working anywhere. Rabelais and Nostradamus both enrolled. The student population still runs to about a third of the city, which is why the medieval lanes feel less like a preserved quarter and more like somewhere people are noisily living.",
+    famousFor: ["The oldest working medical school", "Place de la Comédie", "Student city", "The Antigone quarter", "Beaches 20 minutes away"],
+    thingsToDo: [
+      { title: "Push on the doors in the Écusson", text: "The old town's merchant houses hide staircases and courtyards behind plain street fronts. Many are half-open in the daytime, and the tourist office runs a walk that gets you into the best of them." },
+      { title: "See the oldest botanical garden in France", text: "Planted in 1593 on Henri IV's orders, as a teaching collection for the medical faculty next door. It is free, shaded and mostly full of students revising." },
+      { title: "Walk into the Antigone", text: "Ricardo Bofill laid out an entire neoclassical quarter in the 1980s — the same columns and cornices as the old town, at twice the scale and in precast concrete. It starts abruptly behind the Polygone." },
+      { title: "Take the tram to the sea", text: "Line 3 heads south towards Pérols and the lagoons, and the beaches at Palavas are about half an hour out. The trams on lines 3 and 4 were liveried by Christian Lacroix." }
+    ],
+    gallery: [
+      { article: "Place de la Comédie", caption: "The Comédie is the city's hinge; its Three Graces fountain has stood there since 1776." },
+      { article: "Montpellier Cathedral", caption: "Saint-Pierre began as a monastery chapel in 1364 and still has its two vast porch towers." },
+      { article: "Jardin des plantes de Montpellier", caption: "Founded in 1593 for the medical faculty, this is the oldest botanical garden in France." },
+      { article: "Antigone, Montpellier", caption: "Ricardo Bofill's Antigone quarter applies classical orders to 1980s social housing." },
+      { article: "Musée Fabre", caption: "The Musée Fabre grew out of one painter's collection, given to the city in 1825." },
+      { article: "Montpellier tramway", caption: "Four tram lines cross the city, two of them liveried by the couturier Christian Lacroix." }
+    ],
+    facts: {
+      Population: "300,000",
+      Founded: "985",
+      Language: "French (Occitan)",
+      Currency: "Euro (€)",
+      "Best time": "April–June, September",
+      "Order this": "Grisettes"
+    }
   }
 ];
