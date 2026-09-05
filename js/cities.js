@@ -828,5 +828,137 @@ const CITIES = [
       "Best time": "May–June, September–October",
       "Order this": "Peameal bacon sandwich"
     }
+  },
+  {
+    id: "xian",
+    name: "Xi'an",
+    country: "China",
+    region: "East Asia",
+    accent: "#b04a3c",
+    tagline: "Where the Silk Road began",
+    intro:
+      "Xi'an was the capital of thirteen dynasties, and under the Tang it was Chang'an — a grid of a million people, the largest city on earth and the eastern end of the Silk Road. What survives is a complete Ming wall around the old centre, an army of clay soldiers under a field outside town, and a Muslim quarter whose Hui families have been here since the caravans were still arriving.",
+    famousFor: ["Terracotta Army", "Silk Road terminus", "Ming city walls", "Biang biang noodles", "The Muslim Quarter"],
+    thingsToDo: [
+      { title: "Cycle the wall", text: "Rent a bike at the South Gate and ride the full 13.7 km circuit on top of the ramparts. It takes about ninety minutes and you look down into courtyards the whole way round." },
+      { title: "Reach the Terracotta Army at opening", text: "It is forty minutes east of the city and packed by mid-morning. Start in Pit 1, then walk back through the smaller pits — the half-excavated ones show you how the figures actually come out of the ground." },
+      { title: "Eat down Beiyuanmen", text: "The Muslim Quarter's main lane does roujiamo, hand-pulled biang biang noodles, lamb skewers and persimmon cakes fried in front of you. Go hungry and buy small things from several stalls." },
+      { title: "Take a day at Mount Hua", text: "Two hours east by high-speed rail, five granite peaks with a cable car up and a notorious plank path bolted to the cliff. Doable as a long day trip if you leave on the first train." }
+    ],
+    gallery: [
+      { article: "Terracotta Army", caption: "The Terracotta Army was found in 1974 by farmers digging a well; no two faces are alike." },
+      { article: "Fortifications of Xi'an", caption: "The Ming wall runs 13.7 km around the old city and is wider at the top than most streets below it." },
+      { article: "Giant Wild Goose Pagoda", caption: "The Giant Wild Goose Pagoda was raised in 652 to hold the sutras Xuanzang carried back from India." },
+      { article: "Great Mosque of Xi'an", caption: "The Great Mosque is laid out as Chinese courtyards, with a minaret built in the shape of a pagoda." },
+      { article: "Bell Tower of Xi'an", caption: "The Bell Tower stands at the exact centre of the walled city, where the four main roads meet." },
+      { article: "Mount Hua", caption: "Mount Hua, two hours east, is known for a walkway of planks bolted along an open cliff face." }
+    ],
+    facts: {
+      Population: "13 million",
+      Founded: "1046 BC (as Fenghao)",
+      Language: "Mandarin",
+      Currency: "Yuan (¥)",
+      "Best time": "April–May, September–October",
+      "Order this": "Biang biang noodles"
+    }
+  },
+  {
+    id: "samarkand",
+    name: "Samarkand",
+    country: "Uzbekistan",
+    region: "Central Asia",
+    accent: "#3f6fb5",
+    tagline: "A crossroads paved in turquoise",
+    intro:
+      "Timur made Samarkand his capital in the 1370s and stocked it by force, hauling in the best craftsmen from every city he took. The result is a skyline of ribbed domes glazed in turquoise and lapis, built fast, built too big, and half falling down within a generation. His grandson Ulugh Beg preferred astronomy to conquest and measured the length of the year to within a minute of the modern figure.",
+    famousFor: ["The Registan", "Timurid tilework", "Silk Road", "Ulugh Beg's astronomy", "Plov"],
+    thingsToDo: [
+      { title: "See the Registan twice", text: "Three madrasas facing each other across one square. Come at opening for the tilework in flat morning light, then again after dark when the facades are lit and the crowds have thinned." },
+      { title: "Walk up Shah-i-Zinda", text: "A narrow lane of tomb chambers climbing the hillside, each doorway tiled by a different workshop. It is a working pilgrimage site, so cover shoulders and keep your voice down." },
+      { title: "Stand in Ulugh Beg's observatory", text: "What is left is the underground arc of a giant sextant cut into the bedrock — eleven metres of an instrument that was originally about forty. The museum beside it explains what he did with it." },
+      { title: "Buy bread at Siyob Bazaar", text: "Samarkand non is stamped with a chekich before baking and is genuinely better than the bread elsewhere in the country. Buy dried apricots and halva while you are there." }
+    ],
+    gallery: [
+      { article: "Registan", caption: "Three madrasas face each other across the Registan; the last of them was finished around 1660." },
+      { article: "Shah-i-Zinda", caption: "Shah-i-Zinda is a lane of tombs, Timurid nobles buried around a much older shrine." },
+      { article: "Bibi-Khanym Mosque", caption: "Bibi-Khanym went up in five years to 1404 and began collapsing almost as soon as it was finished." },
+      { article: "Gur-e-Amir", caption: "Gur-e-Amir holds Timur's tomb under a fluted dome that Mughal architects later copied in India." },
+      { article: "Siyob Bazaar", caption: "Siyob is the city's working bazaar: bread, apricots, raisins and halva sold by the kilo." },
+      { article: "Hazrat Khizr Mosque", caption: "The Hazrat Khizr mosque sits above the bazaar on the oldest sacred ground in the city." }
+    ],
+    facts: {
+      Population: "560,000",
+      Founded: "c. 700 BC",
+      Language: "Uzbek, Tajik, Russian",
+      Currency: "Som (soʻm)",
+      "Best time": "April–May, September–October",
+      "Order this": "Plov"
+    }
+  },
+  {
+    id: "zanzibar-city",
+    name: "Zanzibar City",
+    country: "Tanzania",
+    region: "East Africa",
+    accent: "#2f9e7f",
+    tagline: "Coral stone, cloves and dhows",
+    intro:
+      "In 1840 the Sultan of Oman moved his capital from Muscat to this island, and Stone Town is what that decision built: a knot of lanes too narrow for cars, walled in coral rag and studded with carved teak doors. The wealth behind it came from cloves and from slaving, and the town has not tidied either fact away — the Anglican cathedral stands on the site of the last slave market, deliberately.",
+    famousFor: ["Carved Zanzibari doors", "Cloves", "Dhows", "Freddie Mercury's birthplace", "Swahili coast history"],
+    thingsToDo: [
+      { title: "Get lost in Stone Town on purpose", text: "The lanes are too narrow for cars and no map survives contact with them. Walk in any direction for twenty minutes and you will come out at the seafront, which is how everyone navigates." },
+      { title: "Eat at Forodhani at sunset", text: "The seafront gardens fill with grill stalls around six — grilled seafood, cassava, sugarcane juice pressed to order and the flatbread-and-egg thing sold as Zanzibar pizza." },
+      { title: "Tour a spice farm", text: "Half an hour north of town, and better than it sounds: you are handed leaves, bark and green fruit to identify by smell before anyone names them. Cloves, cardamom, nutmeg, vanilla, all still grown commercially." },
+      { title: "Look for red colobus at Jozani", text: "The island's own monkey lives in one forest and nowhere else on earth. Early morning is best, and the boardwalk over the mangroves at the far end of the park is usually empty." }
+    ],
+    gallery: [
+      { article: "Stone Town", caption: "Stone Town is built of coral rag — soft enough to carve, porous enough to need constant repair." },
+      { article: "House of Wonders", caption: "The House of Wonders was the first building in East Africa to have electric light and a lift." },
+      { article: "Christ Church, Zanzibar", caption: "Christ Church was raised over the last slave market; the altar stands where the whipping post stood." },
+      { article: "Old Fort of Zanzibar", caption: "The Omani fort went up in the 1690s, on the ruins of the Portuguese church it replaced." },
+      { article: "Darajani Market", caption: "Darajani is the town's working market — fish, cloves and cardamom, loudest well before nine." },
+      { article: "Jozani Chwaka Bay National Park", caption: "The Zanzibar red colobus lives in this forest and nowhere else; roughly 6,000 remain." }
+    ],
+    facts: {
+      Population: "590,000",
+      Founded: "1830s (as the Omani capital)",
+      Language: "Swahili, English, Arabic",
+      Currency: "Shilling (TSh)",
+      "Best time": "June–October, December–February",
+      "Order this": "Urojo"
+    }
+  },
+  {
+    id: "wellington",
+    name: "Wellington",
+    country: "New Zealand",
+    region: "Oceania",
+    accent: "#6d9b3c",
+    tagline: "The southernmost capital on earth",
+    intro:
+      "Wellington is wedged between a drowned river valley and the hills above it, on a fault line, in the path of everything the Cook Strait funnels through. There is no room to sprawl, so the city stacked its wooden houses up the slopes and put the film studios, the coffee roasters and the national museum within walking distance of each other. It is the smallest capital that behaves like a much larger city.",
+    famousFor: ["Te Papa", "Coffee", "Wētā Workshop", "The wind", "Craft beer"],
+    thingsToDo: [
+      { title: "Ride the cable car up, walk down", text: "Five minutes from Lambton Quay to Kelburn for the view over the harbour, then walk back down through the Botanic Garden. Downhill the whole way, about forty-five minutes with stops." },
+      { title: "Give Te Papa half a day", text: "The national museum is free, sits on base isolators built to ride out an earthquake, and its Gallipoli figures were made by Wētā at two and a half times life size." },
+      { title: "Do the night tour at Zealandia", text: "A fenced valley sanctuary cleared of introduced predators and replanted on a 500-year plan. By day you get kākā and tuatara; the after-dark tour is the realistic chance of seeing a kiwi." },
+      { title: "Drink your way up Cuba Street", text: "Wellington took flat whites seriously before most of the world did, and the roasters are concentrated on and around this one street. The Bucket Fountain halfway up has been soaking pedestrians since 1969." }
+    ],
+    gallery: [
+      { article: "Wellington Harbour", caption: "The harbour is a drowned valley, and the fault that made it runs under the city centre." },
+      { article: "Wellington Cable Car", caption: "The cable car has climbed from Lambton Quay to Kelburn since 1902." },
+      { article: "Te Papa", caption: "Te Papa opened in 1998, is free to enter, and rests on isolators that let it move in a quake." },
+      { article: "The Beehive", caption: "The Beehive, parliament's executive wing, began as a sketch Basil Spence made in 1964." },
+      { article: "Cuba Street", caption: "Cuba Street is the city's pedestrian spine, and its Bucket Fountain dates from 1969." },
+      { article: "Oriental Bay", caption: "Oriental Bay's sand was shipped down from Golden Bay to give the city a beach." }
+    ],
+    facts: {
+      Population: "215,000 (440k metro)",
+      Founded: "1839",
+      Language: "English, Māori",
+      Currency: "Dollar (NZ$)",
+      "Best time": "December–March",
+      "Order this": "Flat white"
+    }
   }
 ];
