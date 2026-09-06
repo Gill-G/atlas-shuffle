@@ -1059,5 +1059,38 @@ const CITIES = [
       "Best time": "April–June, September",
       "Order this": "Grisettes"
     }
+  },
+  {
+    id: "monaco",
+    name: "Monaco",
+    country: "Monaco",
+    region: "Riviera",
+    accent: "#2f5f8f",
+    tagline: "A sovereign state you can walk across",
+    intro:
+      "Monaco is two square kilometres of steep ground between the Alps and the Mediterranean, and about a fifth of that was taken from the sea rather than found there. It is the second-smallest country on earth and the most crowded, ruled by the same family since 1297, and it funds itself by taxing almost everything except its residents' income. The whole state is smaller than most airports, which is the thing photographs never quite convey — you can cross it on foot in half an hour, uphill.",
+    famousFor: ["The Grand Prix", "Monte Carlo Casino", "Superyachts", "No income tax", "The Grimaldis"],
+    thingsToDo: [
+      { title: "Walk a lap of the circuit", text: "The Grand Prix runs on ordinary streets, so the track is there all year. Start at Sainte-Dévote, climb to Casino square, drop through the tunnel and back along the harbour — about half an hour, and it explains why overtaking is impossible." },
+      { title: "Be at the palace at 11:55", text: "The Carabiniers change guard in the square on the Rock, daily, in under ten minutes. Get there early for a spot at the front, then stay for the old-town lanes behind it, which empty out the moment the cruise groups leave." },
+      { title: "Go into the Oceanographic Museum", text: "Prince Albert I built it straight out of the cliff face in 1910 to house what he dredged up himself, and Jacques Cousteau ran it for thirty-one years. The building is worth the ticket even before the tanks." },
+      { title: "Look inside the casino", text: "You can tour the Garnier rooms in the morning for a fee, before play starts. Monégasque citizens are not allowed to gamble here at all — a rule as old as the tables that made the country solvent." }
+    ],
+    gallery: [
+      { article: "Monte Carlo", caption: "The whole state covers about 2.1 km², wedged between the mountains and the sea." },
+      { article: "Monte Carlo Casino", caption: "Casino money let Charles III abolish income tax in 1869; Monégasques may not gamble there." },
+      { article: "Prince's Palace of Monaco", caption: "The Grimaldis took the Rock in 1297, when François Grimaldi talked his way in dressed as a monk." },
+      { article: "Port Hercules", caption: "Port Hercules is the only deep-water harbour on this coast; the Greeks named it for Herakles." },
+      { article: "Oceanographic Museum of Monaco", caption: "Prince Albert I cut the museum into the cliff in 1910; Cousteau directed it for thirty-one years." },
+      { article: "Cathedral of Our Lady Immaculate", caption: "The Grimaldi tombs lie behind the altar, Grace Kelly's among them." }
+    ],
+    facts: {
+      Population: "38,000 in 2.1 km²",
+      Founded: "1215 (Genoese fortress)",
+      Language: "French (Monégasque)",
+      Currency: "Euro (€)",
+      "Best time": "April–June, September",
+      "Order this": "Barbagiuan"
+    }
   }
 ];
