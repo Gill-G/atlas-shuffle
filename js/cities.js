@@ -1092,5 +1092,38 @@ const CITIES = [
       "Best time": "April–June, September",
       "Order this": "Barbagiuan"
     }
+  },
+  {
+    id: "vancouver",
+    name: "Vancouver",
+    country: "Canada",
+    region: "British Columbia",
+    accent: "#2e7d5a",
+    tagline: "Rainforest, mountains and glass",
+    intro:
+      "Vancouver is pinned between the Coast Mountains and the Pacific on land the Musqueam, Squamish and Tsleil-Waututh never ceded, which the city now says out loud at the start of public events. It was incorporated in 1886 and burned to the ground weeks later, rebuilt itself as a port, and was remade again by Expo 86 into the city of slim glass towers on low podiums that planners elsewhere copy by name. The mountains are twenty minutes from downtown; so is the rain, which lasts from October to April.",
+    famousFor: ["The seawall", "Stanley Park", "Glass towers", "Skiing and beaches in one day", "Rain"],
+    thingsToDo: [
+      { title: "Ride the seawall", text: "Twenty-eight kilometres of uninterrupted waterfront path, of which the Stanley Park loop is about ten. Cyclists go anticlockwise and it is enforced by everyone around you. Rent near Denman Street." },
+      { title: "Get up Grouse Mountain", text: "The gondola takes ten minutes. The Grouse Grind — 2,830 steps up 853 metres — takes most people an hour and a half, and you buy a ticket down because descending it is banned." },
+      { title: "Sit in the Dr Sun Yat-Sen garden", text: "The first full-size classical Chinese garden built outside China, finished in 1986 by artisans from Suzhou using no nails, screws or power tools. It is walled, small, and completely silent in the middle of Chinatown." },
+      { title: "Eat across the water in Richmond", text: "Half an hour on the Canada Line and arguably the best Chinese food in North America — dumpling houses, hot pot and, in summer, the night market. Come hungry and bring cash." }
+    ],
+    gallery: [
+      { article: "Vancouver", caption: "The city sits between the Coast Mountains and the Pacific; the ski runs are visible from downtown." },
+      { article: "Seawall (Vancouver)", caption: "The seawall runs 28 km unbroken along the water — the city claims the longest such path anywhere." },
+      { article: "Siwash Rock", caption: "Siwash Rock is a volcanic stack in Stanley Park; Squamish tradition holds it to be a man turned to stone." },
+      { article: "Gastown", caption: "Gastown grew around an 1867 saloon. The steam clock everyone photographs dates from 1977." },
+      { article: "Granville Island", caption: "Granville Island was an industrial sandbar until the 1970s, when the sheds became a public market." },
+      { article: "Museum of Anthropology at UBC", caption: "Arthur Erickson glazed the museum's hall to full height so house posts could stand as they were carved." }
+    ],
+    facts: {
+      Population: "660,000 (2.6m metro)",
+      Founded: "1886",
+      Language: "English (Cantonese, Punjabi)",
+      Currency: "Dollar (C$)",
+      "Best time": "June–September",
+      "Order this": "Japadog"
+    }
   }
 ];
