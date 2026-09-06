@@ -1125,5 +1125,38 @@ const CITIES = [
       "Best time": "June–September",
       "Order this": "Japadog"
     }
+  },
+  {
+    id: "rio",
+    name: "Rio de Janeiro",
+    country: "Brazil",
+    region: "South America",
+    accent: "#e0a52e",
+    tagline: "The city between the granite and the sea",
+    intro:
+      "Rio is built in the gaps between mountains that come straight out of the Atlantic, which is why it has no centre so much as a series of neighbourhoods separated by rock and reached through tunnels. It was the capital of Brazil for nearly two hundred years, and for thirteen of them the capital of Portugal as well — the only time a European empire has been run from outside Europe, after the royal family fled Napoleon in 1808. The forest on the hills is not left over from anything: it was replanted by hand from the 1860s once the coffee estates had stripped it and the city's water ran out.",
+    famousFor: ["Christ the Redeemer", "Carnival", "Copacabana and Ipanema", "Samba", "Sugarloaf"],
+    thingsToDo: [
+      { title: "Take Sugarloaf late in the day", text: "Two cable car stages, Urca first and then the summit. Go up about ninety minutes before sunset: you get the bay in daylight, the sun going down behind Corcovado, and the lights coming on, all in one ticket." },
+      { title: "Ride the rack railway up Corcovado", text: "The train has climbed through the Tijuca forest since 1884, which beats the statue on top by half a century. Book a timed slot, and go early — the summit clouds over by late morning more often than not." },
+      { title: "Walk Santa Teresa down to Lapa", text: "The hill district of studios and crumbling mansions, reached by the little yellow bonde that came back into service in 2015. Walk down the Selarón steps at the bottom and you are in Lapa, which is where the samba bars are." },
+      { title: "See a game at the Maracanã", text: "It held nearly 200,000 people for the 1950 World Cup final, the largest crowd ever at a football match. Capacity is a third of that now, but a Flamengo derby still moves the concrete." }
+    ],
+    gallery: [
+      { article: "Rio de Janeiro", caption: "Rio wraps around granite peaks that rise straight out of the Atlantic." },
+      { article: "Christ the Redeemer (statue)", caption: "The statue stands 30 m tall on an 8 m plinth, finished in 1931 and faced in soapstone." },
+      { article: "Sugarloaf Mountain", caption: "Sugarloaf's cable car opened in 1912 and is among the oldest anywhere still running." },
+      { article: "Ipanema", caption: "Ipanema is divided into numbered postos, and the one you sit at says a good deal about you." },
+      { article: "Escadaria Selarón", caption: "Jorge Selarón tiled these 215 steps over twenty years, until his death at the foot of them in 2013." },
+      { article: "Rio Carnival", caption: "The samba schools parade down the Sambadrome, a concrete strip Oscar Niemeyer drew in 1984." }
+    ],
+    facts: {
+      Population: "6.2 million (13m metro)",
+      Founded: "1565",
+      Language: "Portuguese",
+      Currency: "Real (R$)",
+      "Best time": "May–October (dry season)",
+      "Order this": "Feijoada"
+    }
   }
 ];
