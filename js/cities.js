@@ -1158,5 +1158,38 @@ const CITIES = [
       "Best time": "May–October (dry season)",
       "Order this": "Feijoada"
     }
+  },
+  {
+    id: "london",
+    name: "London",
+    country: "England",
+    region: "Northern Europe",
+    accent: "#c9352f",
+    tagline: "A thousand villages that grew into each other",
+    intro:
+      "London has no centre because it never had one: two separate cities, the mercantile City and royal Westminster, and then a few hundred villages that the sprawl reached and absorbed without ever quite digesting. That is why the street plan makes no sense, why there are dozens of competing high streets, and why Londoners describe where they live by a name that was a farming hamlet in 1800. The Thames running through it is tidal all the way past the centre, rising and falling seven metres twice a day.",
+    famousFor: ["Free national museums", "Pubs", "The Tube", "Theatre", "300 languages"],
+    thingsToDo: [
+      { title: "Walk a canal instead of the river", text: "Regent's Canal runs from Little Venice through the zoo, Camden and out to Islington, mostly below street level and largely empty of tourists. The Islington tunnel has no towpath — boats used to be legged through it by men lying on their backs." },
+      { title: "Swim in the Hampstead ponds", text: "Three of them on the Heath — men's, women's and mixed — open every day of the year including January, when a queue still forms. Afterwards, climb Parliament Hill for the view that is protected in law." },
+      { title: "Use the free museums properly", text: "The national collections cost nothing to enter, which means the right way to use them is an hour at a time. Go into the British Museum for one room and leave; it has been free since it opened in 1759 and it will still be there tomorrow." },
+      { title: "Find a pub that predates the Fire", text: "Most of the City burned in 1666, but a handful of houses further out did not. The Seven Stars behind the Royal Courts has been serving since 1602 and is roughly the size of a front room." }
+    ],
+    gallery: [
+      { article: "London", caption: "London grew by swallowing villages whole, which is why it has dozens of high streets and no centre." },
+      { article: "Palace of Westminster", caption: "The palace is Victorian: the medieval one burned in 1834 and only Westminster Hall came through." },
+      { article: "Tower of London", caption: "The Tower has been fortress, mint, menagerie and prison, and is garrisoned to this day." },
+      { article: "British Museum", caption: "The British Museum opened in 1759 and has never charged for entry." },
+      { article: "Borough Market", caption: "There has been a market at the south end of London Bridge for something like a thousand years." },
+      { article: "Regent's Canal", caption: "Regent's Canal crosses north London for 14 km, mostly a storey below the streets beside it." }
+    ],
+    facts: {
+      Population: "8.9 million (14m metro)",
+      Founded: "AD 47 (Londinium)",
+      Language: "English (300+ spoken)",
+      Currency: "Pound (£)",
+      "Best time": "May–June, September",
+      "Order this": "Pie and mash"
+    }
   }
 ];
