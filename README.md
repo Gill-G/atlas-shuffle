@@ -24,6 +24,7 @@ index.html      # page skeleton — sections are filled in by JS
 css/style.css   # all styling; per-city accent colour is a CSS variable
 js/cities.js    # the dataset: 38 cities, hand-written
 js/main.js      # picks a city, fetches photos, renders the page
+check.js        # verifies every gallery article against the live API
 start.sh        # local static server
 ```
 
@@ -44,10 +45,17 @@ If the request fails — offline, blocked, rate-limited — every word on the pa
 still renders and the image slots fall back to a coloured wash. The site is never
 blank.
 
-All 228 image slots are checked against the live API — every one resolves, and
-every one is an actual photograph. That second check matters: plenty of articles
-lead with a locator map, a logo or a coat of arms instead (`Old Havana` and
-`Van Gogh Museum` both did), which looks broken in a gallery.
+All 228 image slots are checked against the live API by `check.js` — every one
+resolves, and every one is an actual photograph. That second check matters:
+plenty of articles lead with a locator map, a logo or a coat of arms instead
+(`Old Havana` and `Van Gogh Museum` both did), which looks broken in a gallery.
+
+The check is worth re-running now and then, not just when adding a city, because
+an entry that was correct can silently stop being correct. Wikipedia retargeted
+`Malecón` to the generic article `Jetty`, and `Temple of Literature` to
+`Temple of Confucius`; both titles still resolved, and both still led with a real
+photograph, so Havana showed an anonymous breakwater and Hanoi a temple in the
+wrong country until `check.js` learned to look at redirects.
 
 ## Adding a city
 
@@ -71,12 +79,27 @@ the count in the footer, the shuffle pool, the accent colour.
 ```
 
 Two rules worth keeping: `gallery[0]` is the hero image, and every `article` must
-be an exact English Wikipedia title that has a lead photo. Check a new one with:
+be an exact English Wikipedia title that has a lead photo. Check the new entry
+before committing it:
 
 ```bash
-curl -s "https://en.wikipedia.org/w/api.php?action=query&format=json&redirects=1\
-&prop=pageimages&piprop=thumbnail&pithumbsize=800&titles=Porto"
+node check.js            # the whole deck
+node check.js porto      # just the city you added
 ```
+
+It exits non-zero and names the city and article for each of:
+
+| | |
+|---|---|
+| no such article | the title is wrong, or was renamed |
+| no lead image | nothing to show in the slot |
+| looks like a diagram | the lead image is a map, logo, coat of arms or SVG |
+| different subject? | the title now redirects somewhere unrelated |
+| only N px wide | too small to fill a gallery slot cleanly |
+
+The last two are advisory. A redirect that merely retitles — `Sultan Ahmed
+Mosque` to `Blue Mosque, Istanbul` — is reported and is fine; the check cannot
+tell that apart from `Malecón` becoming `Jetty`, so look at what it names.
 
 A `"missing"` key means the title is wrong, and no `thumbnail` key means the
 article has no lead image. Also **look at the filename in the URL** — if it
