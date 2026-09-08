@@ -92,7 +92,7 @@ const CITIES = [
       { article: "Bahia Palace", caption: "Bahia Palace was built in the 1860s–90s and means 'brilliance' — its ceilings are painted cedar." },
       { article: "Majorelle Garden", caption: "The garden's signature 'Majorelle blue' was mixed by the painter Jacques Majorelle in the 1920s." },
       { article: "Ben Youssef Madrasa", caption: "Ben Youssef Madrasa housed 900 students and is covered in carved cedar, stucco and zellij." },
-      { article: "Medina of Marrakesh", caption: "The medina's walls run for 19 km and are built of rammed red earth, which is why the city is 'red'." }
+      { article: "Walls of Marrakesh", caption: "The medina's walls run for 19 km and are built of rammed red earth, which is why the city is 'red'." }
     ],
     facts: {
       Population: "1.0 million",
@@ -352,7 +352,7 @@ const CITIES = [
     ],
     gallery: [
       { article: "Hoàn Kiếm Lake", caption: "Legend says a golden turtle reclaimed a magic sword here, which is why it's the Lake of the Returned Sword." },
-      { article: "Temple of Literature", caption: "The Temple of Literature was Vietnam's first university, founded in 1070." },
+      { article: "Temple of Literature, Hanoi", caption: "The Temple of Literature was Vietnam's first university, founded in 1070." },
       { article: "Ho Chi Minh Mausoleum", caption: "The mausoleum was built against Hồ Chí Minh's own wishes; he had asked to be cremated." },
       { article: "One Pillar Pagoda", caption: "The One Pillar Pagoda is designed to resemble a lotus rising from the water." },
       { article: "Phở", caption: "Phở broth is simmered for hours with charred ginger and onion; northern versions stay clear." },
@@ -748,7 +748,7 @@ const CITIES = [
     ],
     gallery: [
       { article: "Havana", caption: "Havana wraps around one of the great natural harbours of the Caribbean; the old city holds some 900 protected buildings." },
-      { article: "Malecón", caption: "The Malecón took 50 years to build and now runs 8 km along the seafront." },
+      { article: "Malecón, Havana", caption: "The Malecón took 50 years to build and now runs 8 km along the seafront." },
       { article: "El Capitolio", caption: "El Capitolio was completed in 1929 and is slightly taller than the US Capitol it resembles." },
       { article: "Plaza Vieja, Havana", caption: "Plaza Vieja was a residential square, never military — hence the balconies on every side." },
       { article: "Hotel Nacional de Cuba", caption: "The Hotel Nacional opened in 1930 and hosted a famous 1946 meeting of American mob bosses." },

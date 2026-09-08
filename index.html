@@ -6,7 +6,12 @@
 <title>Atlas Shuffle — a random city, every time you load</title>
 <meta name="description" content="Loads a random city from around the world and showcases it: photographs, what it's famous for, and what to do there.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
-<link rel="preconnect" href="https://upload.wikimedia.org">
+<!-- en.wikipedia.org is hit first (the API call); thumb.* serves generated
+     thumbnails, upload.* serves originals when the file is smaller than the
+     size we ask for, so both image hosts stay in play. -->
+<link rel="preconnect" href="https://en.wikipedia.org">
+<link rel="preconnect" href="https://thumb.wikimedia.org">
+<link rel="dns-prefetch" href="https://upload.wikimedia.org">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
