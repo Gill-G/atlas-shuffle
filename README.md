@@ -22,7 +22,7 @@ avoids that.
 ```
 index.html      # page skeleton — sections are filled in by JS
 css/style.css   # all styling; per-city accent colour is a CSS variable
-js/cities.js    # the dataset: 38 cities, hand-written
+js/cities.js    # the dataset: 40 cities, hand-written
 js/main.js      # picks a city, fetches photos, renders the page
 check.js        # verifies every gallery article against the live API
 start.sh        # local static server
@@ -45,7 +45,7 @@ If the request fails — offline, blocked, rate-limited — every word on the pa
 still renders and the image slots fall back to a coloured wash. The site is never
 blank.
 
-All 228 image slots are checked against the live API by `check.js` — every one
+All 240 image slots are checked against the live API by `check.js` — every one
 resolves, and every one is an actual photograph. That second check matters:
 plenty of articles lead with a locator map, a logo or a coat of arms instead
 (`Old Havana` and `Van Gogh Museum` both did), which looks broken in a gallery.

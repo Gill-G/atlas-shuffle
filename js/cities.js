@@ -1257,5 +1257,71 @@ const CITIES = [
       "Best time": "May–June, September",
       "Order this": "Ćevapi"
     }
+  },
+  {
+    id: "naha",
+    name: "Naha",
+    country: "Japan",
+    region: "East Asia",
+    accent: "#cf4a26",
+    tagline: "The capital of a kingdom that no longer exists",
+    intro:
+      "Naha is closer to Taipei than to Tokyo, and for four and a half centuries it was not Japanese at all: the Ryukyu Kingdom traded between China, Japan and southeast Asia, spoke its own language and painted its palaces Chinese vermilion rather than leaving the wood bare. Japan annexed it in 1879. In 1945 the Battle of Okinawa flattened around ninety per cent of the city and killed something like a quarter of the island's civilians, so almost everything here is either rebuilt or recent — which makes the surviving Ryukyu stonework worth going out of your way for.",
+    famousFor: ["The Ryukyu Kingdom", "Shuri Castle", "Awamori", "Okinawa soba", "Shisa lions"],
+    thingsToDo: [
+      { title: "Watch Shuri Castle being rebuilt", text: "The main hall burned down in October 2019, four years after the rest of the site was finished. The reconstruction is deliberately public — you can watch the carpenters cutting joints and painting the lacquer, which is more interesting than the finished building was." },
+      { title: "Work down Kokusai-dori into the market", text: "The mile of shopfronts was nicknamed the Miracle Mile because it rose straight out of the rubble. Turn off it into Makishi market, buy a fish downstairs, and the cooks upstairs will cook it for you." },
+      { title: "Buy a shisa in Tsuboya", text: "Potters have worked this one district since 1682, and the lion-dogs on every Okinawan roof come from here. The lane is stone-paved and takes about twenty minutes to walk end to end." },
+      { title: "Drink awamori properly", text: "Distilled from Thai long-grain rice with black koji, older than shochu, and aged in clay as kūsu. Ask for something aged rather than the cheap stuff, and drink it with water and ice." }
+    ],
+    gallery: [
+      { article: "Shuri Castle", caption: "Shuri was the Ryukyu court's palace, painted Chinese vermilion, and has burned and been rebuilt repeatedly." },
+      { article: "Shikina-en", caption: "Shikina-en was the kings' second residence, laid out around a pond with a Chinese-style bridge." },
+      { article: "Tamaudun", caption: "Tamaudun is the Ryukyu royal mausoleum, cut from limestone in 1501 and walled like a small fort." },
+      { article: "Naminoue Shrine", caption: "Naminoue stands on a cliff over the only beach in central Naha, on far older sacred ground." },
+      { article: "Tsuboya ware", caption: "Tsuboya potters have held the same district since 1682; the shisa on Okinawan roofs are their work." },
+      { article: "Okinawa soba", caption: "Okinawa soba is made with wheat rather than buckwheat, and had to fight to keep the name." }
+    ],
+    facts: {
+      Population: "317,000",
+      Founded: "1429 (Ryukyu capital at Shuri)",
+      Language: "Japanese (Okinawan)",
+      Currency: "Yen (¥)",
+      "Best time": "March–May, October–November",
+      "Order this": "Okinawa soba"
+    }
+  },
+  {
+    id: "sapporo",
+    name: "Sapporo",
+    country: "Japan",
+    region: "East Asia",
+    accent: "#4b56a8",
+    tagline: "A grid city in the snow country",
+    intro:
+      "Sapporo is barely a century and a half old. When Meiji Japan set out to colonise Hokkaido — Ainu land, taken — it hired American advisers and laid the new capital out on a numbered grid, which is why this is the one large Japanese city you can navigate by coordinates rather than by landmarks. It then turned out to be one of the snowiest cities on earth, taking something like five metres a year, and built a culture around that: a festival of ice, a Winter Olympics, and a bowl of miso ramen with butter melting into it.",
+    famousFor: ["The Snow Festival", "Miso ramen", "Sapporo beer", "Five metres of snow", "Streets on a grid"],
+    thingsToDo: [
+      { title: "Come for the Snow Festival", text: "Early February, a week long. The carved blocks fill Odori Park and the ice sculptures fill Susukino. Book beds months ahead — two million people come, and this is a city of two million." },
+      { title: "Eat miso ramen where it was invented", text: "Sapporo made miso the base in the 1950s and added sweetcorn and a slab of butter, which sounds wrong and is not. Ramen Yokocho in Susukino is a single alley of counters, most of them seating eight." },
+      { title: "Drink at the source", text: "Brewing started here in 1876 with Hokkaido barley and German-trained brewers, and the old brick brewhouse is now a museum. Attached is a hall serving jingisukan — lamb grilled at the table under a domed iron plate." },
+      { title: "Go out to Moerenuma Park", text: "Isamu Noguchi's last work: a former waste site turned into land art — a glass pyramid, a cut cone of a hill, fountains on a schedule. Forty minutes from the centre and almost nobody makes the trip." }
+    ],
+    gallery: [
+      { article: "Odori Park", caption: "Odori is a kilometre and a half of park slicing the grid in half from east to west." },
+      { article: "Sapporo Snow Festival", caption: "The festival began in 1950 with six statues built by schoolchildren; two million people now attend." },
+      { article: "Sapporo Clock Tower", caption: "The clock tower of 1878 is one of the few buildings surviving from the colonial-era city." },
+      { article: "Susukino", caption: "Susukino is the largest nightlife district north of Tokyo, and holds the festival's ice sculptures." },
+      { article: "Sapporo Beer Museum", caption: "Brewing started here in 1876, on Hokkaido barley and with German-trained brewers." },
+      { article: "Hokkaidō Shrine", caption: "The shrine was founded in 1869 expressly to consecrate the colonisation of the island." }
+    ],
+    facts: {
+      Population: "1.97 million",
+      Founded: "1868",
+      Language: "Japanese",
+      Currency: "Yen (¥)",
+      "Best time": "June–August, February",
+      "Order this": "Miso ramen"
+    }
   }
 ];
