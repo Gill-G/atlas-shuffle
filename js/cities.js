@@ -1191,5 +1191,71 @@ const CITIES = [
       "Best time": "May–June, September",
       "Order this": "Pie and mash"
     }
+  },
+  {
+    id: "riga",
+    name: "Riga",
+    country: "Latvia",
+    region: "Baltic",
+    accent: "#9e3039",
+    tagline: "The Art Nouveau capital of the Baltic",
+    intro:
+      "Riga was founded as a Hanseatic port in 1201 and run by Baltic German merchants for the next seven centuries, which is why the old town looks north to Lübeck rather than east. Its real signature is later and stranger: around the turn of the twentieth century the city got rich and built almost everything at once, so roughly a third of central Riga went up in Art Nouveau — the densest concentration of it anywhere, much of it by Mikhail Eisenstein, whose son Sergei went into film instead.",
+    famousFor: ["Art Nouveau", "The Hanseatic old town", "Zeppelin-hangar market", "Black Balsam", "Choral singing"],
+    thingsToDo: [
+      { title: "Walk Alberta iela slowly", text: "One street, both sides, faces and masks and screaming heads over every doorway. Eisenstein designed most of it between 1901 and 1908. There is a museum in one of the flats if you want to see how the interiors worked." },
+      { title: "Eat in the Zeppelin hangars", text: "The central market is five German airship hangars brought up from Kurzeme in the 1920s and re-erected by the railway. Fish in one, dairy in another, and it is where the city actually shops." },
+      { title: "Go up St Peter's spire", text: "There is a lift. The platform gives you the red roofs, the river and the Academy of Sciences tower in one turn, which is the fastest way to understand how the city is put together." },
+      { title: "Try to grasp the Baltic Way", text: "In 1989 two million people joined hands in an unbroken chain 675 km long, from here through Vilnius to Tallinn. The Occupation Museum on the square explains what they were standing against." }
+    ],
+    gallery: [
+      { article: "Riga", caption: "Riga was a Hanseatic port from 1201, and Baltic German merchants ran it for seven centuries after." },
+      { article: "Vecrīga", caption: "Much of what reads as medieval in the old town is careful post-war reconstruction." },
+      { article: "Art Nouveau architecture in Riga", caption: "About a third of central Riga is Art Nouveau, the densest concentration of it anywhere." },
+      { article: "Riga Central Market", caption: "The market halls are five Zeppelin hangars, brought from Kurzeme and re-erected in the 1920s." },
+      { article: "Freedom Monument", caption: "The Freedom Monument went up in 1935, and the Soviets never quite dared take it down." },
+      { article: "Latvian Academy of Sciences", caption: "The Academy of Sciences is Riga's Stalinist tower, known locally as Stalin's birthday cake." }
+    ],
+    facts: {
+      Population: "605,000 (1m metro)",
+      Founded: "1201",
+      Language: "Latvian (Russian widely)",
+      Currency: "Euro (€)",
+      "Best time": "June–August",
+      "Order this": "Black Balsam"
+    }
+  },
+  {
+    id: "belgrade",
+    name: "Belgrade",
+    country: "Serbia",
+    region: "Balkans",
+    accent: "#4a6f8a",
+    tagline: "The white city at the confluence",
+    intro:
+      "Belgrade stands on the ridge where the Sava runs into the Danube, which is the reason for everything that has happened to it: whoever held this rock held the road between central Europe and the Balkans, so it has been besieged and rebuilt more times than anywhere else on the continent. Romans, Byzantines, Serbs, Ottomans and Austrians all took a turn, then the twentieth century added a socialist capital in concrete on the marsh across the river. The city that came out of all this is loud, unpolished and open very late.",
+    famousFor: ["Kalemegdan fortress", "Nightlife on the rivers", "Ćevapi", "Brutalist New Belgrade", "Rakija"],
+    thingsToDo: [
+      { title: "Watch the rivers meet from Kalemegdan", text: "The fortress park sits directly over the confluence, and the Sava comes in visibly greener than the Danube. Free, open late, and full of locals rather than visitors on a warm evening." },
+      { title: "Cross into New Belgrade", text: "Built from scratch on drained marsh after 1948 — vast concrete blocks laid out on a grid, now the subject of architectural pilgrimages. Blok 23 is the one to see if you only see one." },
+      { title: "Eat down Skadarlija", text: "The cobbled bohemian street of the 1900s, still lined with kafanas and still playing live music into the small hours. Order ćevapi and a rakija and do not plan anything for the morning." },
+      { title: "Go out on a splav", text: "Belgrade's clubs are barges moored along the Sava and Danube — dozens of them, open until dawn, changing hands and names constantly. Ask on the day rather than trusting any list." }
+    ],
+    gallery: [
+      { article: "Belgrade", caption: "Belgrade sits where the Sava meets the Danube, which is why it has been fought over for two millennia." },
+      { article: "Belgrade Fortress", caption: "The fortress has been rebuilt by Romans, Byzantines, Serbs, Ottomans and Austrians in turn." },
+      { article: "Church of Saint Sava", caption: "Saint Sava is one of the largest Orthodox churches anywhere; begun in 1935, finished inside in 2020." },
+      { article: "Skadarlija", caption: "Skadarlija was the bohemian quarter of the 1900s and still trades on it, cobbles and kafanas included." },
+      { article: "Zemun", caption: "Zemun was a Habsburg border town facing Ottoman Belgrade, and only joined the city in 1934." },
+      { article: "Nikola Tesla Museum", caption: "The Tesla Museum holds his papers and, in a gilded urn, his ashes." }
+    ],
+    facts: {
+      Population: "1.2 million (1.7m metro)",
+      Founded: "279 BC (Celtic Singidunum)",
+      Language: "Serbian",
+      Currency: "Dinar (RSD)",
+      "Best time": "May–June, September",
+      "Order this": "Ćevapi"
+    }
   }
 ];
