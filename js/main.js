@@ -179,6 +179,7 @@ function renderFacts(city) {
 /* ── Orchestration ───────────────────────────────────────── */
 
 async function show(city, { scroll = true, warmed = null } = {}) {
+  dealtWith(city.id);   // a deep link counts as playing that card
   document.body.classList.add("is-loading");
   document.documentElement.style.setProperty("--accent", city.accent);
   document.title = `${city.name}, ${city.country} — Atlas Shuffle`;
@@ -236,6 +237,10 @@ function prefetchAllowed() {
  * fetches again in the foreground, exactly as it did before.
  */
 function queueNext(afterId) {
+  // If the queued city was never shown — a deep link got in first — it has
+  // already left the deck, so put it back rather than lose it from the pass.
+  if (nextCity && nextCity.id !== afterId) returnToDeck(nextCity);
+
   nextCity = pickCity(afterId);
   nextWarm = null;
   if (!prefetchAllowed()) return;
@@ -255,10 +260,44 @@ function queueNext(afterId) {
   });
 }
 
-/** Random city, never the one already on screen. */
+/* ── The deck ────────────────────────────────────────────── */
+
+/* Picking uniformly at random repeats badly: across 40 cities you see one
+   come round twice long before you have seen them all. So deal from a
+   shuffled deck and only reshuffle when it runs out — every city comes up
+   once per pass, which is what the name of the site promises.
+
+   `deck` holds the cities not yet shown in the current pass. */
+
+let deck = shuffledCities();
+
+function shuffledCities() {
+  const out = CITIES.slice();
+  for (let i = out.length - 1; i > 0; i--) {      // Fisher–Yates
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+/** Drop a city from the current pass — it has just been shown. */
+function dealtWith(id) {
+  const at = deck.findIndex((c) => c.id === id);
+  if (at !== -1) deck.splice(at, 1);
+}
+
+/** Put a city back into the pass at a random point — it was queued, then never shown. */
+function returnToDeck(city) {
+  deck.splice(Math.floor(Math.random() * (deck.length + 1)), 0, city);
+}
+
+/** Deal the next city, reshuffling when the pass is over. */
 function pickCity(exceptId) {
-  const pool = CITIES.filter((c) => c.id !== exceptId);
-  return pool[Math.floor(Math.random() * pool.length)];
+  if (deck.length === 0) deck = shuffledCities();
+  // A fresh pass can open with the city already on screen; play the card
+  // under it instead, so nothing repeats back to back.
+  if (deck.length > 1 && deck[0].id === exceptId) [deck[0], deck[1]] = [deck[1], deck[0]];
+  return deck.shift();
 }
 
 let current = null;
