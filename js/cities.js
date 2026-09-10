@@ -1323,5 +1323,71 @@ const CITIES = [
       "Best time": "June–August, February",
       "Order this": "Miso ramen"
     }
+  },
+  {
+    id: "isfahan",
+    name: "Isfahan",
+    country: "Iran",
+    region: "Middle East",
+    accent: "#0f8ca0",
+    tagline: "Half the world, by its own account",
+    intro:
+      "When Shah Abbas moved the Safavid capital here in 1598 he did not extend the old city, he laid out a new one beside it: an avenue of gardens, a chain of bridges, and a square so large that they played polo in it — and still marked the goalposts, which are standing. Isfahan grew rich enough on that plan for its people to coin the phrase Esfahan nesf-e jahan, Isfahan is half the world. What holds it together visually is tile: acres of it, in a turquoise the workshops here mixed and nobody else quite matched.",
+    famousFor: ["Naqsh-e Jahan Square", "Turquoise tilework", "The bridges", "Persian gardens", "Gaz nougat"],
+    thingsToDo: [
+      { title: "Cross the square at both ends of the day", text: "Naqsh-e Jahan is 160 metres by 500, second in size only to Tiananmen, with a mosque at one end, a palace on one side and the bazaar at the other. It is a public lawn in the evenings, full of families with picnic rugs." },
+      { title: "Sit under Khaju bridge after dark", text: "The bridges here are architecture rather than infrastructure — arcades, alcoves, a pavilion for the shah. People gather in the arches at night to sing, because the acoustics reward it, and nobody moves them on." },
+      { title: "Find the Jameh Mosque's four eras", text: "Twelve centuries of building in one complex: a Seljuk brick dome that engineers still study, Mongol stucco, Safavid tile. It is the argument for Isfahan being older and stranger than the postcard square suggests." },
+      { title: "Go over the river to New Julfa", text: "Shah Abbas moved thousands of Armenians here from Julfa in 1604 and gave them their own quarter. Vank Cathedral inside is frescoed floor to ceiling — Persian tilework outside, Italianate biblical scenes within." }
+    ],
+    gallery: [
+      { article: "Naqsh-e Jahan Square", caption: "The square is 160 m by 500 m, and the stone polo goalposts Shah Abbas played between are still in place." },
+      { article: "Sheikh Lotfollah Mosque", caption: "Sheikh Lotfollah was the court's private mosque, which is why it has no minaret and no courtyard." },
+      { article: "Ali Qapu", caption: "Ali Qapu's upper music room is carved into the shapes of instruments, for the acoustics." },
+      { article: "Jameh Mosque of Isfahan", caption: "The Jameh Mosque grew over twelve centuries; its Seljuk dome is still studied by engineers." },
+      { article: "Si-o-se-pol", caption: "Si-o-se-pol carries thirty-three arches across the Zayanderud, which now often runs dry." },
+      { article: "Vank Cathedral", caption: "Vank Cathedral serves the Armenian quarter Shah Abbas founded in 1604, and is frescoed throughout." }
+    ],
+    facts: {
+      Population: "2.2 million",
+      Founded: "c. 600 BC",
+      Language: "Persian",
+      Currency: "Rial (﷼)",
+      "Best time": "April–May, September–October",
+      "Order this": "Beryani"
+    }
+  },
+  {
+    id: "berlin",
+    name: "Berlin",
+    country: "Germany",
+    region: "Central Europe",
+    accent: "#7f8a4a",
+    tagline: "A capital best read through its gaps",
+    intro:
+      "Berlin is a city you understand by what is missing from it. Bombing took the centre, the Wall took a strip through the middle for twenty-eight years, and both German states demolished what embarrassed them, so the place is full of holes that were never filled — car parks where palaces stood, meadows where the death strip ran, a double line of cobbles marking the border across roads and pavements. It has made the city cheap, loose and unusually young, and it explains why so much of what people come for is a monument to an absence.",
+    famousFor: ["The Wall", "Museum Island", "Techno", "Cheap rent, mostly", "Currywurst"],
+    thingsToDo: [
+      { title: "Cycle the runways at Tempelhof", text: "The airport that flew in the Airlift closed in 2008 and became a park — 300 hectares, the runways left exactly as they were. Berliners voted in a referendum in 2014 to forbid building on any of it, and won." },
+      { title: "See the Wall told straight", text: "The East Side Gallery is the painted stretch, but the memorial on Bernauer Strasse is the honest one: a preserved section with the death strip intact behind it, and the names of those shot trying to cross." },
+      { title: "Take on Museum Island in pieces", text: "Five museums on one island in the Spree. Note that the Pergamon is shut for a long renovation and will not fully reopen for years, so aim at the Neues Museum and Nefertiti instead." },
+      { title: "Do a Sunday properly", text: "Turkish market on the Maybachufer canal on Tuesday and Friday, flea market and open-air karaoke at Mauerpark on Sunday afternoon. Both are free, and both are where the city looks most like itself." }
+    ],
+    gallery: [
+      { article: "Berlin", caption: "Berlin has around 900 bridges — more than Venice — because it was built across marsh and water." },
+      { article: "Brandenburg Gate", caption: "The gate stood inside the death strip from 1961 to 1989, unreachable from either side." },
+      { article: "Reichstag building", caption: "Norman Foster's dome puts the public on a ramp directly above the debating chamber." },
+      { article: "East Side Gallery", caption: "The East Side Gallery is 1.3 km of surviving Wall, painted by invited artists in 1990." },
+      { article: "Memorial to the Murdered Jews of Europe", caption: "Peter Eisenman's 2,711 concrete slabs sit on uneven ground, so the field closes over you as you walk in." },
+      { article: "Tempelhofer Feld", caption: "The Airlift airport is now a park; a 2014 referendum banned building on any part of it." }
+    ],
+    facts: {
+      Population: "3.9 million (6m metro)",
+      Founded: "1237",
+      Language: "German",
+      Currency: "Euro (€)",
+      "Best time": "May–September",
+      "Order this": "Currywurst"
+    }
   }
 ];
