@@ -306,8 +306,18 @@ function loadSeen() {
   }
 }
 
-function saveSeen() {
+/**
+ * Write the pass back.
+ *
+ * Two tabs of the site share one record but keep their own copy of it in
+ * memory, so a plain write means whichever tab saves last erases the other's
+ * progress and those cities come round again. Fold in what is stored first.
+ * Starting a fresh pass is the one case that must overwrite, since it is
+ * deliberately dropping everything.
+ */
+function saveSeen({ merge = true } = {}) {
   try {
+    if (merge) for (const id of loadSeen()) seen.add(id);
     localStorage.setItem(PASS_KEY, JSON.stringify([...seen]));
   } catch (err) {
     /* Storage full, blocked or unavailable: the pass just won't survive the tab. */
@@ -331,7 +341,7 @@ function freshDeck() {
   const left = CITIES.filter((c) => !seen.has(c.id));
   if (left.length > 0) return shuffled(left);
   seen = new Set();
-  saveSeen();
+  saveSeen({ merge: false });   // a new pass has to be able to clear the old one
   return shuffled(CITIES);
 }
 
@@ -400,9 +410,32 @@ el("to-top").addEventListener("click", () => {
 // as seen — and keeps the card already in hand, which is the next one up.
 el("pass-reset").addEventListener("click", () => {
   seen = new Set(current ? [current.id] : []);
-  saveSeen();
+  saveSeen({ merge: false });
   deck = freshDeck();
   if (nextCity) takeFromDeck(nextCity.id);
+  renderPass();
+});
+
+/* Another tab of the site is browsing the same pass. Merging on write stops
+   them erasing each other, but this tab's deck would still deal cities the
+   other has already shown, so follow along as they happen. */
+window.addEventListener("storage", (e) => {
+  if (e.key !== PASS_KEY) return;
+  const theirs = loadSeen();
+
+  // Ids we hold that the record no longer has mean the other tab started over.
+  const restarted = [...seen].some((id) => !theirs.has(id));
+  if (restarted) {
+    seen = new Set(theirs);
+    if (current) seen.add(current.id);   // still on screen here, so still seen
+    deck = freshDeck();
+    if (nextCity) takeFromDeck(nextCity.id);
+  } else {
+    theirs.forEach((id) => {
+      seen.add(id);
+      takeFromDeck(id);
+    });
+  }
   renderPass();
 });
 
