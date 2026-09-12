@@ -1488,5 +1488,38 @@ const CITIES = [
       "Best time": "May–October",
       "Order this": "Palusami"
     }
+  },
+  {
+    id: "auckland",
+    name: "Auckland",
+    country: "New Zealand",
+    region: "Oceania",
+    accent: "#5fa88f",
+    tagline: "A city built on fifty-three volcanoes",
+    intro:
+      "Tāmaki Makaurau means something like Tāmaki desired by many, and the reason is the ground itself: an isthmus barely a kilometre and a half across at its narrowest, with a harbour on each side, which made it worth holding long before Europeans arrived in 1840. The field it sits on holds some fifty-three volcanoes and is not extinct — Rangitoto came out of the sea about six hundred years ago, and Māori living on the next island watched it happen. A third of New Zealanders live here now, and more Pacific Islanders than in any other city on earth.",
+    famousFor: ["Fifty-three volcanoes", "The largest Polynesian city", "Sailing", "Black-sand beaches", "Rangitoto"],
+    thingsToDo: [
+      { title: "Climb a volcano before breakfast", text: "Maungawhau and Maungakiekie are ten minutes up and show you the whole isthmus, both harbours at once. The cones are tapu and the tracks are there for a reason, so stay on them." },
+      { title: "Take the ferry to Rangitoto", text: "Twenty-five minutes out, then an hour up through lava fields that still look freshly poured. It is the youngest volcano in the field and the only one that erupted within human memory here." },
+      { title: "Go west to Piha", text: "Forty minutes over the Waitākere Ranges to black iron sand and Lion Rock. The rips are genuinely dangerous and the surf club is famous for it — swim between the flags and nowhere else." },
+      { title: "Eat at the Ōtara market", text: "Saturday mornings, south of the centre, and the largest Pacific market anywhere. Taro, green bananas, raw fish in coconut cream, and sapasui by the plate from about six in the morning." }
+    ],
+    gallery: [
+      { article: "Auckland", caption: "A third of New Zealanders live here, on an isthmus a kilometre and a half wide at its narrowest." },
+      { article: "Rangitoto Island", caption: "Rangitoto rose from the sea about six hundred years ago, and Māori nearby watched it happen." },
+      { article: "Mount Eden", caption: "Maungawhau is one of some fifty-three volcanoes in the field the city is built across." },
+      { article: "Auckland War Memorial Museum", caption: "The museum holds the largest collection of Māori and Pacific taonga anywhere." },
+      { article: "Auckland Harbour Bridge", caption: "The bridge opened in 1959 with four lanes; two more were bolted onto each side ten years later." },
+      { article: "Piha", caption: "Piha's sand is black with iron, and its rips are the reason its lifeguards are famous." }
+    ],
+    facts: {
+      Population: "1.7 million",
+      Founded: "1840",
+      Language: "English, te reo Māori, Samoan",
+      Currency: "Dollar (NZ$)",
+      "Best time": "December–March",
+      "Order this": "Sapasui"
+    }
   }
 ];
