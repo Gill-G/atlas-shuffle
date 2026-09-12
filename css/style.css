@@ -360,7 +360,26 @@ body.is-loading .shuffle__icon { animation: spin 0.9s linear infinite; }
 /* ── Outro ─────────────────────────────────────────────── */
 
 .outro__inner { text-align: center; display: grid; justify-items: center; gap: 1.5rem; }
-.outro__count { margin: 0; color: var(--muted); font-size: 0.9rem; letter-spacing: 0.04em; }
+.outro__count {
+  margin: 0; color: var(--muted); font-size: 0.9rem; letter-spacing: 0.04em;
+  max-width: 70ch;   /* inline flow, so the sentence keeps its own word spacing */
+}
+.outro__pass { color: var(--paper); opacity: 0.75; }
+
+/* A button that reads as prose, for an action offered inside a sentence. */
+.linkish {
+  font: inherit; letter-spacing: inherit;
+  color: var(--muted);
+  background: none; border: 0;
+  padding: 0;
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 0.28em;
+  margin-left: 0.35rem;
+  cursor: pointer;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+.linkish:hover { color: var(--accent); text-decoration-color: var(--accent); }
 
 .btn-big {
   font-family: var(--display);

@@ -176,6 +176,22 @@ function renderFacts(city) {
   );
 }
 
+/* How far through the current pass we are. Deliberately not a live region:
+   the announcer already speaks each city, and a running tally repeated after
+   every shuffle would be noise. */
+function renderPass() {
+  const total = CITIES.length;
+  const n = seen.size;
+
+  el("pass-progress").textContent =
+    n >= total
+      ? `That was all of them — the deck reshuffles from here.`
+      : `${n} seen this time round, ${total - n} to go.`;
+
+  // Nothing to start over from until a pass is actually under way.
+  el("pass-reset").hidden = n < 2 || n >= total;
+}
+
 /* ── Orchestration ───────────────────────────────────────── */
 
 async function show(city, { scroll = true, warmed = null } = {}) {
@@ -203,6 +219,7 @@ async function show(city, { scroll = true, warmed = null } = {}) {
   renderThingsToDo(city);
   renderGallery(city);
   renderFacts(city);
+  renderPass();
 
   if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
 
@@ -318,10 +335,15 @@ function freshDeck() {
   return shuffled(CITIES);
 }
 
-/** Drop a city from the current pass — it has just been shown. */
-function dealtWith(id) {
+/** Take a card out of the deck without judging why. */
+function takeFromDeck(id) {
   const at = deck.findIndex((c) => c.id === id);
   if (at !== -1) deck.splice(at, 1);
+}
+
+/** Drop a city from the current pass — it has just been shown. */
+function dealtWith(id) {
+  takeFromDeck(id);
   if (!seen.has(id)) {
     seen.add(id);
     saveSeen();
@@ -372,6 +394,16 @@ el("shuffle-2").addEventListener("click", shuffle);
 el("to-top").addEventListener("click", () => {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   window.scrollTo({ top: 0, behavior: reduced ? "instant" : "smooth" });
+});
+
+// Starting over keeps the city on screen — you are looking at it, so it counts
+// as seen — and keeps the card already in hand, which is the next one up.
+el("pass-reset").addEventListener("click", () => {
+  seen = new Set(current ? [current.id] : []);
+  saveSeen();
+  deck = freshDeck();
+  if (nextCity) takeFromDeck(nextCity.id);
+  renderPass();
 });
 
 document.addEventListener("keydown", (e) => {
