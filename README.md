@@ -24,7 +24,7 @@ index.html      # page skeleton — sections are filled in by JS
 css/style.css   # all styling; per-city accent colour is a CSS variable
 js/cities.js    # the dataset: 42 cities, hand-written
 js/main.js      # picks a city, fetches photos, renders the page
-check.js        # verifies every gallery article against the live API
+check.js        # verifies the shape of the dataset and every gallery article
 start.sh        # local static server
 ```
 
@@ -85,9 +85,15 @@ before committing it:
 ```bash
 node check.js            # the whole deck
 node check.js porto      # just the city you added
+node check.js --shape    # structure only, no network
 ```
 
-It exits non-zero and names the city and article for each of:
+It checks the **shape** of every entry first — the counts above, plus the things
+that keep the deck coherent: ids kebab-case and unique, accents valid hex and
+unique, no article used by two cities, no empty strings. That part needs no
+network, so `--shape` works offline and a failed API call still reports it.
+
+It then checks every **article**, and names the city and article for each of:
 
 | | |
 |---|---|
@@ -101,10 +107,10 @@ The last two are advisory. A redirect that merely retitles — `Sultan Ahmed
 Mosque` to `Blue Mosque, Istanbul` — is reported and is fine; the check cannot
 tell that apart from `Malecón` becoming `Jetty`, so look at what it names.
 
-A `"missing"` key means the title is wrong, and no `thumbnail` key means the
-article has no lead image. Also **look at the filename in the URL** — if it
-contains `map`, `locator`, `logo`, `coat_of_arms` or ends in `.svg`, the article
-leads with a diagram rather than a photograph, so pick a different article.
+One more advisory: accents within a CIELAB distance of 4 are reported as too
+alike to read as different cities. Three pairs in the deck already are, Rome and
+Amsterdam most of all, so pick a new colour by running the check rather than by
+eye.
 
 ## Interaction
 
@@ -113,6 +119,14 @@ leads with a diagram rather than a photograph, so pick a different article.
 | `R` | new city |
 | `#tokyo` | link straight to one city |
 | Shuffle button | top right, and at the foot of the page |
+
+## The shuffle
+
+Cities are dealt from a shuffled deck rather than picked at random, so a pass
+shows all 42 before any of them comes round again — picking uniformly repeated
+after about nine presses. The pass is kept in `localStorage`, so it survives a
+reload and is shared between tabs; the outro says how far through it you are and
+offers to start it over. A city reached by `#fragment` counts as dealt.
 
 ## Credits
 

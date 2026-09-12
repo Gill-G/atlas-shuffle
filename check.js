@@ -1,9 +1,14 @@
 #!/usr/bin/env node
-/* Checks every gallery article in js/cities.js against the live MediaWiki API.
-   No dependencies; needs Node 18+ for fetch.
+/* Checks js/cities.js: the shape of every entry, and every gallery article
+   against the live MediaWiki API. No dependencies; needs Node 18+ for fetch.
 
-     node check.js                 # check the whole deck
-     node check.js havana hanoi    # check only these city ids
+     node check.js                 # shape and articles, whole deck
+     node check.js havana hanoi    # only these city ids
+     node check.js --shape         # shape only, no network
+
+   The shape rules are the ones the README documents — six gallery slots, four
+   things to do, six facts — plus the invariants that keep the site coherent:
+   ids and accent colours unique, no article used by two cities.
 
    Four things go wrong with an article title, and only the first is
    obvious enough to spot by eye:
@@ -78,6 +83,115 @@ function dropsSubject(from, to) {
   return true;
 }
 
+/* Shape rules. The counts are not arbitrary: six gallery slots fill the grid
+   with the first as the hero, four things to do read best, six facts fill the
+   panel. A deck that drifts from them looks broken rather than varied. */
+const SHAPE = {
+  gallery: [6, 6],
+  thingsToDo: [4, 4],
+  facts: [6, 6],
+  famousFor: [4, 6]
+};
+
+/* Two accents closer than this are indistinguishable in the hero, so a reader
+   gets no sense that the colour belongs to the city. Advisory only. */
+const MIN_ACCENT_DISTANCE = 4;
+
+/** CIE L*a*b*, so colours are compared the way an eye compares them. */
+function lab(hex) {
+  const [r, g, b] = [1, 3, 5]
+    .map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
+    .map((v) => (v > 0.04045 ? ((v + 0.055) / 1.055) ** 2.4 : v / 12.92));
+  const X = (r * 0.4124 + g * 0.3576 + b * 0.1805) / 0.95047;
+  const Y = r * 0.2126 + g * 0.7152 + b * 0.0722;
+  const Z = (r * 0.0193 + g * 0.1192 + b * 0.9505) / 1.08883;
+  const f = (t) => (t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116);
+  return [116 * f(Y) - 16, 500 * (f(X) - f(Y)), 200 * (f(Y) - f(Z))];
+}
+
+const accentDistance = (a, b) => {
+  const [p, q] = [lab(a), lab(b)];
+  return Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]);
+};
+
+const filled = (v) => typeof v === "string" && v.trim().length > 0;
+const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+
+/**
+ * Check the dataset's shape. Runs against whatever subset was asked for, but
+ * uniqueness is judged across the whole deck — a duplicate id is a duplicate
+ * whether or not both cities were named on the command line.
+ */
+function checkShape(cities, all) {
+  const problems = [];
+  const say = (city, why) => problems.push([city, why]);
+
+  for (const c of cities) {
+    const where = c.name || c.id || "(unnamed entry)";
+
+    if (!filled(c.id)) say(where, "no id");
+    else if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(c.id)) say(where, `id "${c.id}" is not kebab-case, so it makes an awkward #fragment`);
+
+    for (const key of ["name", "country", "region", "tagline", "intro"]) {
+      if (!filled(c[key])) say(where, `${key} is missing or empty`);
+    }
+
+    if (!/^#[0-9a-fA-F]{6}$/.test(c.accent || "")) say(where, `accent "${c.accent}" is not a six-digit hex colour`);
+
+    for (const [key, [min, max]] of Object.entries(SHAPE)) {
+      const list = c[key];
+      const n = key === "facts" ? Object.keys(list || {}).length : (list || []).length;
+      if (!list) { say(where, `${key} is missing`); continue; }
+      if (n < min || n > max) {
+        say(where, min === max ? `${n} ${key}, expected ${min}` : `${n} ${key}, expected ${min}-${max}`);
+      }
+    }
+
+    (c.thingsToDo || []).forEach((t, i) => {
+      if (!filled(t.title) || !filled(t.text)) say(where, `thingsToDo[${i}] needs both a title and text`);
+    });
+    (c.gallery || []).forEach((g, i) => {
+      if (!filled(g.article) || !filled(g.caption)) say(where, `gallery[${i}] needs both an article and a caption`);
+    });
+    Object.entries(c.facts || {}).forEach(([k, v]) => {
+      if (!filled(v)) say(where, `fact "${k}" has no value`);
+    });
+  }
+
+  // Uniqueness, judged over the whole deck.
+  const seenIds = new Map();
+  const seenAccents = new Map();
+  const seenArticles = new Map();
+  for (const c of all) {
+    if (seenIds.has(c.id)) say(c.name, `id "${c.id}" is already used by ${seenIds.get(c.id)}`);
+    else seenIds.set(c.id, c.name);
+
+    const accent = (c.accent || "").toLowerCase();
+    if (seenAccents.has(accent)) say(c.name, `accent ${accent} is already used by ${seenAccents.get(accent)}`);
+    else seenAccents.set(accent, c.name);
+
+    for (const g of c.gallery || []) {
+      if (seenArticles.has(g.article)) say(c.name, `"${g.article}" is already in ${seenArticles.get(g.article)}'s gallery`);
+      else seenArticles.set(g.article, c.name);
+    }
+  }
+
+  return problems;
+}
+
+/** Accent pairs too close to tell apart. Advisory, and whole-deck by nature. */
+function closeAccents(all) {
+  const out = [];
+  const valid = all.filter((c) => /^#[0-9a-fA-F]{6}$/.test(c.accent || ""));
+  for (let i = 0; i < valid.length; i++) {
+    for (let j = i + 1; j < valid.length; j++) {
+      const d = accentDistance(valid[i].accent, valid[j].accent);
+      if (d < MIN_ACCENT_DISTANCE) out.push([d, valid[i], valid[j]]);
+    }
+  }
+  return out.sort((a, b) => a[0] - b[0]);
+}
+
 function loadCities() {
   const src = fs.readFileSync(path.join(__dirname, "js", "cities.js"), "utf8");
   const sandbox = {};
@@ -105,12 +219,40 @@ async function api(titles) {
 }
 
 (async () => {
-  const wanted = process.argv.slice(2);
-  const cities = loadCities().filter((c) => !wanted.length || wanted.includes(c.id));
+  const args = process.argv.slice(2);
+  const shapeOnly = args.includes("--shape");
+  const wanted = args.filter((a) => !a.startsWith("--"));
+
+  const all = loadCities();
+  const cities = all.filter((c) => !wanted.length || wanted.includes(c.id));
   if (!cities.length) {
     console.error(`No city matches ${wanted.join(", ")}`);
     process.exit(2);
   }
+
+  /* ── Shape ─────────────────────────────────────────────── */
+
+  const shape = checkShape(cities, all);
+  const near = wanted.length ? [] : closeAccents(all);
+
+  console.log(plural(cities.length, "city", "cities"));
+  if (shape.length) {
+    console.log(`${shape.length} shape problem${shape.length > 1 ? "s" : ""}:\n`);
+    for (const [city, why] of shape) console.log(`  ${city} — ${why}`);
+  } else {
+    console.log("shape is sound: ids, accents and articles all unique, counts as documented");
+  }
+  if (near.length) {
+    console.log(`\n${near.length} accent pair${near.length > 1 ? "s" : ""} close enough to look alike (advisory):`);
+    for (const [d, a, b] of near) {
+      console.log(`  ${a.name} ${a.accent} and ${b.name} ${b.accent} — ${d.toFixed(1)} apart`);
+    }
+  }
+
+  if (shapeOnly) process.exit(shape.length ? 1 : 0);
+  console.log("");
+
+  /* ── Articles ──────────────────────────────────────────── */
 
   const owner = new Map();   // article title -> city name
   cities.forEach((c) => c.gallery.forEach((g) => owner.set(g.article, c.name)));
@@ -120,7 +262,14 @@ async function api(titles) {
   const forward = new Map(); // original title -> resolved title
 
   for (let i = 0; i < titles.length; i += BATCH) {
-    const q = await api(titles.slice(i, i + BATCH));
+    let q;
+    try {
+      q = await api(titles.slice(i, i + BATCH));
+    } catch (err) {
+      // The shape check above still stands and is worth keeping.
+      console.log(`could not reach Wikipedia (${err.message}) — articles not checked`);
+      process.exit(shape.length ? 1 : 2);
+    }
     (q.normalized || []).forEach((n) => forward.set(n.from, n.to));
     (q.redirects || []).forEach((r) => forward.set(r.from, r.to));
     Object.values(q.pages || {}).forEach((p) => info.set(p.title, p));
@@ -160,16 +309,16 @@ async function api(titles) {
     }
   }
 
-  console.log(`${titles.length} gallery slots across ${cities.length} cities`);
+  console.log(`${plural(titles.length, "gallery slot", "gallery slots")} across ${plural(cities.length, "city", "cities")}`);
   if (!problems.length) {
     console.log("all resolve to photographs, no suspect redirects");
-    return;
+  } else {
+    console.log(`${problems.length} to look at:\n`);
+    for (const [city, title, why] of problems) {
+      console.log(`  ${city} — "${title}"\n      ${why}`);
+    }
   }
-  console.log(`${problems.length} to look at:\n`);
-  for (const [city, title, why] of problems) {
-    console.log(`  ${city} — "${title}"\n      ${why}`);
-  }
-  process.exit(1);
+  process.exit(problems.length || shape.length ? 1 : 0);
 })().catch((err) => {
   console.error("check failed:", err.message);
   process.exit(2);
