@@ -37,9 +37,16 @@ Instead each gallery entry names an **English Wikipedia article**:
 { article: "Trevi Fountain", caption: "Trevi Fountain marks the end of an aqueduct…" }
 ```
 
-At render time `main.js` makes one call to the MediaWiki `pageimages` API for all
-six of a city's articles and uses each article's lead photograph. Results are
-cached in memory, so shuffling back to a city you've already seen costs nothing.
+At render time `main.js` asks the MediaWiki `pageimages` API for a city's six
+articles and uses each one's lead photograph. It makes two requests, fired
+together: the five grid shots at 1600px, and the hero on its own, because the
+hero is full-bleed and the API takes one thumbnail size per request. The hero is
+asked for at roughly the width of the viewport, capped at 2560 — a fixed 2560
+looks no better on a laptop and costs three times the bytes, and on a phone it
+would be three megabytes to paint four hundred points across.
+
+Results are cached in memory, so shuffling back to a city you've already seen
+costs nothing.
 
 If the request fails — offline, blocked, rate-limited — every word on the page
 still renders and the image slots fall back to a coloured wash. The site is never
@@ -102,6 +109,7 @@ It then checks every **article**, and names the city and article for each of:
 | looks like a diagram | the lead image is a map, logo, coat of arms or SVG |
 | different subject? | the title now redirects somewhere unrelated |
 | only N px wide | too small to fill a gallery slot cleanly |
+| hero source is N px | `gallery[0]` is smaller than the width it is displayed at |
 
 The last two are advisory. A redirect that merely retitles — `Sultan Ahmed
 Mosque` to `Blue Mosque, Istanbul` — is reported and is fine; the check cannot

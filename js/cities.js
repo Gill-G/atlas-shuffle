@@ -120,8 +120,8 @@ const CITIES = [
       { title: "Get lost in the Grand Bazaar", text: "4,000 shops on 61 covered streets, trading since 1461. Prices are negotiable everywhere; the gold and carpet sections have the best architecture." }
     ],
     gallery: [
-      { article: "Hagia Sophia", caption: "Hagia Sophia has been a cathedral, a mosque, a museum, and a mosque again since 537." },
       { article: "Sultan Ahmed Mosque", caption: "The Blue Mosque takes its name from 20,000 hand-painted İznik tiles lining the interior." },
+      { article: "Hagia Sophia", caption: "Hagia Sophia has been a cathedral, a mosque, a museum, and a mosque again since 537." },
       { article: "Grand Bazaar, Istanbul", caption: "The Grand Bazaar is one of the world's oldest covered markets — 61 streets under one roof." },
       { article: "Topkapı Palace", caption: "Topkapı was the Ottoman court for 400 years and housed up to 4,000 people at a time." },
       { article: "Bosphorus Bridge", caption: "The Bosphorus separates Europe from Asia; this 1973 span was the first bridge ever built across it." },
@@ -186,9 +186,9 @@ const CITIES = [
       { title: "Find a miradouro at sunset", text: "The city has a dozen official viewpoints. Senhora do Monte is the highest; São Pedro de Alcântara has a kiosk that sells beer." }
     ],
     gallery: [
+      { article: "Alfama", caption: "Alfama survived the 1755 earthquake intact, which is why its street plan is still Moorish." },
       { article: "Belém Tower", caption: "Belém Tower was the ceremonial gateway to Lisbon and a launch point for Portugal's sea voyages." },
       { article: "Jerónimos Monastery", caption: "The Jerónimos Monastery was funded by a 5% tax on the spice trade from India." },
-      { article: "Alfama", caption: "Alfama survived the 1755 earthquake intact, which is why its street plan is still Moorish." },
       { article: "São Jorge Castle", caption: "São Jorge Castle has been fortified since the 8th century and holds the best view of the Baixa." },
       { article: "Praça do Comércio", caption: "Praça do Comércio was rebuilt after 1755 as a statement that the city would face the river again." },
       { article: "Pastel de nata", caption: "The pastel de nata was invented by monks who used egg whites to starch their habits." }
@@ -219,7 +219,7 @@ const CITIES = [
       { title: "Eat in Bo-Kaap", text: "The Cape Malay quarter, brightly painted and Muslim since the 18th century. Try bobotie, koesisters and samoosas from a home kitchen." }
     ],
     gallery: [
-      { article: "Table Mountain", caption: "Table Mountain is roughly 260 million years older than the Himalayas." },
+      { article: "Table Mountain National Park", caption: "Table Mountain is roughly 260 million years older than the Himalayas." },
       { article: "Bo-Kaap", caption: "Bo-Kaap's houses were painted after residents gained the right to own them — colour as a statement." },
       { article: "Cape of Good Hope", caption: "Cape of Good Hope is not Africa's southern tip, but it is where ships turn east toward the Indian Ocean." },
       { article: "Robben Island", caption: "Robben Island was a prison, a leper colony and a quarantine station before becoming a museum." },
@@ -252,11 +252,11 @@ const CITIES = [
       { title: "Spend a morning at the Museo Nacional de Antropología", text: "The best pre-Columbian collection in the world, including the Aztec sun stone. Do one wing properly rather than all of it badly." }
     ],
     gallery: [
+      { article: "Chapultepec", caption: "Chapultepec is roughly twice the size of Central Park and holds nine museums." },
       { article: "Zócalo", caption: "The Zócalo is one of the largest city squares on earth and was the Aztec ceremonial centre." },
       { article: "Palacio de Bellas Artes", caption: "Bellas Artes has sunk about four metres into the soft lakebed since construction began in 1904." },
       { article: "Frida Kahlo Museum", caption: "La Casa Azul in Coyoacán is the house where Frida Kahlo was born, lived and died." },
       { article: "Teotihuacan", caption: "Teotihuacan was already a 1,000-year-old ruin when the Aztecs found it and named it." },
-      { article: "Chapultepec", caption: "Chapultepec is roughly twice the size of Central Park and holds nine museums." },
       { article: "Xochimilco", caption: "Xochimilco's chinampas are artificial islands built by staking wattle into the lakebed." }
     ],
     facts: {
@@ -318,8 +318,8 @@ const CITIES = [
       { title: "Chase the aurora between September and March", text: "You need dark, clear sky and solar activity. Drive twenty minutes out of town, check the Icelandic Met Office forecast, and be prepared to wait." }
     ],
     gallery: [
-      { article: "Hallgrímskirkja", caption: "Hallgrímskirkja's facade is modelled on the basalt columns formed by cooling Icelandic lava." },
       { article: "Harpa (concert hall)", caption: "Harpa's glass shell was designed with Olafur Eliasson and echoes basalt crystal geometry." },
+      { article: "Hallgrímskirkja", caption: "Hallgrímskirkja's facade is modelled on the basalt columns formed by cooling Icelandic lava." },
       { article: "Blue Lagoon (geothermal spa)", caption: "The Blue Lagoon is man-made — runoff from a geothermal plant, milky with silica." },
       { article: "Sun Voyager", caption: "Sun Voyager is not a Viking ship but a dreamboat, an ode to the idea of undiscovered territory." },
       { article: "Þingvellir", caption: "Þingvellir hosted the world's oldest running parliament from 930, in a rift between two continents." },
@@ -351,7 +351,7 @@ const CITIES = [
       { title: "Circle Hoàn Kiếm Lake at 06:00", text: "The lake is the city's living room. At dawn it fills with tai chi, badminton and running clubs; at weekends the surrounding roads close to traffic entirely." }
     ],
     gallery: [
-      { article: "Hoàn Kiếm Lake", caption: "Legend says a golden turtle reclaimed a magic sword here, which is why it's the Lake of the Returned Sword." },
+      { article: "Ngọc Sơn Temple", caption: "Ngọc Sơn sits on an island in Hoàn Kiếm, the lake where legend says a golden turtle reclaimed a magic sword." },
       { article: "Temple of Literature, Hanoi", caption: "The Temple of Literature was Vietnam's first university, founded in 1070." },
       { article: "Ho Chi Minh Mausoleum", caption: "The mausoleum was built against Hồ Chí Minh's own wishes; he had asked to be cremated." },
       { article: "One Pillar Pagoda", caption: "The One Pillar Pagoda is designed to resemble a lotus rising from the water." },
@@ -516,7 +516,7 @@ const CITIES = [
       { title: "Sit in a brown café", text: "Bruine kroegen are old, wood-panelled and tobacco-stained neighbourhood pubs. Order a small beer with a two-finger head and stay for hours." }
     ],
     gallery: [
-      { article: "Canals of Amsterdam", caption: "Amsterdam has 165 canals and roughly 1,500 bridges over about 100 km of water." },
+      { article: "Grachtengordel", caption: "The canal ring holds 165 canals and roughly 1,500 bridges over about 100 km of water." },
       { article: "Rijksmuseum", caption: "The Rijksmuseum holds 8,000 objects on display out of a collection of about a million." },
       { article: "Magere Brug", caption: "The Magere Brug over the Amstel is still opened by hand to let boats through." },
       { article: "Anne Frank House", caption: "The Franks hid behind a bookcase in this canal house for 761 days." },
@@ -648,10 +648,10 @@ const CITIES = [
       { title: "Follow a second line", text: "Sunday afternoon parades organised by social aid and pleasure clubs, with a brass band and anyone who wants to join. Ask locally where this week's is." }
     ],
     gallery: [
+      { article: "Mardi Gras in New Orleans", caption: "Mardi Gras krewes have paraded since 1857; purple, green and gold mean justice, faith and power." },
       { article: "French Quarter", caption: "The French Quarter's wrought-iron balconies are mostly Spanish — the French buildings burned in 1788." },
       { article: "St. Louis Cathedral (New Orleans)", caption: "St Louis Cathedral is the oldest continuously active cathedral in the United States." },
       { article: "Jackson Square (New Orleans)", caption: "Jackson Square was the parade ground where Louisiana was formally transferred to the US in 1803." },
-      { article: "Mardi Gras in New Orleans", caption: "Mardi Gras krewes have paraded since 1857; purple, green and gold mean justice, faith and power." },
       { article: "Garden District, New Orleans", caption: "The Garden District was built by wealthy Americans who were not welcome in the Creole Quarter." },
       { article: "Preservation Hall", caption: "Preservation Hall has staged traditional jazz nightly since 1961, with no drinks and no amplification." }
     ],
@@ -747,9 +747,9 @@ const CITIES = [
       { title: "Stay in a casa particular", text: "Licensed rooms in private homes. Cheaper than hotels, and the reason most people come away understanding anything about the city." }
     ],
     gallery: [
+      { article: "El Capitolio", caption: "El Capitolio was completed in 1929 and is slightly taller than the US Capitol it resembles." },
       { article: "Havana", caption: "Havana wraps around one of the great natural harbours of the Caribbean; the old city holds some 900 protected buildings." },
       { article: "Malecón, Havana", caption: "The Malecón took 50 years to build and now runs 8 km along the seafront." },
-      { article: "El Capitolio", caption: "El Capitolio was completed in 1929 and is slightly taller than the US Capitol it resembles." },
       { article: "Plaza Vieja, Havana", caption: "Plaza Vieja was a residential square, never military — hence the balconies on every side." },
       { article: "Hotel Nacional de Cuba", caption: "The Hotel Nacional opened in 1930 and hosted a famous 1946 meeting of American mob bosses." },
       { article: "Havana Cathedral", caption: "Havana Cathedral's baroque facade is asymmetrical: its two bell towers are deliberately different sizes." }
@@ -879,8 +879,8 @@ const CITIES = [
       { title: "Buy bread at Siyob Bazaar", text: "Samarkand non is stamped with a chekich before baking and is genuinely better than the bread elsewhere in the country. Buy dried apricots and halva while you are there." }
     ],
     gallery: [
-      { article: "Registan", caption: "Three madrasas face each other across the Registan; the last of them was finished around 1660." },
       { article: "Shah-i-Zinda", caption: "Shah-i-Zinda is a lane of tombs, Timurid nobles buried around a much older shrine." },
+      { article: "Registan", caption: "Three madrasas face each other across the Registan; the last of them was finished around 1660." },
       { article: "Bibi-Khanym Mosque", caption: "Bibi-Khanym went up in five years to 1404 and began collapsing almost as soon as it was finished." },
       { article: "Gur-e-Amir", caption: "Gur-e-Amir holds Timur's tomb under a fluted dome that Mughal architects later copied in India." },
       { article: "Siyob Bazaar", caption: "Siyob is the city's working bazaar: bread, apricots, raisins and halva sold by the kilo." },
@@ -912,10 +912,10 @@ const CITIES = [
       { title: "Look for red colobus at Jozani", text: "The island's own monkey lives in one forest and nowhere else on earth. Early morning is best, and the boardwalk over the mangroves at the far end of the park is usually empty." }
     ],
     gallery: [
+      { article: "Old Fort of Zanzibar", caption: "The Omani fort went up in the 1690s, on the ruins of the Portuguese church it replaced." },
       { article: "Stone Town", caption: "Stone Town is built of coral rag — soft enough to carve, porous enough to need constant repair." },
       { article: "House of Wonders", caption: "The House of Wonders was the first building in East Africa to have electric light and a lift." },
       { article: "Christ Church, Zanzibar", caption: "Christ Church was raised over the last slave market; the altar stands where the whipping post stood." },
-      { article: "Old Fort of Zanzibar", caption: "The Omani fort went up in the 1690s, on the ruins of the Portuguese church it replaced." },
       { article: "Darajani Market", caption: "Darajani is the town's working market — fish, cloves and cardamom, loudest well before nine." },
       { article: "Jozani Chwaka Bay National Park", caption: "The Zanzibar red colobus lives in this forest and nowhere else; roughly 6,000 remain." }
     ],
@@ -1044,7 +1044,7 @@ const CITIES = [
       { title: "Take the tram to the sea", text: "Line 3 heads south towards Pérols and the lagoons, and the beaches at Palavas are about half an hour out. The trams on lines 3 and 4 were liveried by Christian Lacroix." }
     ],
     gallery: [
-      { article: "Place de la Comédie", caption: "The Comédie is the city's hinge; its Three Graces fountain has stood there since 1776." },
+      { article: "Montpellier", caption: "The Comédie is the city's hinge; its Three Graces fountain has stood there since 1776." },
       { article: "Montpellier Cathedral", caption: "Saint-Pierre began as a monastery chapel in 1364 and still has its two vast porch towers." },
       { article: "Jardin des plantes de Montpellier", caption: "Founded in 1593 for the medical faculty, this is the oldest botanical garden in France." },
       { article: "Antigone, Montpellier", caption: "Ricardo Bofill's Antigone quarter applies classical orders to 1980s social housing." },
@@ -1176,8 +1176,8 @@ const CITIES = [
       { title: "Find a pub that predates the Fire", text: "Most of the City burned in 1666, but a handful of houses further out did not. The Seven Stars behind the Royal Courts has been serving since 1602 and is roughly the size of a front room." }
     ],
     gallery: [
-      { article: "London", caption: "London grew by swallowing villages whole, which is why it has dozens of high streets and no centre." },
       { article: "Palace of Westminster", caption: "The palace is Victorian: the medieval one burned in 1834 and only Westminster Hall came through." },
+      { article: "London", caption: "London grew by swallowing villages whole, which is why it has dozens of high streets and no centre." },
       { article: "Tower of London", caption: "The Tower has been fortress, mint, menagerie and prison, and is garrisoned to this day." },
       { article: "British Museum", caption: "The British Museum opened in 1759 and has never charged for entry." },
       { article: "Borough Market", caption: "There has been a market at the south end of London Bridge for something like a thousand years." },

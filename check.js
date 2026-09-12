@@ -29,6 +29,7 @@ const path = require("path");
 
 const API = "https://en.wikipedia.org/w/api.php";
 const THUMB_PX = 1600;       // keep in step with THUMB_PX in js/main.js
+const HERO_PX = 2560;        // and with HERO_PX: gallery[0] is shown full-bleed
 const MIN_WIDTH = 700;       // below this a photo looks soft in a gallery slot
 const BATCH = 40;            // titles per API request
 
@@ -255,6 +256,7 @@ async function api(titles) {
   /* ── Articles ──────────────────────────────────────────── */
 
   const owner = new Map();   // article title -> city name
+  const heroes = new Set(cities.map((c) => c.gallery[0].article));
   cities.forEach((c) => c.gallery.forEach((g) => owner.set(g.article, c.name)));
   const titles = [...owner.keys()];
 
@@ -306,6 +308,13 @@ async function api(titles) {
     const w = page.thumbnail.width || 0;
     if (w && w < MIN_WIDTH) {
       problems.push([where, title, `lead image is only ${w}px wide`]);
+    }
+
+    /* The hero fills the window, so it is the one slot where the source has to
+       be genuinely large — anything smaller is being stretched to fit. */
+    const source = (page.original && page.original.width) || 0;
+    if (heroes.has(title) && source && source < HERO_PX) {
+      problems.push([where, title, `hero source is ${source}px, under the ${HERO_PX}px it is shown at`]);
     }
   }
 

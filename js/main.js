@@ -9,7 +9,18 @@
    ============================================================ */
 
 const API = "https://en.wikipedia.org/w/api.php";
-const THUMB_PX = 1600;
+const THUMB_PX = 1600;   // gallery grid: cells are a few hundred px wide
+const HERO_MAX = 2560;   // the most we will ever ask for the full-bleed hero
+
+/* The hero covers the whole viewport, so ask for what this screen can actually
+   show. A fixed 2560 looks identical to 1600 on a laptop but costs three times
+   the bytes, and on a phone it is three megabytes to paint four hundred points
+   across. Never below the grid size, never above HERO_MAX — the point is a
+   sharp photograph, not the largest file Wikimedia holds. */
+function heroSize() {
+  const px = (window.innerWidth || 1280) * (window.devicePixelRatio || 1);
+  return Math.min(HERO_MAX, Math.max(THUMB_PX, Math.ceil(px / 320) * 320));
+}
 
 /** article title -> image url (or null if the API had none). Survives shuffles. */
 const imageCache = new Map();
@@ -35,7 +46,7 @@ async function getJSON(url, attempt = 0) {
  * Returns a Map of the ORIGINAL title -> url|null, so callers don't
  * have to care that the API normalises and follows redirects.
  */
-async function fetchImages(titles) {
+async function fetchImages(titles, size = THUMB_PX) {
   const wanted = titles.filter((t) => !imageCache.has(t));
   if (wanted.length === 0) return;
 
@@ -46,7 +57,7 @@ async function fetchImages(titles) {
     redirects: "1",       // follow e.g. "The Bridge of Peace" -> "Bridge of Peace"
     prop: "pageimages",
     piprop: "thumbnail",
-    pithumbsize: String(THUMB_PX),
+    pithumbsize: String(size),
     titles: wanted.join("|")
   });
 
@@ -72,6 +83,19 @@ async function fetchImages(titles) {
     const hit = byTitle.get(resolve(t));
     imageCache.set(t, hit === undefined ? null : hit);
   });
+}
+
+/**
+ * Ask for one city's photographs.
+ *
+ * The hero fills the viewport and the grid shots do not, so they are fetched
+ * at different sizes — two requests rather than one, fired together, so this
+ * costs a connection rather than a round trip. pageimages takes a single
+ * thumbnail size per request, which is why it cannot be one call.
+ */
+function fetchCityImages(city) {
+  const [hero, ...rest] = city.gallery.map((g) => g.article);
+  return Promise.all([fetchImages([hero], heroSize()), fetchImages(rest, THUMB_PX)]);
 }
 
 /* ── Rendering ───────────────────────────────────────────── */
@@ -206,7 +230,7 @@ async function show(city, { scroll = true, warmed = null } = {}) {
   // fetchImages() below is a no-op; if the warm-up failed, it retries here.
   try {
     if (warmed) await warmed;
-    await fetchImages(city.gallery.map((g) => g.article));
+    await fetchCityImages(city);
   } catch (err) {
     console.warn("Could not load photos — showing text only.", err);
     city.gallery.forEach((g) => {
@@ -266,7 +290,7 @@ function queueNext(afterId) {
   whenIdle(() => {
     if (nextCity !== city) return; // a deep link overtook us
 
-    nextWarm = fetchImages(city.gallery.map((g) => g.article))
+    nextWarm = fetchCityImages(city)
       .then(() => {
         // The hero is the one photo shown at full size straight away, and
         // renderHero waits on it decoding, so pull the bytes down too.
