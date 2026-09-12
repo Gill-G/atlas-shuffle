@@ -269,10 +269,39 @@ function queueNext(afterId) {
 
    `deck` holds the cities not yet shown in the current pass. */
 
-let deck = shuffledCities();
+/* The pass outlives the tab. Without this a reload would start a new pass, so
+   anyone who refreshes rather than pressing R would still meet repeats — which
+   is most of what the deck was meant to fix.
 
-function shuffledCities() {
-  const out = CITIES.slice();
+   What gets stored is the ids already shown, not the cards still to come. That
+   way a city added to the dataset joins the pass in progress instead of sitting
+   out until the next one, and a city removed from it simply stops matching. */
+
+const PASS_KEY = "atlas-shuffle:seen:v1";
+
+/** Reading storage throws outright in some privacy modes, so never assume. */
+function loadSeen() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(PASS_KEY));
+    return new Set(Array.isArray(raw) ? raw.filter((id) => typeof id === "string") : []);
+  } catch (err) {
+    return new Set();
+  }
+}
+
+function saveSeen() {
+  try {
+    localStorage.setItem(PASS_KEY, JSON.stringify([...seen]));
+  } catch (err) {
+    /* Storage full, blocked or unavailable: the pass just won't survive the tab. */
+  }
+}
+
+let seen = loadSeen();
+let deck = freshDeck();
+
+function shuffled(list) {
+  const out = list.slice();
   for (let i = out.length - 1; i > 0; i--) {      // Fisher–Yates
     const j = Math.floor(Math.random() * (i + 1));
     [out[i], out[j]] = [out[j], out[i]];
@@ -280,10 +309,23 @@ function shuffledCities() {
   return out;
 }
 
+/** What is left of the current pass, or a whole new one once it is spent. */
+function freshDeck() {
+  const left = CITIES.filter((c) => !seen.has(c.id));
+  if (left.length > 0) return shuffled(left);
+  seen = new Set();
+  saveSeen();
+  return shuffled(CITIES);
+}
+
 /** Drop a city from the current pass — it has just been shown. */
 function dealtWith(id) {
   const at = deck.findIndex((c) => c.id === id);
   if (at !== -1) deck.splice(at, 1);
+  if (!seen.has(id)) {
+    seen.add(id);
+    saveSeen();
+  }
 }
 
 /** Put a city back into the pass at a random point — it was queued, then never shown. */
@@ -293,7 +335,7 @@ function returnToDeck(city) {
 
 /** Deal the next city, reshuffling when the pass is over. */
 function pickCity(exceptId) {
-  if (deck.length === 0) deck = shuffledCities();
+  if (deck.length === 0) deck = freshDeck();
   // A fresh pass can open with the city already on screen; play the card
   // under it instead, so nothing repeats back to back.
   if (deck.length > 1 && deck[0].id === exceptId) [deck[0], deck[1]] = [deck[1], deck[0]];
