@@ -1389,5 +1389,104 @@ const CITIES = [
       "Best time": "May–September",
       "Order this": "Currywurst"
     }
+  },
+  {
+    id: "noumea",
+    name: "Nouméa",
+    country: "New Caledonia",
+    region: "Oceania",
+    accent: "#e0645f",
+    tagline: "A French town inside the world's second reef",
+    intro:
+      "Nouméa sits on a peninsula inside a lagoon of some 24,000 square kilometres, ringed by a barrier reef about 1,500 km long — the longest anywhere after Australia's, and UNESCO-listed since 2008. The town itself reads oddly French for the tropics: pétanque under the flame trees, a covered market selling baguettes beside taro. That surface sits on a harder history of penal colony and settler rule, which the Tjibaou Cultural Centre on the ridge was built to answer, in a country still arguing about whether to leave France.",
+    famousFor: ["The lagoon", "Tjibaou Cultural Centre", "Kanak culture", "Barrier reef", "Bougna"],
+    thingsToDo: [
+      { title: "Give the Tjibaou Centre a morning", text: "Renzo Piano's ten curved cases stand along a ridge like unfinished Kanak huts, ribbed in iroko and angled so the trade winds sound through them. It is named for the Kanak leader assassinated in 1989, and the permanent exhibition is the best introduction to the islands you will get." },
+      { title: "Boat out to Amédée", text: "A white iron lighthouse cast in Paris in 1865, shipped out in pieces and bolted together on a sand islet. Two hundred and forty-seven steps, and from the top the reef line is visible as a ring of breaking water." },
+      { title: "Get in the lagoon", text: "Îlot Maître is twenty minutes by shuttle from the Baie de l'Orphelinat and has turtles on the seagrass. Anse Vata is the beach in town, and the wind there is reliable enough that it is mostly kitesurfers." },
+      { title: "Eat bougna", text: "Yam, taro, sweet potato and chicken or fish in coconut milk, wrapped in banana leaves and cooked for hours on hot stones. It takes planning, so it turns up at Sunday tables and tribal stays rather than on restaurant menus." }
+    ],
+    gallery: [
+      { article: "Nouméa", caption: "Nouméa sits on a peninsula inside a lagoon of about 24,000 km², UNESCO-listed in 2008." },
+      { article: "Jean-Marie Tjibaou Cultural Centre", caption: "Renzo Piano's ten cases are shaped to catch the trade winds, and named for a leader killed in 1989." },
+      { article: "New Caledonian barrier reef", caption: "The reef runs roughly 1,500 km, the longest in the world after Australia's." },
+      { article: "Amédée Lighthouse", caption: "The Amédée light was cast in Paris in 1865 and bolted together on a sand islet offshore." },
+      { article: "Isle of Pines (island)", caption: "The Isle of Pines held deported Communards before it held tourists; its columnar pines grow nowhere else." },
+      { article: "Ouvéa", caption: "Ouvéa is a coral atoll in the Loyalty Islands with twenty-five kilometres of beach along one side." }
+    ],
+    facts: {
+      Population: "94,000 (180k greater)",
+      Founded: "1854",
+      Language: "French, and 28 Kanak languages",
+      Currency: "CFP franc (₣)",
+      "Best time": "September–November",
+      "Order this": "Bougna"
+    }
+  },
+  {
+    id: "suva",
+    name: "Suva",
+    country: "Fiji",
+    region: "Oceania",
+    accent: "#3fa05f",
+    tagline: "The Pacific's capital city, and its wettest",
+    intro:
+      "Suva is the largest city in the Pacific islands outside Australia and New Zealand, and it sits on the windward side of Viti Levu taking about three metres of rain a year, which is why the buildings are stained and the greenery is relentless. The capital moved here from Levuka in 1882 because Levuka had run out of flat ground. The city that grew is roughly half iTaukei and half Indo-Fijian — descendants of the labourers brought under indenture from 1879 — and that shows up in the food long before it shows up anywhere else.",
+    famousFor: ["The biggest city in the Pacific", "Rain", "Kava", "Curry and kokoda", "The university"],
+    thingsToDo: [
+      { title: "Sit through a kava session", text: "Yaqona, pounded root and water, served from a tanoa. Clap once, take the bilo in both hands, drink it in one, clap three times. It numbs the mouth and is the social fabric rather than a novelty, so accept properly or decline properly." },
+      { title: "Work through the municipal market", text: "The largest produce market in the Pacific, and the upstairs is entirely kava. Come on a Saturday morning for the noise, then cross the road for a roti parcel." },
+      { title: "See the drua at the Fiji Museum", text: "The Ratu Finau is the last ocean-going Fijian drua ever built, and the museum also holds the rudder of the Bounty. It sits in Thurston Gardens, ten minutes' walk from the seawall." },
+      { title: "Walk the seawall at dusk", text: "The path along the harbour fills with joggers, touch rugby and families once the heat drops. It is the simplest way to see the city behaving like itself rather than like a capital." }
+    ],
+    gallery: [
+      { article: "Suva", caption: "Suva is the largest city in the Pacific islands, and among the wettest capitals anywhere." },
+      { article: "Fiji Museum", caption: "The museum holds the Ratu Finau, the last ocean-going drua, and the rudder of the Bounty." },
+      { article: "Thurston Gardens", caption: "Thurston Gardens opened in 1913, on the ground where the village of Suva had stood." },
+      { article: "Sacred Heart Cathedral, Suva", caption: "The cathedral was finished in 1902, in sandstone brought down from Sydney." },
+      { article: "University of the South Pacific", caption: "USP is owned jointly by twelve Pacific countries and teaches across all of them." },
+      { article: "Rewa River", caption: "The Rewa is Fiji's largest river; its delta east of the city grows much of the country's food." }
+    ],
+    facts: {
+      Population: "93,000 (185k greater)",
+      Founded: "1882 (as capital)",
+      Language: "English, Fijian, Fiji Hindi",
+      Currency: "Dollar (FJ$)",
+      "Best time": "May–October",
+      "Order this": "Kokoda"
+    }
+  },
+  {
+    id: "apia",
+    name: "Apia",
+    country: "Samoa",
+    region: "Oceania",
+    accent: "#e05f9c",
+    tagline: "A harbour town run on fa'a Samoa",
+    intro:
+      "Apia is strung along a single harbour and holds about a fifth of Samoa's people, but the thing that governs it is not the town plan: it is fa'a Samoa, the Samoan way, under which most land is held customarily by extended families and decisions run through matai rather than through an office. Robert Louis Stevenson spent his last four years on the hill above here and is buried at the top of it. The harbour's other famous day was in March 1889, when six German and American warships squaring up for a fight were destroyed together by a cyclone.",
+    famousFor: ["Robert Louis Stevenson", "Fa'a Samoa", "Tatau", "Sundays", "Palusami"],
+    thingsToDo: [
+      { title: "Climb to Stevenson's grave", text: "Start at Vailima, his house, now a museum kept much as he had it. The path up Mount Vaea takes about forty-five minutes and was cut by Samoan chiefs who called it the Road of Loving Hearts. Tusitala, teller of tales, is on the tomb." },
+      { title: "Let Sunday happen to you", text: "Almost everything shuts, the town wears white, and the singing from the churches is the loudest thing in Apia. If you are invited to to'ona'i, the lunch afterwards, go — and eat more than you think you can." },
+      { title: "Start at Maketi Fou", text: "The main market runs day and night: taro, breadfruit, koko Samoa, and cooked food from mid-morning. It is the cheapest and best eating in the country and nobody minds you lingering." },
+      { title: "Get out to the coast", text: "Piula cave pool is a freshwater spring in front of a church, forty minutes east. The To Sua trench on the south coast is an hour further, and the ladder down into it is steeper than the photographs suggest." }
+    ],
+    gallery: [
+      { article: "Apia", caption: "Apia runs along one harbour on Upolu and holds about a fifth of the country's people." },
+      { article: "Immaculate Conception Cathedral, Apia", caption: "The waterfront cathedral was rebuilt and reconsecrated in 2014, replacing one begun in 1885." },
+      { article: "Robert Louis Stevenson Museum", caption: "Stevenson spent his last four years at Vailima; Samoans called him Tusitala, the teller of tales." },
+      { article: "Peʻa", caption: "The pe'a is tapped by hand from waist to knee over days, and is not a thing begun lightly." },
+      { article: "Lalomanu", caption: "Lalomanu, on the south-east coast, was rebuilt after the tsunami of 2009." },
+      { article: "Manono Island", caption: "Manono has no cars and no dogs, and a footpath that rings the whole island in about two hours." }
+    ],
+    facts: {
+      Population: "37,000",
+      Founded: "1850s",
+      Language: "Samoan, English",
+      Currency: "Tālā (WS$)",
+      "Best time": "May–October",
+      "Order this": "Palusami"
+    }
   }
 ];
