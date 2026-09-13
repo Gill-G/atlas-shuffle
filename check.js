@@ -33,11 +33,22 @@ const HERO_PX = 2560;        // and with HERO_PX: gallery[0] is shown full-bleed
 const MIN_WIDTH = 700;       // below this a photo looks soft in a gallery slot
 const BATCH = 40;            // titles per API request
 
-/* Lead images that are diagrams rather than photographs. Matched on word
-   boundaries against the percent-decoded filename, so "sémaphore" does not
-   read as "map". */
+/* Lead images that are diagrams rather than photographs.
+   Two passes, because one alone gets it wrong in opposite directions:
+
+     - separated words, so "sémaphore" does not read as "map";
+     - a few words distinctive enough to match anywhere in the filename,
+       which is what "aucklandmaphochstetter1859" and "vitilevu_topo" needed.
+
+   Both got through the boundary-only version and were caught by eye. */
 const NOT_A_PHOTO =
-  /(?:^|[_\-. ])(map|locator|logo|coat[_ ]of[_ ]arms|flag|seal|plan|diagram|quartiers)(?:$|[_\-. 0-9])/;
+  /(?:^|[_\-. ])(map|locator|logo|coat[_ ]of[_ ]arms|flag|seal|plan|diagram|topo|chart|quartiers)(?:$|[_\-. 0-9])/;
+
+const NOT_A_PHOTO_ANYWHERE =
+  /(locator|quartiers|coat[_ ]?of[_ ]?arms|topographic|hochstetter|landsat|blank[_ ]?map|map(?:of|_of)|[a-z]{4,}map(?:$|[_\-.0-9]))/;
+
+const looksLikeDiagram = (file) =>
+  NOT_A_PHOTO.test(file) || NOT_A_PHOTO_ANYWHERE.test(file) || file.endsWith(".svg");
 
 /* Words a redirect is allowed to lose without it meaning anything: these are
    ordinary retitlings, not a change of subject. */
@@ -302,7 +313,7 @@ async function api(titles) {
       problems.push([where, title, `redirects to "${final}" — different subject?`]);
     }
     const file = decodeURIComponent(thumb.split("/").pop().split("?")[0]);
-    if (NOT_A_PHOTO.test(file.toLowerCase()) || file.toLowerCase().endsWith(".svg")) {
+    if (looksLikeDiagram(file.toLowerCase())) {
       problems.push([where, title, `lead image looks like a diagram: ${file}`]);
     }
     const w = page.thumbnail.width || 0;
