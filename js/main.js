@@ -324,7 +324,13 @@ const PASS_KEY = "atlas-shuffle:seen:v1";
 function loadSeen() {
   try {
     const raw = JSON.parse(localStorage.getItem(PASS_KEY));
-    return new Set(Array.isArray(raw) ? raw.filter((id) => typeof id === "string") : []);
+    if (!Array.isArray(raw)) return new Set();
+    // Keep only cities that still exist. A record written before an entry was
+    // removed would otherwise be counted by renderPass() but ignored by
+    // freshDeck(), which filters against CITIES — and the two would disagree
+    // about whether the pass was finished.
+    const known = new Set(CITIES.map((c) => c.id));
+    return new Set(raw.filter((id) => known.has(id)));
   } catch (err) {
     return new Set();
   }
