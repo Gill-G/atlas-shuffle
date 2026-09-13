@@ -203,6 +203,12 @@ function renderFacts(city) {
 /* How far through the current pass we are. Deliberately not a live region:
    the announcer already speaks each city, and a running tally repeated after
    every shuffle would be noise. */
+/** Cities not yet shown in this pass. The one number both the tally and the
+    announcement are allowed to quote, so they cannot disagree. */
+function remaining() {
+  return CITIES.length - seen.size;
+}
+
 function renderPass() {
   const total = CITIES.length;
   const n = seen.size;
@@ -210,7 +216,7 @@ function renderPass() {
   el("pass-progress").textContent =
     n >= total
       ? `That was all of them — the deck reshuffles from here.`
-      : `${n} seen this time round, ${total - n} to go.`;
+      : `${n} seen this time round, ${remaining()} to go.`;
 
   // Nothing to start over from until a pass is actually under way.
   el("pass-reset").hidden = n < 2 || n >= total;
@@ -449,7 +455,9 @@ el("pass-reset").addEventListener("click", () => {
   // start over from — so it cannot be left holding focus, or the next Tab
   // starts again from the top of the page. Hand focus to the obvious next
   // action, and say what happened, since the tally itself is not announced.
-  el("announcer").textContent = `Pass reset. All ${CITIES.length} cities to see again.`;
+  // The city on screen still counts as seen, so this is one short of the whole
+  // deck — and it has to be the number the tally shows, not a rounder one.
+  el("announcer").textContent = `Pass reset. ${remaining()} cities still to see.`;
   el("shuffle-2").focus();
 });
 
