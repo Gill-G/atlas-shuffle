@@ -465,6 +465,14 @@ window.addEventListener("storage", (e) => {
       seen.add(id);
       takeFromDeck(id);
     });
+    // The deck is not the only place a card can be. If the other tab has just
+    // shown the one held in hand, dealing it here would show it twice and
+    // leave the tally stuck, so drop it and deal another. Clearing nextCity
+    // first stops queueNext() returning a card that has now been seen.
+    if (nextCity && theirs.has(nextCity.id)) {
+      nextCity = null;
+      queueNext(current ? current.id : null);
+    }
   }
   renderPass();
 });
