@@ -458,6 +458,7 @@ window.addEventListener("storage", (e) => {
   if (restarted) {
     seen = new Set(theirs);
     if (current) seen.add(current.id);   // still on screen here, so still seen
+    saveSeen();                          // ...so the other tab must be told
     deck = freshDeck();
     if (nextCity) takeFromDeck(nextCity.id);
   } else {
