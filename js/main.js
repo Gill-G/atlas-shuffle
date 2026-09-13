@@ -444,6 +444,13 @@ el("pass-reset").addEventListener("click", () => {
   deck = freshDeck();
   if (nextCity) takeFromDeck(nextCity.id);
   renderPass();
+
+  // renderPass() has just hidden this button — a fresh pass has nothing to
+  // start over from — so it cannot be left holding focus, or the next Tab
+  // starts again from the top of the page. Hand focus to the obvious next
+  // action, and say what happened, since the tally itself is not announced.
+  el("announcer").textContent = `Pass reset. All ${CITIES.length} cities to see again.`;
+  el("shuffle-2").focus();
 });
 
 /* Another tab of the site is browsing the same pass. Merging on write stops
