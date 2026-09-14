@@ -464,6 +464,29 @@ el("pass-reset").addEventListener("click", () => {
 /* Another tab of the site is browsing the same pass. Merging on write stops
    them erasing each other, but this tab's deck would still deal cities the
    other has already shown, so follow along as they happen. */
+/**
+ * Put the card in hand back on a sound footing after the record has changed.
+ *
+ * It must be one this pass has not already counted — dealing a city the other
+ * tab has shown would display it twice and leave the tally stuck, since
+ * dealtWith() would have nothing to add. And it must not also be sitting in
+ * the deck, or it gets dealt a second time later.
+ *
+ * Dealing a replacement goes through freshDeck(), which starts a new pass once
+ * nothing is left, so it is only safe while the deck still holds something.
+ * Empty-handed, shuffle() deals for itself, which is the right moment.
+ */
+function reconcileCardInHand() {
+  if (!nextCity) return;
+  if (seen.has(nextCity.id)) {
+    nextCity = null;
+    nextWarm = null;
+    if (deck.length > 0) queueNext(current ? current.id : null);
+  } else {
+    takeFromDeck(nextCity.id);
+  }
+}
+
 window.addEventListener("storage", (e) => {
   if (e.key !== PASS_KEY) return;
   const theirs = loadSeen();
@@ -475,28 +498,16 @@ window.addEventListener("storage", (e) => {
     if (current) seen.add(current.id);   // still on screen here, so still seen
     saveSeen();                          // ...so the other tab must be told
     deck = freshDeck();
-    if (nextCity) takeFromDeck(nextCity.id);
   } else {
     theirs.forEach((id) => {
       seen.add(id);
       takeFromDeck(id);
     });
-    // The deck is not the only place a card can be. If the other tab has just
-    // shown the one held in hand, dealing it here would show it twice and
-    // leave the tally stuck, so drop it and deal another. Clearing nextCity
-    // first stops queueNext() returning a card that has now been seen.
-    if (nextCity && theirs.has(nextCity.id)) {
-      nextCity = null;
-      nextWarm = null;
-      // Only deal a replacement when there is one to deal. With the deck empty
-      // the pass is finished, and queueNext() would reach freshDeck(), which
-      // clears the record and starts a new pass — too large a decision to take
-      // on a message from another tab, and it would swallow the "that was all
-      // of them" state this tab is about to render. Left empty-handed,
-      // shuffle() deals for itself, which is the right moment to start over.
-      if (deck.length > 0) queueNext(current ? current.id : null);
-    }
   }
+  // The deck is not the only place a card can be, and either branch can leave
+  // the one in hand stale. Both need the same rule, so neither depends on the
+  // other having run first.
+  reconcileCardInHand();
   renderPass();
 });
 
