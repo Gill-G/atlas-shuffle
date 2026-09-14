@@ -44,8 +44,14 @@ const BATCH = 40;            // titles per API request
 const NOT_A_PHOTO =
   /(?:^|[_\-. ])(map|locator|logo|coat[_ ]of[_ ]arms|flag|seal|plan|diagram|topo|chart|quartiers)(?:$|[_\-. 0-9])/;
 
+/* The run-together rule needs no trailing boundary. Requiring one meant
+   "aucklandmaphochstetter1859" was caught only by the hochstetter literal
+   below, which is no use for the next such filename. Needing four letters
+   before "map" is what keeps "mapo_bridge_seoul" out — the risk is a word
+   that ends in -map, and the ones that exist (roadmap, heatmap, sitemap) are
+   all diagrams anyway. */
 const NOT_A_PHOTO_ANYWHERE =
-  /(locator|quartiers|coat[_ ]?of[_ ]?arms|topographic|hochstetter|landsat|blank[_ ]?map|map(?:of|_of)|[a-z]{4,}map(?:$|[_\-.0-9]))/;
+  /(locator|quartiers|coat[_ ]?of[_ ]?arms|topographic|hochstetter|landsat|blank[_ ]?map|map(?:of|_of)|[a-z]{4,}map)/;
 
 const looksLikeDiagram = (file) =>
   NOT_A_PHOTO.test(file) || NOT_A_PHOTO_ANYWHERE.test(file) || file.endsWith(".svg");
