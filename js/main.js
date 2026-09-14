@@ -487,7 +487,14 @@ window.addEventListener("storage", (e) => {
     // first stops queueNext() returning a card that has now been seen.
     if (nextCity && theirs.has(nextCity.id)) {
       nextCity = null;
-      queueNext(current ? current.id : null);
+      nextWarm = null;
+      // Only deal a replacement when there is one to deal. With the deck empty
+      // the pass is finished, and queueNext() would reach freshDeck(), which
+      // clears the record and starts a new pass — too large a decision to take
+      // on a message from another tab, and it would swallow the "that was all
+      // of them" state this tab is about to render. Left empty-handed,
+      // shuffle() deals for itself, which is the right moment to start over.
+      if (deck.length > 0) queueNext(current ? current.id : null);
     }
   }
   renderPass();
