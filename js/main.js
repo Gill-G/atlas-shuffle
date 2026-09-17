@@ -389,6 +389,123 @@ function renderPass() {
   el("pass-reset").hidden = n < 2 || n >= total;
 }
 
+/* ── The index ───────────────────────────────────────────── */
+
+/* Fifty cities reachable only by shuffling or by knowing a #fragment is a
+   deck with no lid. The index opens it, grouped by region — which is the
+   first thing that field has ever been used for — and marks what the current
+   pass has already dealt, so it answers "what have I not seen yet". */
+
+let indexBuilt = false;
+let openerBeforeIndex = null;
+
+/** city id -> the row's button and tick, so marking needs no DOM query. */
+const indexNodes = new Map();
+
+function buildIndex() {
+  const byRegion = new Map();
+  CITIES.forEach((c) => {
+    if (!byRegion.has(c.region)) byRegion.set(c.region, []);
+    byRegion.get(c.region).push(c);
+  });
+
+  const regions = [...byRegion.keys()].sort((a, b) => a.localeCompare(b));
+  el("index-body").replaceChildren(
+    ...regions.map((region) => {
+      const section = document.createElement("section");
+      section.className = "index__region";
+
+      const heading = document.createElement("h3");
+      heading.textContent = region;
+
+      const list = document.createElement("ul");
+      list.className = "index__list";
+
+      byRegion
+        .get(region)
+        .slice()
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .forEach((city) => {
+          const item = document.createElement("li");
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "index__city";
+          button.id = `index-city-${city.id}`;
+
+          const tick = document.createElement("span");
+          tick.className = "tick";
+          tick.setAttribute("aria-hidden", "true");
+
+          const name = document.createElement("span");
+          name.textContent = city.name;
+
+          const where = document.createElement("span");
+          where.className = "where";
+          where.textContent = city.country;
+
+          button.append(tick, name, where);
+          indexNodes.set(city.id, { button, tick });
+          button.addEventListener("click", () => {
+            closeIndex();
+            if (current && current.id === city.id) return;
+            current = city;
+            history.replaceState(null, "", `#${city.id}`);
+            show(city);
+          });
+
+          item.append(button);
+          list.append(item);
+        });
+
+      section.append(heading, list);
+      return section;
+    })
+  );
+  indexBuilt = true;
+}
+
+/** Mark what this pass has dealt. Recomputed on open, since it keeps changing. */
+function markIndex() {
+  const left = remaining();
+  el("index-note").textContent =
+    left === 0
+      ? `All ${CITIES.length} seen this time round — the next shuffle starts a new pass.`
+      : `${CITIES.length} in the deck · ${left} you have not seen this time round.`;
+
+  CITIES.forEach((city) => {
+    const row = indexNodes.get(city.id);
+    if (!row) return;
+    const { button, tick } = row;
+    const isCurrent = !!current && current.id === city.id;
+    if (seen.has(city.id)) button.classList.add("is-seen");
+    else button.classList.remove("is-seen");
+    if (isCurrent) button.classList.add("is-current");
+    else button.classList.remove("is-current");
+    tick.textContent = seen.has(city.id) ? "✓" : "";
+    button.setAttribute(
+      "aria-label",
+      `${city.name}, ${city.country}${isCurrent ? " — on screen now" : seen.has(city.id) ? " — already seen this time round" : ""}`
+    );
+  });
+}
+
+function openIndex() {
+  if (!indexBuilt) buildIndex();
+  markIndex();
+  openerBeforeIndex = el("index-open");   // where focus goes back to on close
+  el("index").hidden = false;
+  document.body.classList.add("is-indexing");
+  el("index-close").focus();
+}
+
+function closeIndex() {
+  if (el("index").hidden) return;
+  el("index").hidden = true;
+  document.body.classList.remove("is-indexing");
+  if (openerBeforeIndex && openerBeforeIndex.focus) openerBeforeIndex.focus();
+  openerBeforeIndex = null;
+}
+
 /* ── Orchestration ───────────────────────────────────────── */
 
 async function show(city, { scroll = true, warmed = null } = {}) {
@@ -424,6 +541,7 @@ async function show(city, { scroll = true, warmed = null } = {}) {
   el("announcer").textContent = `Now showing ${city.name}, ${city.country}. ${city.tagline}.`;
 
   showCredits(city);
+  if (indexBuilt) markIndex();
 
   queueNext(city.id);
 }
@@ -731,9 +849,21 @@ window.addEventListener("storage", (e) => {
   renderPass();
 });
 
+el("index-open").addEventListener("click", openIndex);
+el("index-close").addEventListener("click", closeIndex);
+el("index").addEventListener("click", (e) => {
+  if (e.target === el("index")) closeIndex();   // the backdrop, not the sheet
+});
+
 document.addEventListener("keydown", (e) => {
   const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable;
   if (typing || e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.key === "Escape") {
+    closeIndex();
+    return;
+  }
+  // The index is a dialog: shuffling underneath it would be a surprise.
+  if (!el("index").hidden) return;
   if (e.key === "r" || e.key === "R") {
     e.preventDefault();
     shuffle();

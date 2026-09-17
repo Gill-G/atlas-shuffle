@@ -20,6 +20,10 @@
 
 <header class="topbar">
   <span class="wordmark">Atlas <em>Shuffle</em></span>
+  <button id="index-open" class="indexbtn" type="button" aria-haspopup="dialog">
+    <span class="indexbtn__icon" aria-hidden="true">☰</span>
+    <span class="indexbtn__label">All cities</span>
+  </button>
   <button id="shuffle" class="shuffle" type="button">
     <span class="shuffle__icon" aria-hidden="true">↻</span>
     <span class="shuffle__label">New city</span>
@@ -102,6 +106,18 @@
   </section>
 
 </main>
+
+<!-- ── Index ────────────────────────────────────────────── -->
+<div class="index" id="index" hidden>
+  <div class="index__sheet" role="dialog" aria-modal="true" aria-labelledby="index-title">
+    <header class="index__head">
+      <h2 class="index__title" id="index-title">All cities</h2>
+      <p class="index__note" id="index-note"></p>
+      <button class="index__close" id="index-close" type="button" aria-label="Close the index">✕</button>
+    </header>
+    <div class="index__body" id="index-body"></div>
+  </div>
+</div>
 
 <footer class="foot">
   <div class="wrap">

@@ -115,6 +115,19 @@ const SHAPE = {
    gets no sense that the colour belongs to the city. Advisory only. */
 const MIN_ACCENT_DISTANCE = 4;
 
+/* The index groups by region, so these have to be a small closed set at one
+   level of granularity. The deck used to mix continental regions with
+   provinces and French administrative areas — Ontario and Occitanie alongside
+   East Asia — which read oddly in the hero and would have made the index
+   nonsense. Add to this list deliberately, not by typing a new value. */
+const REGIONS = new Set([
+  "Northern Europe", "Western Europe", "Southern Europe", "Central Europe",
+  "Balkans", "Baltic", "Caucasus", "Europe / Asia",
+  "Middle East", "Central Asia", "South Asia", "Southeast Asia", "East Asia",
+  "North Africa", "East Africa", "Southern Africa",
+  "North America", "Caribbean", "South America", "Oceania"
+]);
+
 /** CIE L*a*b*, so colours are compared the way an eye compares them. */
 function lab(hex) {
   const [r, g, b] = [1, 3, 5]
@@ -155,6 +168,7 @@ function checkShape(cities, all) {
     }
 
     if (!/^#[0-9a-fA-F]{6}$/.test(c.accent || "")) say(where, `accent "${c.accent}" is not a six-digit hex colour`);
+    if (c.region && !REGIONS.has(c.region)) say(where, `region "${c.region}" is not one the index knows`);
 
     for (const [key, [min, max]] of Object.entries(SHAPE)) {
       const list = c[key];

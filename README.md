@@ -115,6 +115,7 @@ It then checks every **article**, and names the city and article for each of:
 | different subject? | the title now redirects somewhere unrelated |
 | only N px wide | too small to fill a gallery slot cleanly |
 | hero source is N px | `gallery[0]` is smaller than the width it is displayed at |
+| region is not one the index knows | `region` must come from the closed set in `check.js` |
 
 The last two are advisory. A redirect that merely retitles — `Sultan Ahmed
 Mosque` to `Blue Mosque, Istanbul` — is reported and is fine; the check cannot
@@ -142,8 +143,19 @@ eye.
 | | |
 |---|---|
 | `R` | new city |
+| `Esc` | close the index |
 | `#tokyo` | link straight to one city |
 | Shuffle button | top right, and at the foot of the page |
+| All cities | opens the index |
+
+## The index
+
+Fifty cities reachable only by shuffling or by knowing a fragment is a deck with
+no lid, so "All cities" opens one, grouped by region — the first thing that field
+has ever been used for, and the reason `region` had to be normalised into the
+closed set `check.js` now enforces. Cities the current pass has already dealt are
+dimmed and ticked, so the list answers "what have I not seen yet" rather than
+merely listing what exists. It is built on first open, not at load.
 
 ## The shuffle
 

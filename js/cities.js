@@ -173,7 +173,7 @@ const CITIES = [
     id: "lisbon",
     name: "Lisbon",
     country: "Portugal",
-    region: "Western Europe",
+    region: "Southern Europe",
     accent: "#3e9c8f",
     tagline: "Seven hills and the Atlantic light",
     intro:
@@ -206,7 +206,7 @@ const CITIES = [
     id: "cape-town",
     name: "Cape Town",
     country: "South Africa",
-    region: "Western Cape",
+    region: "Southern Africa",
     accent: "#3d86b5",
     tagline: "Where a mountain meets two oceans",
     intro:
@@ -800,7 +800,7 @@ const CITIES = [
     id: "toronto",
     name: "Toronto",
     country: "Canada",
-    region: "Ontario",
+    region: "North America",
     accent: "#5ba06b",
     tagline: "A city assembled out of everywhere else",
     intro:
@@ -965,7 +965,7 @@ const CITIES = [
     id: "nice",
     name: "Nice",
     country: "France",
-    region: "Côte d'Azur",
+    region: "Western Europe",
     accent: "#e2794e",
     tagline: "French since 1860, Italian for centuries before",
     intro:
@@ -998,7 +998,7 @@ const CITIES = [
     id: "le-havre",
     name: "Le Havre",
     country: "France",
-    region: "Normandy",
+    region: "Western Europe",
     accent: "#7f93a6",
     tagline: "A city cast in concrete, on purpose",
     intro:
@@ -1031,7 +1031,7 @@ const CITIES = [
     id: "montpellier",
     name: "Montpellier",
     country: "France",
-    region: "Occitanie",
+    region: "Western Europe",
     accent: "#b8536f",
     tagline: "A medieval university town that never got old",
     intro:
@@ -1064,7 +1064,7 @@ const CITIES = [
     id: "monaco",
     name: "Monaco",
     country: "Monaco",
-    region: "Riviera",
+    region: "Western Europe",
     accent: "#2f5f8f",
     tagline: "A sovereign state you can walk across",
     intro:
@@ -1097,7 +1097,7 @@ const CITIES = [
     id: "vancouver",
     name: "Vancouver",
     country: "Canada",
-    region: "British Columbia",
+    region: "North America",
     accent: "#2e7d5a",
     tagline: "Rainforest, mountains and glass",
     intro:
