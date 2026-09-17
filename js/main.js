@@ -279,6 +279,27 @@ function prefetchAllowed() {
 }
 
 /**
+ * Whether to pull down the next city's hero photograph, as opposed to merely
+ * resolving where it lives.
+ *
+ * The two are not comparable. Resolving is one JSON response of a few
+ * kilobytes; the photograph is asked for at the width of the viewport and
+ * measures two to three megabytes — spent on a city nobody has asked to see.
+ * So the bytes wait for a connection that can clearly afford them, while the
+ * addresses are fetched either way and still save a round trip.
+ *
+ * Note this cannot be solved by prefetching a smaller image: imageCache keys
+ * on the article title, so a smaller URL cached here would be the one shown.
+ */
+function prefetchPhotoAllowed() {
+  const c = navigator.connection;
+  if (!c) return true;                                   // nothing known: assume a desktop
+  if (c.saveData) return false;
+  if (c.effectiveType && c.effectiveType !== "4g") return false;
+  return c.downlink === undefined || c.downlink >= 5;    // Mbps
+}
+
+/**
  * Choose the city after this one and warm its photos in the background.
  * Never rejects: a failed warm-up just leaves the cache empty and show()
  * fetches again in the foreground, exactly as it did before.
@@ -299,7 +320,10 @@ function queueNext(afterId) {
     nextWarm = fetchCityImages(city)
       .then(() => {
         // The hero is the one photo shown at full size straight away, and
-        // renderHero waits on it decoding, so pull the bytes down too.
+        // renderHero waits on it decoding, so pull the bytes down too — where
+        // the connection can stand it. Where it cannot, the addresses are
+        // still cached and the photograph simply loads when it is wanted.
+        if (!prefetchPhotoAllowed()) return;
         const lead = imageCache.get(city.gallery[0].article);
         if (lead) new Image().src = lead;
       })
