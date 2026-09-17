@@ -415,10 +415,20 @@ let current = null;
 async function shuffle() {
   if (document.body.classList.contains("is-loading")) return;
   document.body.classList.add("is-swapping");
-  const next = nextCity || pickCity(current && current.id);
-  const warmed = next === nextCity ? nextWarm : null;
+  let next = nextCity || pickCity(current && current.id);
+  let warmed = next === nextCity ? nextWarm : null;
   // Let the fade-out land before the DOM changes underneath it.
   await new Promise((r) => setTimeout(r, 220));
+
+  // A fifth of a second is long enough for another tab to have shown this very
+  // city. Showing it now would repeat it inside the pass, and dealtWith() would
+  // have nothing to add, so the tally would not move. The storage handler has
+  // already put a fresh card in hand by this point; take that, or deal.
+  if (seen.has(next.id)) {
+    next = nextCity && !seen.has(nextCity.id) ? nextCity : pickCity(current && current.id);
+    warmed = next === nextCity ? nextWarm : null;
+  }
+
   current = next;
   history.replaceState(null, "", `#${next.id}`);
   await show(next, { warmed });
