@@ -38,12 +38,17 @@ Instead each gallery entry names an **English Wikipedia article**:
 ```
 
 At render time `main.js` asks the MediaWiki `pageimages` API for a city's six
-articles and uses each one's lead photograph. It makes two requests, fired
-together: the five grid shots at 1600px, and the hero on its own, because the
-hero is full-bleed and the API takes one thumbnail size per request. The hero is
-asked for at roughly the width of the viewport, capped at 2560 — a fixed 2560
-looks no better on a laptop and costs three times the bytes, and on a phone it
-would be three megabytes to paint four hundred points across.
+articles and uses each one's lead photograph. Every photograph is asked for at
+the size it will actually be drawn, which takes two or three requests, fired
+together, because the API takes one thumbnail size per request.
+
+The hero is full-bleed, so it gets roughly the width of the viewport, capped at
+2560 — a fixed 2560 looks no better on a laptop and costs three times the bytes,
+and on a phone it would be three megabytes to paint four hundred points across.
+The five grid tiles are much smaller and the grid lays them out three different
+ways, so `shotSizes()` mirrors those breakpoints: on a 1440px laptop the tiles
+are drawn around 510 and 330 CSS px and are fetched at 640, where they used to
+be fetched at 1600 — about 230KB each rather than 800KB.
 
 Results are cached in memory, so shuffling back to a city you've already seen
 costs nothing.

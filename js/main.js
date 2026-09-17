@@ -22,6 +22,46 @@ function heroSize() {
   return Math.min(HERO_MAX, Math.max(THUMB_PX, Math.ceil(px / 320) * 320));
 }
 
+const TILE_MIN = 640;    // small enough tiles still survive a window being widened
+
+/** Round to a step the thumbnailer is likely to have made before. */
+const bucket = (px, min) => Math.min(HERO_MAX, Math.max(min, Math.ceil(px / 320) * 320));
+
+/**
+ * What each grid tile is actually drawn at, in the shots' own order.
+ *
+ * This mirrors the grid in css/style.css, which lays the five tiles out three
+ * different ways, and the widths differ by a factor of three between them:
+ *
+ *   under 620px   one column, every tile the full width
+ *   620 to 999    two columns, the fifth tile spanning both
+ *   1000 and up   six columns, the first two spanning three and the rest two
+ *
+ * Asking for one size for all five was wrong in both directions — on a desktop
+ * the narrow tiles are drawn around 330px and were fetched at 1600.
+ */
+function shotSizes() {
+  const vw = window.innerWidth || 1280;
+  const dpr = window.devicePixelRatio || 1;
+  const gut = Math.min(Math.max(20, vw * 0.05), 64);          // --gut
+  const gap = Math.min(Math.max(20, vw * 0.025), 32);         // .gallery gap
+  const content = Math.min(vw, 1180) - gut * 2;               // --wrap, padded
+
+  if (vw >= 1000) {
+    const col = (content - gap * 5) / 6;
+    const wide = bucket((col * 3 + gap * 2) * dpr, TILE_MIN);
+    const narrow = bucket((col * 2 + gap) * dpr, TILE_MIN);
+    return [wide, wide, narrow, narrow, narrow];
+  }
+  if (vw >= 620) {
+    const half = bucket(((content - gap) / 2) * dpr, TILE_MIN);
+    const full = bucket(content * dpr, TILE_MIN);
+    return [half, half, half, half, full];
+  }
+  const full = bucket(content * dpr, TILE_MIN);
+  return [full, full, full, full, full];
+}
+
 /** article title -> image url (or null if the API had none). Survives shuffles. */
 const imageCache = new Map();
 
@@ -95,7 +135,22 @@ async function fetchImages(titles, size = THUMB_PX) {
  */
 function fetchCityImages(city) {
   const [hero, ...rest] = city.gallery.map((g) => g.article);
-  return Promise.all([fetchImages([hero], heroSize()), fetchImages(rest, THUMB_PX)]);
+  const sizes = shotSizes();
+
+  // pageimages takes one thumbnail size per request, so tiles drawn at the
+  // same size share a request. There are at most two distinct sizes, which
+  // makes three requests for a city — all fired together.
+  const bySize = new Map();
+  rest.forEach((article, i) => {
+    const px = sizes[i];
+    if (!bySize.has(px)) bySize.set(px, []);
+    bySize.get(px).push(article);
+  });
+
+  return Promise.all([
+    fetchImages([hero], heroSize()),
+    ...[...bySize].map(([px, articles]) => fetchImages(articles, px))
+  ]);
 }
 
 /* ── Rendering ───────────────────────────────────────────── */
