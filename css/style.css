@@ -129,6 +129,36 @@ body.is-loading .shuffle__icon { animation: spin 0.9s linear infinite; }
 }
 .hero.has-img .hero__img { opacity: 1; transform: scale(1); }
 
+/* Photographer and licence. Small, out of the way, but present — most of these
+   photographs are CC-BY, where naming the author is a condition and not a
+   courtesy. */
+.hero__credit {
+  position: absolute;
+  right: var(--gut); bottom: 1.1rem;
+  margin: 0;
+  max-width: 45vw;
+  text-align: right;
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  color: var(--paper);
+  opacity: 0.55;
+  transition: opacity 0.2s ease;
+}
+.hero__credit:hover { opacity: 0.9; }
+.hero__credit a { color: inherit; text-decoration-color: rgba(241, 238, 232, 0.4); }
+.hero__credit:empty { display: none; }
+
+.credit {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  opacity: 0.7;
+}
+.credit a { color: inherit; text-decoration-color: var(--rule); }
+.credit a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+.credit:empty { display: none; }
+
 .hero__scrim {
   position: absolute; inset: 0;
   background:

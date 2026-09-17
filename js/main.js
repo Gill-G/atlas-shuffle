@@ -65,6 +65,107 @@ function shotSizes() {
 /** article title -> image url (or null if the API had none). Survives shuffles. */
 const imageCache = new Map();
 
+/** article title -> the file the photograph lives in, e.g. "Djemaa_el_Fna.jpg". */
+const fileOf = new Map();
+
+/** file name -> { author, licence, page } once looked up. */
+const creditCache = new Map();
+
+const COMMONS_FILE = "https://commons.wikimedia.org/wiki/File:";
+
+/* MediaWiki treats spaces and underscores in a title as the same character and
+   hands titles back with spaces, while pageimages reports the file with
+   underscores. Key on one form or every lookup misses. */
+const fileKey = (name) => String(name || "").replace(/^File:/, "").replace(/ /g, "_");
+
+/** The credit line nodes on screen, so filling them needs no DOM query. */
+let creditNodes = [];
+
+/** extmetadata values arrive as HTML — usually a link to the author's page. */
+function textFrom(html) {
+  return String(html || "")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#0?39;|&apos;/g, "'")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/**
+ * Look up who took these photographs.
+ *
+ * Attribution is a condition of most of the licences here, not a courtesy, so
+ * this runs for every photograph shown. It is deliberately separate from
+ * fetchImages and never awaited by it: a credit arriving a moment after the
+ * picture is fine, a picture waiting on a credit is not.
+ *
+ * Two shapes to beware of. MediaWiki serialises an empty extmetadata as [],
+ * not {}, so anything indexing into it blindly will throw. And a file hosted
+ * on Commons is reported as "missing" by the English Wikipedia while still
+ * returning its imageinfo, so that flag says nothing about whether the file
+ * exists.
+ */
+async function fetchCredits(files) {
+  const wanted = [...new Set(files.filter(Boolean).map(fileKey).filter((f) => !creditCache.has(f)))];
+  if (wanted.length === 0) return;
+
+  const params = new URLSearchParams({
+    action: "query",
+    format: "json",
+    origin: "*",
+    prop: "imageinfo",
+    iiprop: "extmetadata|url",
+    iiextmetadatafilter: "Artist|LicenseShortName|Credit",
+    titles: wanted.map((f) => `File:${f}`).join("|")
+  });
+
+  const data = await getJSON(`${API}?${params}`);
+  const pages = Object.values((data.query || {}).pages || {});
+
+  pages.forEach((p) => {
+    const file = fileKey(p.title);
+    const info = (p.imageinfo || [])[0] || {};
+    const meta = info.extmetadata;
+    const field = (name) =>
+      meta && !Array.isArray(meta) && meta[name] ? textFrom(meta[name].value) : "";
+
+    creditCache.set(file, {
+      author: field("Artist") || field("Credit"),
+      licence: field("LicenseShortName"),
+      page: info.descriptionurl || COMMONS_FILE + encodeURIComponent(file)
+    });
+  });
+
+  // Anything the API did not answer for still gets a link to its file page,
+  // which is where the licence and the author are recorded.
+  wanted.forEach((f) => {
+    if (!creditCache.has(f)) {
+      creditCache.set(f, { author: "", licence: "", page: COMMONS_FILE + encodeURIComponent(f) });
+    }
+  });
+}
+
+/** Fill in one credit line, or leave it empty if there is nothing to say. */
+function renderCredit(el_, article) {
+  const file = fileOf.get(article);
+  const credit = file && creditCache.get(fileKey(file));
+  el_.replaceChildren();
+  if (!credit) return;
+
+  const link = document.createElement("a");
+  link.href = credit.page;
+  link.target = "_blank";
+  link.rel = "noopener";
+  link.textContent = credit.author || "Wikimedia Commons";
+
+  el_.append(document.createTextNode("Photo: "), link);
+  if (credit.licence) el_.append(document.createTextNode(` · ${credit.licence}`));
+}
+
 const el = (id) => document.getElementById(id);
 
 /* ── Image fetching ──────────────────────────────────────── */
@@ -96,7 +197,7 @@ async function fetchImages(titles, size = THUMB_PX) {
     origin: "*",          // CORS
     redirects: "1",       // follow e.g. "The Bridge of Peace" -> "Bridge of Peace"
     prop: "pageimages",
-    piprop: "thumbnail",
+    piprop: "thumbnail|name",   // the file name is what credits are looked up by
     pithumbsize: String(size),
     titles: wanted.join("|")
   });
@@ -117,11 +218,14 @@ async function fetchImages(titles, size = THUMB_PX) {
   const byTitle = new Map();
   Object.values(q.pages || {}).forEach((p) => {
     byTitle.set(p.title, p.thumbnail ? p.thumbnail.source : null);
+    if (p.pageimage) fileOf.set(p.title, p.pageimage);
   });
 
   wanted.forEach((t) => {
-    const hit = byTitle.get(resolve(t));
+    const resolved = resolve(t);
+    const hit = byTitle.get(resolved);
     imageCache.set(t, hit === undefined ? null : hit);
+    if (fileOf.has(resolved)) fileOf.set(t, fileOf.get(resolved));
   });
 }
 
@@ -170,6 +274,8 @@ function renderHero(city) {
 
   img.removeAttribute("src");
   img.alt = `${city.name}: ${lead.caption}`;
+  el("hero-credit").replaceChildren();
+  creditNodes = [{ node: el("hero-credit"), article: lead.article }];
 
   if (!src) return; // keep the accent wash
   const probe = new Image();
@@ -210,6 +316,7 @@ function renderThingsToDo(city) {
 function renderGallery(city) {
   // Slot 0 is the hero; the grid shows the rest.
   const shots = city.gallery.slice(1);
+  creditNodes = creditNodes.filter((c) => c.node === el("hero-credit"));
 
   el("gallery").replaceChildren(
     ...shots.map((shot) => {
@@ -233,6 +340,11 @@ function renderGallery(city) {
 
       const caption = document.createElement("figcaption");
       caption.textContent = shot.caption;
+
+      const credit = document.createElement("span");
+      credit.className = "credit";
+      caption.append(credit);
+      creditNodes.push({ node: credit, article: shot.article });
 
       frame.append(img, fallback);
       figure.append(frame, caption);
@@ -311,7 +423,26 @@ async function show(city, { scroll = true, warmed = null } = {}) {
   document.body.classList.remove("is-loading", "is-swapping");
   el("announcer").textContent = `Now showing ${city.name}, ${city.country}. ${city.tagline}.`;
 
+  showCredits(city);
+
   queueNext(city.id);
+}
+
+/**
+ * Name the photographers, once the city is up.
+ *
+ * Deliberately after the render and never awaited: the pictures must not wait
+ * on this. If the lookup fails the credits stay empty rather than showing
+ * something wrong, and the footer still points at Commons.
+ */
+function showCredits(city) {
+  const articles = city.gallery.map((g) => g.article);
+  fetchCredits(articles.map((a) => fileOf.get(a)))
+    .then(() => {
+      if (current !== city) return;   // shuffled on while we were asking
+      creditNodes.forEach(({ node, article }) => renderCredit(node, article));
+    })
+    .catch(() => {});
 }
 
 /* ── Looking ahead ───────────────────────────────────────── */

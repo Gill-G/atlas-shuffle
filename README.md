@@ -156,4 +156,13 @@ offers to start it over. A city reached by `#fragment` counts as dealt.
 ## Credits
 
 Photographs come from Wikimedia Commons via the Wikipedia API and belong to their
-respective photographers. All descriptive text was written by hand.
+respective photographers, who are named under each one: `main.js` asks
+`imageinfo` for `Artist` and `LicenseShortName` after the city is on screen and
+fills the credit lines in. Most of these photographs are CC-BY or CC-BY-SA,
+where naming the author is a condition of the licence and not a courtesy.
+
+The lookup never blocks a photograph, and where Commons records no author — some
+files carry only a date and a category — the credit links to the file page,
+which is where the licence lives.
+
+All descriptive text was written by hand.
