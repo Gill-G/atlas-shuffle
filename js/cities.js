@@ -1521,5 +1521,137 @@ const CITIES = [
       "Best time": "December–March",
       "Order this": "Sapasui"
     }
+  },
+  {
+    id: "granada",
+    name: "Granada",
+    country: "Spain",
+    region: "Southern Europe",
+    accent: "#6f8f4a",
+    tagline: "The last city of al-Andalus",
+    intro:
+      "Granada was the final Muslim kingdom in Iberia, and it held out for two and a half centuries after the rest had fallen — which is why the Alhambra exists at all, built by a dynasty that knew it was the last of its line. The city surrendered in January 1492, the year Columbus sailed and the year the Jews were expelled, and the Catholic Monarchs are buried a few streets below the palace they took. Above it the Albaicín keeps its Moorish street plan: too steep and too tangled to have been rebuilt.",
+    famousFor: ["The Alhambra", "Free tapas", "Flamenco in the caves", "The Albaicín", "Sierra Nevada behind it"],
+    thingsToDo: [
+      { title: "Book the Alhambra weeks ahead", text: "Entry is capped and the Nasrid Palaces are timed to the half hour, printed on the ticket and enforced. Take the earliest slot you can: the carved plaster is cut to catch low light, which is what it was designed for." },
+      { title: "Climb into the Albaicín at dusk", text: "The lanes above the river were the Moorish quarter and still run where they ran. Mirador San Nicolás gets the crowd and the view of the palace against the snow; the smaller squares on the way up get neither." },
+      { title: "Let the tapas arrive", text: "Granada is one of the last Spanish cities where a drink still comes with food, unasked and included. Order a second and the plate changes. Do not order tapas from the menu — that is not how it works here." },
+      { title: "Hear flamenco in Sacromonte", text: "The caves cut into the hillside are Roma homes, some of them still, and the zambra danced in them is its own tradition rather than a show imported from Seville." }
+    ],
+    gallery: [
+      { article: "Alhambra", caption: "The Alhambra was built by the Nasrids, the last Muslim dynasty in Iberia, and surrendered in 1492." },
+      { article: "Generalife", caption: "The Generalife was the sultans' summer garden, watered by a channel running the length of its court." },
+      { article: "Court of the Lions", caption: "Twelve marble lions carry the fountain at the centre of the Nasrid palaces; the basin once told the hours." },
+      { article: "Albaicín", caption: "The Albaicín keeps the Moorish street plan — too steep and too tangled to have been replaced." },
+      { article: "Granada Cathedral", caption: "The cathedral went up on the site of the main mosque, and took nearly two centuries to finish." },
+      { article: "Sacromonte", caption: "Sacromonte's cave dwellings are Roma homes, and the zambra danced in them is a tradition of its own." }
+    ],
+    facts: {
+      Population: "230,000",
+      Founded: "c. 1013 (Zirid taifa)",
+      Language: "Spanish",
+      Currency: "Euro (€)",
+      "Best time": "April–June, September–October",
+      "Order this": "Whatever comes with the drink"
+    }
+  },
+  {
+    id: "luang-prabang",
+    name: "Luang Prabang",
+    country: "Laos",
+    region: "Southeast Asia",
+    accent: "#e08a2a",
+    tagline: "A royal capital between two rivers",
+    intro:
+      "Luang Prabang sits on a tongue of land where the Nam Khan runs into the Mekong, and was the royal capital of Lan Xang — the kingdom of a million elephants — until the monarchy ended in 1975. What survived is unusual: a town of low timber shophouses and thirty-odd working monasteries, French shutters over Lao carpentry, small enough to cross on foot in twenty minutes. UNESCO listed the whole of it in 1995, which has kept the skyline down and the tourism up.",
+    famousFor: ["Gilded monasteries", "The alms procession", "The Mekong", "French-Lao cooking", "Waterfalls"],
+    thingsToDo: [
+      { title: "Watch the alms round, carefully", text: "Before six, several hundred monks walk the main street to collect rice. It is a religious obligation and not a performance: stay across the road, do not use a flash, and do not buy rice from the touts to join in." },
+      { title: "Climb Phousi for the rivers", text: "Three hundred-odd steps up the hill in the middle of town, and both rivers are visible from the top. Sunset is crowded; first light is not, and the temple on the way up is better lit then." },
+      { title: "Take a boat to Pak Ou", text: "Two hours up the Mekong to limestone caves stacked with thousands of discarded Buddha figures, left there over centuries as it became improper to destroy them." },
+      { title: "Swim at Kuang Si", text: "Half an hour south, a staircase of turquoise pools under a tall fall. The colour is limestone in the water. Go early — the tuk-tuks all arrive together mid-morning." }
+    ],
+    gallery: [
+      { article: "Luang Prabang", caption: "The town sits on a peninsula where the Nam Khan meets the Mekong, UNESCO-listed since 1995." },
+      { article: "Wat Xieng Thong", caption: "Wat Xieng Thong was built in 1560 and its roofs sweep almost to the ground, in the Luang Prabang style." },
+      { article: "Royal Palace, Luang Prabang", caption: "The palace was built for the king in 1904 and became a museum after the monarchy ended in 1975." },
+      { article: "Wat Mai Suwannaphumaham", caption: "Wat Mai housed the Prabang, the gold Buddha the town is named for, for much of the last century." },
+      { article: "Pak Ou Caves", caption: "The Pak Ou caves hold thousands of Buddha figures left by people unwilling to destroy them." },
+      { article: "Kuang Si Falls", caption: "Kuang Si falls through a staircase of pools whose colour comes from limestone in the water." }
+    ],
+    facts: {
+      Population: "56,000",
+      Founded: "1353 (capital of Lan Xang)",
+      Language: "Lao, French",
+      Currency: "Kip (₭)",
+      "Best time": "November–February",
+      "Order this": "Khao soi Luang Prabang"
+    }
+  },
+  {
+    id: "hong-kong",
+    name: "Hong Kong",
+    country: "Hong Kong",
+    region: "East Asia",
+    accent: "#e04a4a",
+    tagline: "A city that had to grow upwards",
+    intro:
+      "Hong Kong is mostly mountain and sea, with only a fraction of it flat enough to build on, so it went vertical harder than anywhere else: more skyscrapers than any other city, stacked along a harbour with country parks starting a few hundred metres behind them. It was a British colony for a century and a half and returned to China in 1997, and the seams show everywhere — English street names on Cantonese streets, double-decker trams, a legal system inherited from one place and a future decided in another.",
+    famousFor: ["The harbour skyline", "Dim sum", "The Star Ferry", "Hiking above the towers", "Neon"],
+    thingsToDo: [
+      { title: "Cross on the Star Ferry", text: "Seven minutes between Kowloon and Central for a couple of dollars, on boats whose design has barely changed since the 1950s. The lower deck is cheaper, louder and better. Do it after dark." },
+      { title: "Go up the Peak — then walk", text: "The tram has climbed since 1888 at a gradient that makes the towers look tilted. At the top, most people photograph the view and leave; the Lugard Road circuit is flat, an hour round, and nearly empty." },
+      { title: "Eat dim sum before eleven", text: "Trolleys in the old halls, order sheets in the new ones. Push the tea lid ajar for a refill, and tap two fingers on the table when someone pours for you — it is how you say thank you without interrupting." },
+      { title: "Find the country park", text: "Three quarters of Hong Kong is undeveloped and much of it is protected. Dragon's Back is forty minutes from Central by bus and ends at a beach, which is not what the skyline leads you to expect." }
+    ],
+    gallery: [
+      { article: "Victoria Peak", caption: "The Peak rises straight behind Central; the tram has been climbing it since 1888." },
+      { article: "Kowloon", caption: "Kowloon faces the island across the harbour, and holds the denser half of the city." },
+      { article: "Star Ferry", caption: "The Star Ferry has crossed the harbour since 1888, and still costs a few dollars." },
+      { article: "Man Mo temples in Hong Kong", caption: "The Man Mo temple on Hollywood Road dates from the 1840s and burns coils of incense for weeks at a time." },
+      { article: "The Big Buddha (Hong Kong)", caption: "The Tian Tan Buddha on Lantau was finished in 1993 and is reached by 268 steps." },
+      { article: "Chungking Mansions", caption: "Chungking Mansions packs guesthouses, curry houses and traders from a hundred countries into one block." }
+    ],
+    facts: {
+      Population: "7.5 million",
+      Founded: "1841 (as a British colony)",
+      Language: "Cantonese, English",
+      Currency: "Dollar (HK$)",
+      "Best time": "October–December",
+      "Order this": "Dim sum"
+    }
+  },
+  {
+    id: "kathmandu",
+    name: "Kathmandu",
+    country: "Nepal",
+    region: "South Asia",
+    accent: "#8f3a52",
+    tagline: "Three kingdoms' worth of temples in one valley",
+    intro:
+      "The Kathmandu valley held three rival Newar kingdoms for centuries, and each spent its wealth out-building the others, which is why a valley the size of a city has three palace squares rather than one. The craft is Newar: brick and carved timber, struts under every eave, courtyards behind plain walls. The earthquake of April 2015 brought a great deal of it down and the rebuilding is still going on, in many places with the original timbers salvaged and numbered.",
+    famousFor: ["Durbar squares", "Newar woodcarving", "Boudha's stupa", "Trekking starts here", "Momos"],
+    thingsToDo: [
+      { title: "Walk the kora at Boudha", text: "Clockwise around one of the largest stupas anywhere, with the crowd, at dusk, when the butter lamps go on. It is a Tibetan quarter as much as a monument, and the rooftop cafés look straight onto the eyes." },
+      { title: "Read the durbar squares together", text: "Kathmandu, Patan and Bhaktapur were three capitals competing, and seeing one explains little. Patan is the finest carving, Bhaktapur the most intact, Kathmandu the most damaged and the most rebuilt." },
+      { title: "Go up to Swayambhunath early", text: "Three hundred-odd steps, monkeys the whole way, and the valley laid out underneath in the haze. The stupa is far older than anything below it." },
+      { title: "See Pashupatinath as a working place", text: "Nepal's most important Hindu temple, on the river, where cremations happen in the open on the ghats. Non-Hindus cannot enter the main shrine; watch from the far bank, and photograph very little." }
+    ],
+    gallery: [
+      { article: "Kathmandu", caption: "The city's own durbar square was the palace of the Malla kings, and lost much of its height in 2015." },
+      { article: "Boudha Stupa", caption: "Boudha is one of the largest stupas in the world, and the centre of Tibetan life in the valley." },
+      { article: "Swayambhunath", caption: "Swayambhunath sits on a hill above the valley and is older than the city spread out below it." },
+      { article: "Pashupatinath Temple", caption: "Pashupatinath is Nepal's principal Hindu temple, with cremation ghats along the Bagmati below it." },
+      { article: "Bhaktapur Durbar Square", caption: "Bhaktapur was the third of the valley's capitals, and kept more of its fabric than the other two." },
+      { article: "Thamel", caption: "Thamel is where the trekking outfitters are, and where most of the valley's visitors end up sleeping." }
+    ],
+    facts: {
+      Population: "1.5 million (valley 3m)",
+      Founded: "c. 723",
+      Language: "Nepali, Newar",
+      Currency: "Rupee (रु)",
+      "Best time": "October–November, March–April",
+      "Order this": "Momos"
+    }
   }
 ];
