@@ -403,6 +403,12 @@ body.is-loading .shuffle__icon { animation: spin 0.9s linear infinite; }
 .indexbtn:hover, .indexbtn:focus-visible { color: var(--paper); border-color: var(--accent); }
 .indexbtn__icon { color: var(--accent); }
 
+/* The hidden attribute works by applying display:none from the user-agent
+   stylesheet, and any author rule that sets display beats it — so giving
+   .index a display of its own left the dialog on screen permanently, with
+   nothing in it and no way to shut it. Restate it here. */
+.index[hidden] { display: none; }
+
 .index {
   position: fixed; inset: 0; z-index: 50;
   background: rgba(8, 8, 10, 0.82);
