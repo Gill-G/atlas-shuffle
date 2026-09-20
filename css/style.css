@@ -409,6 +409,13 @@ body.is-loading .shuffle__icon { animation: spin 0.9s linear infinite; }
    nothing in it and no way to shut it. Restate it here. */
 .index[hidden] { display: none; }
 
+/* main.js sets this while the dialog is up. Without it the page behind keeps
+   scrolling once the sheet reaches its end, which reads as the dialog sliding
+   off the site. The gutter is reserved always, or removing the scrollbar
+   shifts the whole page sideways each time the index opens. */
+html { scrollbar-gutter: stable; }
+body.is-indexing { overflow: hidden; }
+
 .index {
   position: fixed; inset: 0; z-index: 50;
   background: rgba(8, 8, 10, 0.82);
