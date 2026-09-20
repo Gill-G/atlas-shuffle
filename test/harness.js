@@ -79,10 +79,15 @@ const tabs = [];
  */
 function boot(store = new Map(), { hash = "", respond = null, connection = null, realTime = false } = {}) {
   /* shuffle() waits 220ms for the fade before it shows anything, and a full
-     pass is fifty of those. Capping the site's timers makes the suite run in
-     seconds instead of a minute without changing any ordering: everything
-     still happens in the same sequence, just sooner. Pass realTime to keep the
-     real delays where a test depends on their length. */
+     pass is fifty of those, so the site's timers are capped to keep the suite
+     in seconds rather than a minute.
+
+     This is not order-preserving. The fade, whenIdle's 400ms fallback and
+     getJSON's retry backoff all collapse to the same 5ms, so what decides
+     their order becomes when they were scheduled rather than how long they
+     asked for. A test that depends on one out-lasting another — a prefetch
+     landing mid-shuffle, a retry landing mid-render — must pass realTime and
+     use the real delays. */
   const schedule = realTime
     ? setTimeout
     : (fn, ms) => setTimeout(fn, Math.min(Number(ms) || 0, 5));
@@ -162,6 +167,17 @@ function boot(store = new Map(), { hash = "", respond = null, connection = null,
       return { ok: true, status: 200, json: async () => ({ query: { pages } }) };
     }
   };
+
+  /* Honour the hidden attributes index.html ships with. Without this every
+     element starts visible, and main.js's keydown handler — which ignores R
+     while the index is open — behaves from boot as though the dialog were
+     open, so the R shortcut is dead in every test for a reason that has
+     nothing to do with the site. */
+  const markup = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
+  for (const tag of markup.match(/<[^>]*\bhidden\b[^>]*>/g) || []) {
+    const id = /id="([^"]+)"/.exec(tag);
+    if (id) elements[id[1]].hidden = true;
+  }
 
   sandbox.globalThis = sandbox;
   vm.createContext(sandbox);
