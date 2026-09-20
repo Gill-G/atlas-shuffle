@@ -25,8 +25,35 @@ css/style.css   # all styling; per-city accent colour is a CSS variable
 js/cities.js    # the dataset: 50 cities, hand-written
 js/main.js      # picks a city, fetches photos, renders the page
 check.js        # verifies the shape of the dataset and every gallery article
+test/           # the behaviour of main.js, and of the page in a real browser
 start.sh        # local static server
 ```
+
+## Tests
+
+```bash
+node test/run.js           # everything
+node test/run.js --unit    # the stub-browser tests only, no browser needed
+node test/run.js pass      # only cases whose name contains "pass"
+```
+
+No framework and no dependencies. `test/harness.js` runs the real `js/main.js`
+in a `vm` against a stub browser, where `setItem` delivers storage events
+between tabs — the only way the cross-tab code executes, and where several real
+bugs lived. `test/unit.js` holds the behaviour, most of it regressions: each was
+written against the commit before its fix and shown to fail there, because a
+test that has never failed has proved nothing.
+
+`test/browser.js` drives the real page in headless Chrome and reads **computed**
+style, which the stub cannot do. That distinction is not academic: the index
+dialog once shipped covering the whole site because `.index { display: grid }`
+overrode the `hidden` attribute, and sixteen stub tests passed because a stub
+models `hidden` as a plain property. It stubs the API inside the page, so it
+tests the site rather than Wikipedia, and skips with a note if no browser is
+found — set `CHROME` to point at one.
+
+`node check.js` is deliberately separate: it checks the dataset against live
+Wikipedia, so folding it in would mean the suite could not pass offline.
 
 ## How the photos work
 
