@@ -107,6 +107,11 @@ async function drive(driver, { port = 9000 + Math.floor(Math.random() * 900) } =
 
   const dir = stage(driver);
   const server = spawn("python3", ["-m", "http.server", String(port)], { cwd: dir, stdio: "ignore" });
+  // Without this a missing python3 raises an unhandled 'error' event, which
+  // takes the whole run down before the message below can be printed and
+  // before the temp directory is cleaned up. The suite is meant to degrade.
+  let serverFailed = null;
+  server.on("error", (err) => { serverFailed = err; });
   try {
     // A fixed port fails to bind when runs follow each other closely enough
     // that the last one is still in TIME_WAIT, so the port is chosen at
@@ -117,16 +122,47 @@ async function drive(driver, { port = 9000 + Math.floor(Math.random() * 900) } =
       try { execFileSync("curl", ["-sf", "-o", "/dev/null", `http://localhost:${port}/`]); serving = true; break; }
       catch { await new Promise((r) => setTimeout(r, 250)); }
     }
+    if (serverFailed) return { skip: `no server to test with (${serverFailed.message})` };
     if (!serving) return { failed: `the test server never answered on port ${port}` };
 
+    /* A profile of its own: --headless=new otherwise uses the default one,
+       which the reader's everyday Chrome is usually holding open, and the
+       launch then hands off or refuses and dumps nothing at all.
+
+       A Windows Chrome cannot use a WSL path for this — it simply fails to
+       start — so the directory is handed over in the form that Windows can
+       see. If that conversion is not available, go without a profile rather
+       than pass a path the browser will choke on. */
+    const profile = fs.mkdtempSync(path.join(os.tmpdir(), "atlas-profile-"));
+    let profileArg = profile;
+    if (/\.exe$/i.test(browser)) {
+      try {
+        profileArg = execFileSync("wslpath", ["-w", profile], { encoding: "utf8" }).trim();
+      } catch {
+        profileArg = null;
+      }
+    }
+    const profileFlags = profileArg
+      ? [`--user-data-dir=${profileArg}`, "--no-first-run", "--no-default-browser-check"]
+      : [];
     let found = null;
-    for (const host of hostsFor(browser)) {
-      const dom = execFileSync(browser, [
-        "--headless=new", "--disable-gpu", "--window-size=1440,900",
-        "--virtual-time-budget=60000", "--dump-dom", `http://${host}:${port}/`
-      ], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024, stdio: ["ignore", "pipe", "ignore"] });
-      found = /<pre id="results">([\s\S]*?)<\/pre>/.exec(dom);
-      if (found) break;
+    try {
+      for (const host of hostsFor(browser)) {
+        let dom = "";
+        try {
+          dom = execFileSync(browser, [
+            "--headless=new", "--disable-gpu", "--window-size=1440,900",
+            ...profileFlags,
+            "--virtual-time-budget=60000", "--dump-dom", `http://${host}:${port}/`
+          ], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024, stdio: ["ignore", "pipe", "ignore"] });
+        } catch (err) {
+          continue;   // this address did not work; try the next one
+        }
+        found = /<pre id="results">([\s\S]*?)<\/pre>/.exec(dom);
+        if (found) break;
+      }
+    } finally {
+      fs.rmSync(profile, { recursive: true, force: true });
     }
     if (!found) return { lines: [], missing: true };
     return {
@@ -147,7 +183,9 @@ async function drive(driver, { port = 9000 + Math.floor(Math.random() * 900) } =
 /* The driver runs inside the page. It has no access to anything here. */
 const DRIVER = `
 const found = [];
-const report = (name, ok, detail) => found.push(name + " :: " + (ok ? "ok" : "fail") + " :: " + detail);
+// The detail must never be empty: trimming the line would leave a trailing
+// "::" that the separator no longer matches, and the verdict would parse wrong.
+const report = (name, ok, detail) => found.push(name + " :: " + (ok ? "ok" : "fail") + " :: " + (detail || "-"));
 const displayOf = (id) => getComputedStyle(document.getElementById(id)).display;
 
 /* Wait for the page to be ready rather than guessing a delay. Under
@@ -195,6 +233,7 @@ addEventListener("load", async () => {
     report("photographs are credited",
       /Photo:/.test(document.getElementById("hero-credit").textContent),
       document.getElementById("hero-credit").textContent);
+    report("the driver ran to the end", true, "no exception");
   } catch (err) {
     report("the driver ran to the end", false, err.message);
   }
@@ -211,6 +250,9 @@ const once = async () => (outcome ||= await drive(DRIVER));
 
 /* Each finding from the page becomes a case here, so a failure names itself. */
 const NAMES = [
+  // first, so that a driver that threw says why instead of every other case
+  // failing with "no result" and the one line carrying the reason discarded
+  "the driver ran to the end",
   "index is hidden on load",
   "opens when asked",
   "every city has a row",
