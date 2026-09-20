@@ -253,6 +253,67 @@ test("a credit that cannot be found does not stop the city", async (t) => {
   t.equal(tab.read("creditNodes[0].node.children.length"), 0, "the credit is left empty, not wrong");
 });
 
+test("two cities cannot be on their way to the screen at once", async (t) => {
+  // The shuffle button, a row in the index and a pasted #fragment all start a
+  // show. Two at once used to finish in whatever order the network decided:
+  // the slower one won the hero while the faster had set the title.
+  //
+  // The gap matters. shuffle() calls show() only after its fade, so a click
+  // that lands before that gets the earlier token and the shuffle wins
+  // harmlessly. The damage needs the click to land after the fade and before
+  // the photographs arrive, which is when the shuffle's own show is the one
+  // abandoned — and its card is still in nextCity.
+  // Read from the tab under test, not a probe: every boot shuffles its own
+  // deck, so a card queued in one tab says nothing about the next.
+  let slow = [], medium = [];
+  const respond = () => async (url) => {
+    const titles = url.searchParams.get("titles").split("|");
+    await tick(titles.some((x) => slow.includes(x)) ? 240 : titles.some((x) => medium.includes(x)) ? 30 : 1);
+    const pages = {};
+    titles.forEach((title, i) => {
+      pages[i] = url.searchParams.get("prop") === "imageinfo"
+        ? { title, imageinfo: [{ descriptionurl: "x", extmetadata: {} }] }
+        : { title, thumbnail: { source: "https://img.example/x.jpg" }, pageimage: "x.jpg" };
+    });
+    return { ok: true, status: 200, json: async () => ({ query: { pages } }) };
+  };
+
+  // 2g keeps the card queued but unwarmed, so the shuffle really waits
+  const tab = boot(new Map(), { respond: respond(), connection: { effectiveType: "2g" } });
+  await settle();
+
+  const pickedId = tab.read("CITIES.find(c => c.id !== current.id && c.id !== nextCity.id).id");
+  medium = tab.read("nextCity.gallery.map(g => g.article)");
+  slow = tab.read(`CITIES.find(c => c.id === "${pickedId}").gallery.map(g => g.article)`);
+
+  const shuffling = tab.run("shuffle()");
+  await tick(12);
+  tab.run(`(() => { const c = CITIES.find(x => x.id === "${pickedId}"); current = c; show(c); })()`);
+  await shuffling;
+  await tick(700);
+
+  const onScreen = new Set([
+    tab.read("current.name"),
+    tab.read('document.getElementById("hero-name").textContent'),
+    tab.read('document.getElementById("hero-img").alt').split(":")[0],
+    tab.read("document.title").split(",")[0],
+    tab.read('document.getElementById("announcer").textContent').split(",")[0].replace("Now showing ", "")
+  ]);
+  t.equal(onScreen.size, 1, `cities on the page at once: ${[...onScreen].join(" / ")}`);
+
+  // And the pass must still add up. An abandoned show once handed its card
+  // back while nextCity still held it, so the deck ended with two of it.
+  const deck = tab.read("deck.map(c => c.id)");
+  const seen = tab.read("[...seen]");
+  const hand = tab.read("nextCity && nextCity.id");
+  const duplicated = deck.filter((id, i) => deck.indexOf(id) !== i);
+  t.equal(duplicated.length, 0, `cards duplicated in the deck: ${duplicated.join(", ")}`);
+  t.equal(deck.filter((id) => seen.includes(id)).length, 0, "cards in the deck already counted as seen");
+  t.equal(hand && deck.includes(hand) ? 1 : 0, 0, "the card in hand is also in the deck");
+  t.equal(deck.length + seen.length + (hand ? 1 : 0), tab.read("CITIES.length"),
+    `cards accounted for (deck ${deck.length} + seen ${seen.length} + hand ${hand ? 1 : 0})`);
+});
+
 test("the index lists every city, grouped, and marks the pass", async (t) => {
   const tab = boot();
   await settle();

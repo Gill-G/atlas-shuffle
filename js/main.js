@@ -508,8 +508,16 @@ function closeIndex() {
 
 /* ── Orchestration ───────────────────────────────────────── */
 
+/* Only one city may be on its way to the screen. Three places start a show —
+   the shuffle button, a picked row in the index, and a pasted #fragment — and
+   only the shuffle checked whether one was already running, so two could wait
+   on their photographs at once and finish in whichever order the network
+   decided. The slower one rendered last and won the hero while the faster one
+   had already set the title: one page, two cities. */
+let showToken = 0;
+
 async function show(city, { scroll = true, warmed = null } = {}) {
-  dealtWith(city.id);   // a deep link counts as playing that card
+  const token = ++showToken;
   document.body.classList.add("is-loading");
   document.documentElement.style.setProperty("--accent", city.accent);
   document.title = `${city.name}, ${city.country} — Atlas Shuffle`;
@@ -527,6 +535,26 @@ async function show(city, { scroll = true, warmed = null } = {}) {
       if (!imageCache.has(g.article)) imageCache.set(g.article, null);
     });
   }
+
+  if (token !== showToken) {
+    // A newer show started while this one waited, so the page belongs to it.
+    // Put this city back if it had been dealt but never seen, or the pass
+    // loses a card nobody looked at.
+    //
+    // Drop it from the hand first. shuffle() takes its card out of nextCity
+    // without clearing it, so without this the card is handed back here and
+    // then handed back a second time by queueNext(), whose own guard returns
+    // whatever nextCity still holds — leaving the deck with two of it, and a
+    // pass that shows one city twice.
+    if (nextCity && nextCity.id === city.id) {
+      nextCity = null;
+      nextWarm = null;
+    }
+    if (!seen.has(city.id) && !deck.some((c) => c.id === city.id)) returnToDeck(city);
+    return;
+  }
+
+  dealtWith(city.id);   // shown at last — a deep link counts as playing that card
 
   renderHero(city);
   renderIntro(city);
