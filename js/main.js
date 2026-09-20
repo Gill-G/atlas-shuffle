@@ -314,9 +314,9 @@ function renderThingsToDo(city) {
 }
 
 function renderGallery(city) {
-  // Slot 0 is the hero; the grid shows the rest.
+  // Slot 0 is the hero; the grid shows the rest. renderHero runs first and has
+  // already reset creditNodes to the hero's line, so these append to it.
   const shots = city.gallery.slice(1);
-  creditNodes = creditNodes.filter((c) => c.node === el("hero-credit"));
 
   el("gallery").replaceChildren(
     ...shots.map((shot) => {
