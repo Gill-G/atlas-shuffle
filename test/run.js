@@ -28,10 +28,11 @@ function makeAsserts(record) {
 
 async function runGroup(title, cases, filter) {
   const chosen = filter ? cases.filter((c) => c.name.includes(filter)) : cases;
-  if (chosen.length === 0) return { passed: 0, failed: 0, skipped: 0 };
+  if (chosen.length === 0) return { passed: 0, failed: 0, skipped: 0, matched: 0 };
 
   console.log(`\n${title}`);
   let passed = 0, failed = 0, skipped = 0;
+  const matched = chosen.length;
 
   for (const testCase of chosen) {
     const record = [];
@@ -60,7 +61,7 @@ async function runGroup(title, cases, filter) {
       console.log(`  ok    ${testCase.name}`);
     }
   }
-  return { passed, failed, skipped };
+  return { passed, failed, skipped, matched };
 }
 
 (async () => {
@@ -72,9 +73,19 @@ async function runGroup(title, cases, filter) {
   if (!unitOnly) results.push(await runGroup("real browser", browser.cases, filter));
 
   const total = results.reduce(
-    (sum, r) => ({ passed: sum.passed + r.passed, failed: sum.failed + r.failed, skipped: sum.skipped + r.skipped }),
-    { passed: 0, failed: 0, skipped: 0 }
+    (sum, r) => ({
+      passed: sum.passed + r.passed, failed: sum.failed + r.failed,
+      skipped: sum.skipped + r.skipped, matched: sum.matched + r.matched
+    }),
+    { passed: 0, failed: 0, skipped: 0, matched: 0 }
   );
+
+  // A filter that matches nothing once reported success, so a stale name in a
+  // script passed silently. Running no tests is not the same as passing.
+  if (filter && total.matched === 0) {
+    console.error(`\nno test matches "${filter}"`);
+    process.exit(2);
+  }
 
   console.log(
     `\n${total.passed} passed, ${total.failed} failed` +
