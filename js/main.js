@@ -585,7 +585,14 @@ function showCredits(city) {
   const articles = city.gallery.map((g) => g.article);
   fetchCredits(articles.map((a) => fileOf.get(a)))
     .then(() => {
-      if (current !== city) return;   // shuffled on while we were asking
+      // Shuffled on while we were asking. Belt and braces as the code stands:
+      // renderHero and renderGallery rebuild creditNodes for whatever is on
+      // screen, so a late answer would only re-render the current city's
+      // credits from the cache and produce the same lines again. It is kept
+      // because that is an accident of ordering, not a promise — the day
+      // credit nodes outlive a render, this is what stops one city's
+      // photographers appearing under another's photographs.
+      if (current !== city) return;
       creditNodes.forEach(({ node, article }) => renderCredit(node, article));
     })
     .catch(() => {});

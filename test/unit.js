@@ -314,6 +314,27 @@ test("two cities cannot be on their way to the screen at once", async (t) => {
     `cards accounted for (deck ${deck.length} + seen ${seen.length} + hand ${hand ? 1 : 0})`);
 });
 
+test("the card in hand is never also in the deck", async (t) => {
+  // When another tab starts a new pass, freshDeck() rebuilds from every city
+  // it has not seen — which includes the one already dealt into this tab's
+  // hand. Without taking it back out, that card gets dealt a second time.
+  const tab = boot();
+  await settle();
+  for (let i = 0; i < 3; i++) { await tab.run("shuffle()"); await tick(3); }
+
+  const held = tab.read("nextCity.id");
+  // a record that drops what this tab holds — a restart — and does not
+  // mention the card in hand, so it stays unseen and lands in the new deck
+  tab.otherTabWrote([tab.read(`CITIES.find(c => c.id !== "${held}" && c.id !== current.id).id`)]);
+  await tick(40);
+
+  const hand = tab.read("nextCity && nextCity.id");
+  const deck = tab.read("deck.map(c => c.id)");
+  t.ok(hand, "a card is still in hand");
+  t.equal(hand && deck.includes(hand) ? 1 : 0, 0, `${hand} is in the deck as well as in hand`);
+  t.equal(deck.filter((id, i) => deck.indexOf(id) !== i).length, 0, "duplicates in the deck");
+});
+
 test("the index lists every city, grouped, and marks the pass", async (t) => {
   const tab = boot();
   await settle();
