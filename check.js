@@ -28,6 +28,13 @@ const fs = require("fs");
 const path = require("path");
 
 const API = "https://en.wikipedia.org/w/api.php";
+
+/* Wikimedia's user-agent policy asks for a way to get in touch, and means it:
+   a run identifying itself only as tooling was refused outright with "You are
+   making too many requests" while a contactable one went through. The repo is
+   the contact — it is public, and it is what someone at their end would want
+   to look at. */
+const UA = "atlas-shuffle-check/1.0 (https://github.com/Gill-G/atlas-shuffle)";
 const THUMB_PX = 1600;       // keep in step with THUMB_PX in js/main.js
 const HERO_PX = 2560;        // and with HERO_PX: gallery[0] is shown full-bleed
 const MIN_WIDTH = 700;       // below this a photo looks soft in a gallery slot
@@ -239,7 +246,7 @@ async function api(titles) {
   for (let attempt = 0; ; attempt++) {
     try {
       const res = await fetch(`${API}?${params}`, {
-        headers: { "User-Agent": "atlas-shuffle-check/1.0 (repo tooling)" }
+        headers: { "User-Agent": UA }
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return (await res.json()).query || {};
