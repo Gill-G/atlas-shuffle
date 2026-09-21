@@ -228,6 +228,16 @@ addEventListener("load", async () => {
       linkish && getComputedStyle(linkish).color !== prose,
       linkish ? getComputedStyle(linkish).color + " vs " + prose : "no control found");
 
+    /* The no-JS notice must not cost anything to everybody else. A "noscript ~ *"
+       rule reads as though it only applies with scripting off, but the element is
+       in the DOM either way, so it hid main and the footer for every visitor —
+       and only showed up as a black page, because .topbar outranks it. */
+    report("the page is not hidden by the no-JS notice",
+      getComputedStyle(document.querySelector("main")).display !== "none" &&
+      getComputedStyle(document.querySelector(".foot")).display !== "none",
+      "main=" + getComputedStyle(document.querySelector("main")).display +
+      " foot=" + getComputedStyle(document.querySelector(".foot")).display);
+
     const hero = document.getElementById("hero-img");
     report("the hero photograph is shown", !!hero.getAttribute("src"), hero.getAttribute("src") || "no src");
     report("photographs are credited",
@@ -260,10 +270,14 @@ const NAMES = [
   "closes again",
   "Escape closes it",
   "the reset control outreads the prose around it",
+  "the page is not hidden by the no-JS notice",
   "the hero photograph is shown",
   "photographs are credited"
 ];
 
+/* A finding the page reports but this list does not name is dropped without a
+   word — a new report added to the driver alone looks like it passed, because
+   nothing prints it either way. Make the omission a failure. */
 const cases = NAMES.map((name) => ({
   name,
   fn: async (t) => {
@@ -276,5 +290,16 @@ const cases = NAMES.map((name) => ({
     t.ok(finding.ok, finding.detail);
   }
 }));
+
+cases.push({
+  name: "every finding the page reports is accounted for",
+  fn: async (t) => {
+    const result = await once();
+    if (result.skip) return { skip: result.skip };
+    if (result.failed || result.missing) return;   // already reported above
+    const stray = result.lines.map((l) => l.name).filter((n) => !NAMES.includes(n));
+    t.ok(stray.length === 0, stray.join(", ") || "none");
+  }
+});
 
 module.exports = { cases, findBrowser };

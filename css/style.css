@@ -387,6 +387,38 @@ body.is-loading .shuffle__icon { animation: spin 0.9s linear infinite; }
   line-height: 1.3;
 }
 
+/* ── Without JavaScript ────────────────────────────────── */
+
+/* The page is built in the browser, so with scripting off there is nothing
+   behind this but an empty skeleton. Say so, and hide the skeleton. */
+.noscript {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: clamp(3rem, 12vh, 7rem) var(--gut);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.noscript h1 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(2.2rem, 7vw, 3.4rem);
+  color: var(--paper);
+  margin: 0 0 1.2rem;
+}
+.noscript p { margin: 0 0 1rem; text-wrap: pretty; }
+.noscript code { color: var(--paper); }
+
+/* Hide the skeleton underneath, which without scripting is a blank hero and
+   five empty frames. This has to key off the media feature, not off the
+   noscript element: noscript is in the DOM whether or not scripting is on, so
+   a `noscript ~ *` rule blanks the site for everyone. !important because the
+   parts being hidden set display from a class — `.topbar` is a whole level of
+   specificity above any selector that can name body's children generically. */
+@media (scripting: none) {
+  body > :not(noscript) { display: none !important; }
+}
+
 /* ── Index ─────────────────────────────────────────────── */
 
 .indexbtn {
