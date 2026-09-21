@@ -48,7 +48,12 @@ function makeElement(tag) {
       set: new Set(),
       add(...names) { names.forEach((n) => this.set.add(n)); },
       remove(...names) { names.forEach((n) => this.set.delete(n)); },
-      contains(name) { return this.set.has(name); }
+      contains(name) { return this.set.has(name); },
+      toggle(name, force) {
+        const on = force === undefined ? !this.set.has(name) : !!force;
+        if (on) this.set.add(name); else this.set.delete(name);
+        return on;
+      }
     },
 
     set textContent(value) { el.text = String(value); el.children = []; },

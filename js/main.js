@@ -377,17 +377,20 @@ function renderFacts(city) {
 /** Cities not yet shown in this pass. The one number both the tally and the
     announcement are allowed to quote, so they cannot disagree. */
 function remaining() {
-  return CITIES.length - seen.size;
+  return pool().filter((c) => !seen.has(c.id)).length;
 }
 
 function renderPass() {
-  const total = CITIES.length;
-  const n = seen.size;
+  const total = pool().length;
+  const n = total - remaining();
+  const where = onlyRegion ? ` in ${onlyRegion}` : "";
 
   el("pass-progress").textContent =
     n >= total
-      ? `That was all of them — the deck reshuffles from here.`
-      : `${n} seen this time round, ${remaining()} to go.`;
+      ? onlyRegion
+        ? `That was all of ${onlyRegion} — it reshuffles from here.`
+        : `That was all of them — the deck reshuffles from here.`
+      : `${n} seen${where} this time round, ${remaining()} to go.`;
 
   // Nothing to start over from until a pass is actually under way.
   el("pass-reset").hidden = n < 2 || n >= total;
@@ -406,6 +409,9 @@ let openerBeforeIndex = null;
 /** city id -> the row's button and tick, so marking needs no DOM query. */
 const indexNodes = new Map();
 
+/** region -> its "shuffle here" button, for the same reason. */
+const regionNodes = new Map();
+
 function buildIndex() {
   const byRegion = new Map();
   CITIES.forEach((c) => {
@@ -419,8 +425,22 @@ function buildIndex() {
       const section = document.createElement("section");
       section.className = "index__region";
 
+      /* The heading doubles as the control for shuffling this region alone.
+         The index is where someone is already looking at the deck by region,
+         so it is where they are most likely to want less of it. */
       const heading = document.createElement("h3");
-      heading.textContent = region;
+      heading.className = "index__heading";
+
+      const label = document.createElement("span");
+      label.textContent = region;
+
+      const only = document.createElement("button");
+      only.type = "button";
+      only.className = "index__only";
+      only.addEventListener("click", () => setRegion(onlyRegion === region ? null : region));
+      regionNodes.set(region, only);
+
+      heading.append(label, only);
 
       const list = document.createElement("ul");
       list.className = "index__list";
@@ -471,10 +491,23 @@ function buildIndex() {
 /** Mark what this pass has dealt. Recomputed on open, since it keeps changing. */
 function markIndex() {
   const left = remaining();
-  el("index-note").textContent =
-    left === 0
-      ? `All ${CITIES.length} seen this time round — the next shuffle starts a new pass.`
-      : `${CITIES.length} in the deck · ${left} you have not seen this time round.`;
+  const size = pool().length;
+  el("index-note").textContent = onlyRegion
+    ? left === 0
+      ? `All ${size} in ${onlyRegion} seen this time round — the next shuffle starts them again.`
+      : `Shuffling ${onlyRegion} only · ${size} cities · ${left} you have not seen this time round.`
+    : left === 0
+      ? `All ${size} seen this time round — the next shuffle starts a new pass.`
+      : `${size} in the deck · ${left} you have not seen this time round.`;
+
+  regionNodes.forEach((button, region) => {
+    const on = onlyRegion === region;
+    button.classList.toggle("is-on", on);
+    button.setAttribute("aria-pressed", on ? "true" : "false");
+    button.textContent = on ? "only this" : "shuffle here";
+    button.setAttribute("aria-label",
+      on ? `Shuffle the whole deck again, not just ${region}` : `Shuffle ${region} only`);
+  });
 
   CITIES.forEach((city) => {
     const row = indexNodes.get(city.id);
@@ -692,6 +725,67 @@ function queueNext(afterId) {
    out until the next one, and a city removed from it simply stops matching. */
 
 const PASS_KEY = "atlas-shuffle:seen:v1";
+const REGION_KEY = "atlas-shuffle:region:v1";
+
+/* Shuffling one region only. null is the whole deck, which is the default and
+   what most visits stay on. It outlives the tab like the pass does, so it is
+   said out loud in two places — the index note and the tally under the city —
+   because a filter you cannot see is just a site that has lost cities. */
+let onlyRegion = loadRegion();
+
+function loadRegion() {
+  try {
+    const raw = localStorage.getItem(REGION_KEY);
+    // Only honour a region the deck still has. A stored value left over from a
+    // city that has since been removed would filter the deck down to nothing.
+    return CITIES.some((c) => c.region === raw) ? raw : null;
+  } catch (err) {
+    return null;
+  }
+}
+
+function saveRegion() {
+  try {
+    if (onlyRegion) localStorage.setItem(REGION_KEY, onlyRegion);
+    else localStorage.removeItem(REGION_KEY);
+  } catch (err) {
+    /* Same as the pass: it just will not outlive the tab. */
+  }
+}
+
+/** The cities the shuffle may deal — the whole deck, or one region of it. */
+function pool() {
+  return onlyRegion ? CITIES.filter((c) => c.region === onlyRegion) : CITIES;
+}
+
+const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+
+/**
+ * Narrow the shuffle to one region, or open it back up with null.
+ *
+ * The card in hand was dealt out of the old pool, so it is dropped rather than
+ * put back: it was never shown, so it is not in `seen`, and freshDeck() builds
+ * from `seen` — it comes round again by itself if the new pool still holds it.
+ * The city on screen stays where it is. Changing what comes next is not a
+ * reason to take away what someone is reading.
+ */
+function setRegion(next) {
+  if (next === onlyRegion) return;
+  onlyRegion = next;
+  saveRegion();
+
+  nextCity = null;
+  nextWarm = null;
+  deck = freshDeck();
+  queueNext(current ? current.id : null);
+
+  renderPass();
+  if (indexBuilt) markIndex();
+  el("announcer").textContent = next
+    ? `Shuffling ${next} only. ${plural(remaining(), "city", "cities")} to see.`
+    : `Shuffling the whole deck again. ${plural(remaining(), "city", "cities")} to see.`;
+}
+
 
 /** Reading storage throws outright in some privacy modes, so never assume. */
 function loadSeen() {
@@ -741,11 +835,15 @@ function shuffled(list) {
 
 /** What is left of the current pass, or a whole new one once it is spent. */
 function freshDeck() {
-  const left = CITIES.filter((c) => !seen.has(c.id));
+  const cards = pool();
+  const left = cards.filter((c) => !seen.has(c.id));
   if (left.length > 0) return shuffled(left);
-  seen = new Set();
+  // Spent — but only clear what is in view. Filtered to one region, wiping the
+  // whole record would mean a look at Oceania threw away a pass over the other
+  // forty-six cities, which the visitor never asked for and cannot see happen.
+  for (const c of cards) seen.delete(c.id);
   saveSeen({ merge: false });   // a new pass has to be able to clear the old one
-  return shuffled(CITIES);
+  return shuffled(cards);
 }
 
 /** Take a card out of the deck without judging why. */
@@ -822,7 +920,15 @@ el("to-top").addEventListener("click", () => {
 // Starting over keeps the city on screen — you are looking at it, so it counts
 // as seen — and keeps the card already in hand, which is the next one up.
 el("pass-reset").addEventListener("click", () => {
-  seen = new Set(current ? [current.id] : []);
+  // Filtered to a region, this clears that region and leaves the rest of the
+  // pass alone — the same rule freshDeck() follows, and for the same reason:
+  // the button is under a tally that only ever counted the region.
+  if (onlyRegion) {
+    for (const c of pool()) seen.delete(c.id);
+    if (current) seen.add(current.id);
+  } else {
+    seen = new Set(current ? [current.id] : []);
+  }
   saveSeen({ merge: false });
   deck = freshDeck();
   if (nextCity) takeFromDeck(nextCity.id);

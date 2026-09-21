@@ -191,6 +191,20 @@ closed set `check.js` now enforces. Cities the current pass has already dealt ar
 dimmed and ticked, so the list answers "what have I not seen yet" rather than
 merely listing what exists. It is built on first open, not at load.
 
+Each region heading carries a **shuffle here**, which narrows the deck to that
+region until it is pressed again — the index is where you are already reading
+the deck by region, so it is where you are most likely to want less of it. The
+choice outlives the tab, so it is said out loud in the index note and in the
+tally under the city; a filter you cannot see is just a site that has lost
+cities.
+
+The pass keeps its own counting straight underneath. Running a region dry
+reshuffles that region and leaves the rest of the record alone, so a look at
+Oceania does not throw away a pass across the other forty-four, and "start over"
+under the tally clears only what the tally was counting. The card already
+prefetched is dropped when the region changes, or the first city after narrowing
+to East Asia would be whatever was queued before it.
+
 ## The shuffle
 
 Cities are dealt from a shuffled deck rather than picked at random, so a pass

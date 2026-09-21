@@ -362,4 +362,91 @@ test("the index lists every city, grouped, and marks the pass", async (t) => {
   t.ok(tab.elements["index-open"].focused, "focus returned to the opener");
 });
 
+/* ── Shuffling one region ─────────────────────────────────
+
+   The filter narrows the pool the deck is dealt from, which is the machinery
+   every past bug in this file lived in. The cases below are about the pass
+   staying honest across the change, not about the control that sets it. */
+
+/** The region with the most cities, so a pass through one is worth watching. */
+const biggestRegion = (tab) =>
+  tab.read(`[...CITIES.reduce((m, c) => m.set(c.region, (m.get(c.region) || 0) + 1), new Map())]
+              .sort((a, b) => b[1] - a[1])[0][0]`);
+
+test("shuffling one region deals that region, once each", async (t) => {
+  const tab = boot();
+  await settle();
+  const region = biggestRegion(tab);
+  await tab.run(`setRegion(${JSON.stringify(region)})`);
+
+  const size = tab.read("pool().length");
+  const drawn = [];
+  for (let i = 0; i < size; i++) {
+    await tab.run("shuffle()");
+    drawn.push({ id: tab.read("current.id"), region: tab.read("current.region") });
+    await tick(3);
+  }
+  t.equal(drawn.filter((c) => c.region !== region).length, 0, "draws from outside the region");
+  t.equal(new Set(drawn.map((c) => c.id)).size, size, `distinct cities in a pass of ${size}`);
+});
+
+test("the card in hand is re-dealt when the region changes", async (t) => {
+  // It was picked out of the old pool. Left alone it is shown next, so the
+  // first city after narrowing to Oceania would be whatever was queued before.
+  const tab = boot();
+  await settle();
+  const region = biggestRegion(tab);
+  await tab.run(`setRegion(${JSON.stringify(region)})`);
+  t.equal(tab.read("nextCity && nextCity.region"), region, "queued city's region");
+  t.ok(tab.read("deck.every((c) => c.region === onlyRegion)"), "deck is all one region");
+});
+
+test("a region's pass does not spend the rest of the deck", async (t) => {
+  const tab = boot();
+  await settle();
+  for (let i = 0; i < 5; i++) {
+    await tab.run("shuffle()");
+    await tick(3);
+  }
+  const before = tab.read("[...seen]");
+  const region = biggestRegion(tab);
+  await tab.run(`setRegion(${JSON.stringify(region)})`);
+
+  // Run the region dry and round again, which is what clears it.
+  const size = tab.read("pool().length");
+  for (let i = 0; i < size * 2 + 2; i++) {
+    await tab.run("shuffle()");
+    await tick(3);
+  }
+  const lost = tab.read(
+    `${JSON.stringify(before)}.filter((id) => CITIES.find((c) => c.id === id).region !== ${JSON.stringify(region)}
+       && !seen.has(id)).length`
+  );
+  t.equal(lost, 0, "cities dropped from the wider pass");
+});
+
+test("the region outlives the tab", async (t) => {
+  const store = new Map();
+  const first = boot(store);
+  await settle();
+  const region = biggestRegion(first);
+  await first.run(`setRegion(${JSON.stringify(region)})`);
+
+  const second = boot(store);
+  await settle();
+  t.equal(second.read("onlyRegion"), region, "region after a reload");
+  t.ok(second.read("deck.every((c) => c.region === onlyRegion)"), "deck is all one region");
+});
+
+test("a stored region the deck no longer has is ignored", async (t) => {
+  // A region only ever existed because some city carried it. Remove that city
+  // and the stored value would filter the pool down to nothing to deal.
+  const store = new Map();
+  store.set("atlas-shuffle:region:v1", "Atlantis");
+  const tab = boot(store);
+  await settle();
+  t.equal(tab.read("onlyRegion"), null, "region filter");
+  t.equal(tab.read("pool().length"), tab.read("CITIES.length"), "cities to deal from");
+});
+
 module.exports = { cases, reset };
