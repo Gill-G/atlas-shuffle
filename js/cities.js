@@ -653,7 +653,7 @@ const CITIES = [
       { article: "St. Louis Cathedral (New Orleans)", caption: "St Louis Cathedral is the oldest continuously active cathedral in the United States." },
       { article: "Jackson Square (New Orleans)", caption: "Jackson Square was the parade ground where Louisiana was formally transferred to the US in 1803." },
       { article: "Garden District, New Orleans", caption: "The Garden District was built by wealthy Americans who were not welcome in the Creole Quarter." },
-      { article: "Preservation Hall", caption: "Preservation Hall has staged traditional jazz nightly since 1961, with no drinks and no amplification." }
+      { article: "Preservation Hall Jazz Band", caption: "Preservation Hall has staged traditional jazz nightly since 1961, with no drinks and no amplification." }
     ],
     facts: {
       Population: "370,000 (1.3m metro)",
@@ -1211,7 +1211,7 @@ const CITIES = [
     gallery: [
       { article: "Riga", caption: "Riga was a Hanseatic port from 1201, and Baltic German merchants ran it for seven centuries after." },
       { article: "Vecrīga", caption: "Much of what reads as medieval in the old town is careful post-war reconstruction." },
-      { article: "Art Nouveau architecture in Riga", caption: "About a third of central Riga is Art Nouveau, the densest concentration of it anywhere." },
+      { article: "Albert Street, Riga", caption: "Alberta iela is the thick of it: about a third of central Riga is Art Nouveau, more than anywhere else." },
       { article: "Riga Central Market", caption: "The market halls are five Zeppelin hangars, brought from Kurzeme and re-erected in the 1920s." },
       { article: "Freedom Monument", caption: "The Freedom Monument went up in 1935, and the Soviets never quite dared take it down." },
       { article: "Latvian Academy of Sciences", caption: "The Academy of Sciences is Riga's Stalinist tower, known locally as Stalin's birthday cake." }
