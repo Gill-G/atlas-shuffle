@@ -117,6 +117,13 @@ the count in the footer, the shuffle pool, the accent colour.
 }
 ```
 
+`country` is what a traveller would say, not a sovereign state, and it is not
+checked against anything — it exists to be read under the city name. So
+Edinburgh is in Scotland and London in England rather than both in the United
+Kingdom, and Hong Kong, New Caledonia and Monaco stand as their own answers.
+Nothing groups or counts by it; `region` is the field with rules, because the
+index groups by that one.
+
 Two rules worth keeping: `gallery[0]` is the hero image, and every `article` must
 be an exact English Wikipedia title that has a lead photo. Check the new entry
 before committing it:
