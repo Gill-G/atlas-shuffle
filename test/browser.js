@@ -238,6 +238,22 @@ addEventListener("load", async () => {
       "main=" + getComputedStyle(document.querySelector("main")).display +
       " foot=" + getComputedStyle(document.querySelector(".foot")).display);
 
+    /* Each grid photograph sits in a figure with its caption. An alt repeating
+       that caption is read out on top of it, so every caption came through
+       twice. The hero is the other way round: nothing renders its caption, so
+       it must have one. */
+    const figs = [...document.querySelectorAll("#gallery figure")];
+    const doubled = figs.filter((f) => {
+      const alt = f.querySelector("img").getAttribute("alt") || "";
+      return alt && f.querySelector("figcaption").textContent.includes(alt);
+    });
+    report("a caption is not also read out as alt text",
+      figs.length > 0 && doubled.length === 0,
+      figs.length + " figures, " + doubled.length + " doubled");
+    report("the hero photograph still describes itself",
+      (document.getElementById("hero-img").getAttribute("alt") || "").length > 10,
+      document.getElementById("hero-img").getAttribute("alt") || "empty");
+
     const hero = document.getElementById("hero-img");
     report("the hero photograph is shown", !!hero.getAttribute("src"), hero.getAttribute("src") || "no src");
     report("photographs are credited",
@@ -271,6 +287,8 @@ const NAMES = [
   "Escape closes it",
   "the reset control outreads the prose around it",
   "the page is not hidden by the no-JS notice",
+  "a caption is not also read out as alt text",
+  "the hero photograph still describes itself",
   "the hero photograph is shown",
   "photographs are credited"
 ];

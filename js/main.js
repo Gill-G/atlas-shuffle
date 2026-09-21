@@ -326,7 +326,11 @@ function renderGallery(city) {
       frame.className = "shot";
 
       const img = document.createElement("img");
-      img.alt = shot.caption;
+      /* Empty on purpose. The figcaption below carries the sentence, and a
+         screen reader reads both, so an alt holding the same words read every
+         caption in the grid twice over. The hero keeps a real alt because its
+         caption is not rendered anywhere. */
+      img.alt = "";
       img.loading = "lazy";
       img.decoding = "async";
       img.addEventListener("load", () => img.classList.add("loaded"), { once: true });
