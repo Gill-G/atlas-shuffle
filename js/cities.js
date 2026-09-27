@@ -306,7 +306,7 @@ const CITIES = [
     name: "Reykjavík",
     country: "Iceland",
     region: "Northern Europe",
-    accent: "#4a8fc0",
+    accent: "#3393d2",
     tagline: "The world's northernmost capital",
     intro:
       "Reykjavík holds about a third of Iceland's population in a low, brightly painted town heated almost entirely by geothermal water pumped from underground. In June it barely gets dark; in December the sun is up for four hours. Everything else on the island is within a day's drive.",
@@ -504,7 +504,7 @@ const CITIES = [
     name: "Amsterdam",
     country: "Netherlands",
     region: "Western Europe",
-    accent: "#c9803f",
+    accent: "#bd8a4e",
     tagline: "A city engineered out of a swamp",
     intro:
       "Amsterdam's centre is a planned 17th-century ring of canals dug during the Dutch Golden Age, with the merchant houses along them still standing on wooden piles driven into the mud. There are more bicycles than residents, and the city is built at the scale of a person on one.",
@@ -669,7 +669,7 @@ const CITIES = [
     name: "Bergen",
     country: "Norway",
     region: "Northern Europe",
-    accent: "#4e93a8",
+    accent: "#63939f",
     tagline: "The gateway to the fjords",
     intro:
       "Bergen was Norway's capital in the 13th century and the northernmost office of the Hanseatic League, which left a row of wooden trading houses on the wharf that are now a World Heritage site. It is surrounded by seven mountains, sits at the mouth of the fjord country, and rains roughly 230 days a year.",
