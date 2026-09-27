@@ -839,8 +839,8 @@ function freshDeck() {
   const left = cards.filter((c) => !seen.has(c.id));
   if (left.length > 0) return shuffled(left);
   // Spent — but only clear what is in view. Filtered to one region, wiping the
-  // whole record would mean a look at Oceania threw away a pass over the other
-  // forty-six cities, which the visitor never asked for and cannot see happen.
+  // whole record would mean a look at Oceania threw away a pass over the rest of the
+  // deck, which the visitor never asked for and cannot see happen.
   for (const c of cards) seen.delete(c.id);
   saveSeen({ merge: false });   // a new pass has to be able to clear the old one
   return shuffled(cards);

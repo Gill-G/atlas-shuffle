@@ -36,7 +36,7 @@ const API = "https://en.wikipedia.org/w/api.php";
    to look at. */
 const UA = "atlas-shuffle-check/1.0 (https://github.com/Gill-G/atlas-shuffle)";
 const THUMB_PX = 1600;       // keep in step with THUMB_PX in js/main.js
-const HERO_PX = 2560;        // and with HERO_PX: gallery[0] is shown full-bleed
+const HERO_PX = 2560;        // and with HERO_MAX: gallery[0] is shown full-bleed
 const MIN_WIDTH = 700;       // below this a photo looks soft in a gallery slot
 const BATCH = 40;            // titles per API request
 

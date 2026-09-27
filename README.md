@@ -200,7 +200,7 @@ cities.
 
 The pass keeps its own counting straight underneath. Running a region dry
 reshuffles that region and leaves the rest of the record alone, so a look at
-Oceania does not throw away a pass across the other forty-four, and "start over"
+Oceania does not throw away a pass across the rest of the deck, and "start over"
 under the tally clears only what the tally was counting. The card already
 prefetched is dropped when the region changes, or the first city after narrowing
 to East Asia would be whatever was queued before it.
