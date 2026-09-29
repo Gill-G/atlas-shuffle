@@ -9,7 +9,7 @@
    ============================================================ */
 
 const API = "https://en.wikipedia.org/w/api.php";
-const THUMB_PX = 1600;   // gallery grid: cells are a few hundred px wide
+const THUMB_PX = 1600;   // the least the hero is ever asked for
 const HERO_MAX = 2560;   // the most we will ever ask for the full-bleed hero
 
 /* The hero covers the whole viewport, so ask for what this screen can actually
@@ -187,7 +187,7 @@ async function getJSON(url, attempt = 0) {
  * Returns a Map of the ORIGINAL title -> url|null, so callers don't
  * have to care that the API normalises and follows redirects.
  */
-async function fetchImages(titles, size = THUMB_PX) {
+async function fetchImages(titles, size) {
   const wanted = titles.filter((t) => !imageCache.has(t));
   if (wanted.length === 0) return;
 
@@ -371,18 +371,19 @@ function renderFacts(city) {
   );
 }
 
-/* How far through the current pass we are. Deliberately not a live region:
-   the announcer already speaks each city, and a running tally repeated after
-   every shuffle would be noise. */
 /** Cities not yet shown in this pass. The one number both the tally and the
     announcement are allowed to quote, so they cannot disagree. */
 function remaining() {
   return pool().filter((c) => !seen.has(c.id)).length;
 }
 
+/* How far through the current pass we are. Deliberately not a live region:
+   the announcer already speaks each city, and a running tally repeated after
+   every shuffle would be noise. */
 function renderPass() {
   const total = pool().length;
-  const n = total - remaining();
+  const left = remaining();
+  const n = total - left;
   const where = onlyRegion ? ` in ${onlyRegion}` : "";
 
   el("pass-progress").textContent =
@@ -390,7 +391,7 @@ function renderPass() {
       ? onlyRegion
         ? `That was all of ${onlyRegion} — it reshuffles from here.`
         : `That was all of them — the deck reshuffles from here.`
-      : `${n} seen${where} this time round, ${remaining()} to go.`;
+      : `${n} seen${where} this time round, ${left} to go.`;
 
   // Nothing to start over from until a pass is actually under way.
   el("pass-reset").hidden = n < 2 || n >= total;
@@ -404,7 +405,6 @@ function renderPass() {
    pass has already dealt, so it answers "what have I not seen yet". */
 
 let indexBuilt = false;
-let openerBeforeIndex = null;
 
 /** city id -> the row's button and tick, so marking needs no DOM query. */
 const indexNodes = new Map();
@@ -514,14 +514,13 @@ function markIndex() {
     if (!row) return;
     const { button, tick } = row;
     const isCurrent = !!current && current.id === city.id;
-    if (seen.has(city.id)) button.classList.add("is-seen");
-    else button.classList.remove("is-seen");
-    if (isCurrent) button.classList.add("is-current");
-    else button.classList.remove("is-current");
-    tick.textContent = seen.has(city.id) ? "✓" : "";
+    const isSeen = seen.has(city.id);
+    button.classList.toggle("is-seen", isSeen);
+    button.classList.toggle("is-current", isCurrent);
+    tick.textContent = isSeen ? "✓" : "";
     button.setAttribute(
       "aria-label",
-      `${city.name}, ${city.country}${isCurrent ? " — on screen now" : seen.has(city.id) ? " — already seen this time round" : ""}`
+      `${city.name}, ${city.country}${isCurrent ? " — on screen now" : isSeen ? " — already seen this time round" : ""}`
     );
   });
 }
@@ -529,7 +528,6 @@ function markIndex() {
 function openIndex() {
   if (!indexBuilt) buildIndex();
   markIndex();
-  openerBeforeIndex = el("index-open");   // where focus goes back to on close
   el("index").hidden = false;
   document.body.classList.add("is-indexing");
   el("index-close").focus();
@@ -539,8 +537,7 @@ function closeIndex() {
   if (el("index").hidden) return;
   el("index").hidden = true;
   document.body.classList.remove("is-indexing");
-  if (openerBeforeIndex && openerBeforeIndex.focus) openerBeforeIndex.focus();
-  openerBeforeIndex = null;
+  el("index-open").focus();   // back to the only thing that opens it
 }
 
 /* ── Orchestration ───────────────────────────────────────── */
@@ -901,9 +898,11 @@ async function shuffle() {
 
 /* ── Boot ────────────────────────────────────────────────── */
 
+/** The city the URL fragment names, if it names one. */
+const cityFromHash = () => CITIES.find((c) => c.id === decodeURIComponent(location.hash.slice(1)));
+
 function initialCity() {
-  const requested = decodeURIComponent(location.hash.slice(1));
-  return CITIES.find((c) => c.id === requested) || pickCity();
+  return cityFromHash() || pickCity();
 }
 
 el("city-count").textContent = CITIES.length;
@@ -1017,7 +1016,7 @@ document.addEventListener("keydown", (e) => {
 
 // Support pasting a #city link into an already-open tab.
 window.addEventListener("hashchange", () => {
-  const target = CITIES.find((c) => c.id === decodeURIComponent(location.hash.slice(1)));
+  const target = cityFromHash();
   if (target && (!current || target.id !== current.id)) {
     current = target;
     show(target);

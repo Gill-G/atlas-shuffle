@@ -103,7 +103,7 @@ function boot(store = new Map(), { hash = "", respond = null, connection = null,
 
   const sandbox = {
     console, setTimeout: schedule, clearTimeout, Promise, Math, Object, Array, JSON,
-    String, Number, RegExp, Error, Date, URLSearchParams, Set, Map,
+    String, Number, RegExp, Error, URLSearchParams, Set, Map,
 
     localStorage: {
       getItem: (key) => (store.has(key) ? store.get(key) : null),
@@ -189,7 +189,6 @@ function boot(store = new Map(), { hash = "", respond = null, connection = null,
   vm.runInContext(fs.readFileSync(path.join(ROOT, "js/cities.js"), "utf8"), sandbox);
   vm.runInContext(fs.readFileSync(path.join(ROOT, "js/main.js"), "utf8"), sandbox);
 
-  tab.sandbox = sandbox;
   tab.read = (expression) => vm.runInContext(expression, sandbox);
   tab.run = (expression) => vm.runInContext(expression, sandbox);
   tab.press = (key) =>
@@ -217,4 +216,4 @@ const tick = (ms = 0) => new Promise((resolve) => setTimeout(resolve, ms));
 /** Let boot settle: the first city renders through two awaits and a probe image. */
 const settle = () => tick(400);
 
-module.exports = { boot, reset, tick, settle, tabs, ROOT };
+module.exports = { boot, reset, tick, settle, ROOT };

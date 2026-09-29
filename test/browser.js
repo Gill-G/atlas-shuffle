@@ -320,4 +320,4 @@ cases.push({
   }
 });
 
-module.exports = { cases, findBrowser };
+module.exports = { cases };
