@@ -413,8 +413,59 @@ function renderPass() {
 
 let indexBuilt = false;
 
-/** city id -> the row's button and tick, so marking needs no DOM query. */
+/** city id -> its row in the region lists, so marking needs no DOM query. */
 const indexNodes = new Map();
+
+/** One city's row: a button that shows it, with room for a tick and a star. */
+function cityRow(city) {
+  const item = document.createElement("li");
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "index__city";
+
+  const tick = document.createElement("span");
+  tick.className = "tick";
+  tick.setAttribute("aria-hidden", "true");
+
+  const name = document.createElement("span");
+  name.textContent = city.name;
+
+  const where = document.createElement("span");
+  where.className = "where";
+  where.textContent = city.country;
+
+  const star = document.createElement("span");
+  star.className = "star";
+  star.setAttribute("aria-hidden", "true");
+
+  button.append(tick, name, where, star);
+  button.addEventListener("click", () => {
+    closeIndex();
+    if (current && current.id === city.id) return;
+    current = city;
+    history.replaceState(null, "", `#${city.id}`);
+    show(city);
+  });
+  item.append(button);
+  return { item, button, tick, star };
+}
+
+/** Say on a row whether its city is on screen, seen this pass, or wanted. */
+function markRow({ button, tick, star }, city) {
+  const isCurrent = !!current && current.id === city.id;
+  const isSeen = seen.has(city.id);
+  const isWanted = wanted.has(city.id);
+  button.classList.toggle("is-seen", isSeen);
+  button.classList.toggle("is-current", isCurrent);
+  tick.textContent = isSeen ? "✓" : "";
+  star.textContent = isWanted ? "★" : "";
+  button.setAttribute(
+    "aria-label",
+    `${city.name}, ${city.country}` +
+      (isCurrent ? " — on screen now" : isSeen ? " — already seen this time round" : "") +
+      (isWanted ? " — on your want-to-go list" : "")
+  );
+}
 
 /** region -> its "shuffle here" button, for the same reason. */
 const regionNodes = new Map();
@@ -457,35 +508,9 @@ function buildIndex() {
         .slice()
         .sort((a, b) => a.name.localeCompare(b.name))
         .forEach((city) => {
-          const item = document.createElement("li");
-          const button = document.createElement("button");
-          button.type = "button";
-          button.className = "index__city";
-          button.id = `index-city-${city.id}`;
-
-          const tick = document.createElement("span");
-          tick.className = "tick";
-          tick.setAttribute("aria-hidden", "true");
-
-          const name = document.createElement("span");
-          name.textContent = city.name;
-
-          const where = document.createElement("span");
-          where.className = "where";
-          where.textContent = city.country;
-
-          button.append(tick, name, where);
-          indexNodes.set(city.id, { button, tick });
-          button.addEventListener("click", () => {
-            closeIndex();
-            if (current && current.id === city.id) return;
-            current = city;
-            history.replaceState(null, "", `#${city.id}`);
-            show(city);
-          });
-
-          item.append(button);
-          list.append(item);
+          const row = cityRow(city);
+          indexNodes.set(city.id, row);
+          list.append(row.item);
         });
 
       section.append(heading, list);
@@ -518,18 +543,20 @@ function markIndex() {
 
   CITIES.forEach((city) => {
     const row = indexNodes.get(city.id);
-    if (!row) return;
-    const { button, tick } = row;
-    const isCurrent = !!current && current.id === city.id;
-    const isSeen = seen.has(city.id);
-    button.classList.toggle("is-seen", isSeen);
-    button.classList.toggle("is-current", isCurrent);
-    tick.textContent = isSeen ? "✓" : "";
-    button.setAttribute(
-      "aria-label",
-      `${city.name}, ${city.country}${isCurrent ? " — on screen now" : isSeen ? " — already seen this time round" : ""}`
-    );
+    if (row) markRow(row, city);
   });
+
+  // The want-to-go list comes first, and is rebuilt rather than marked: it is
+  // short, and which cities are on it is exactly what changes.
+  const mine = CITIES.filter((c) => wanted.has(c.id)).sort((a, b) => a.name.localeCompare(b.name));
+  el("index-want").hidden = mine.length === 0;
+  el("index-want-list").replaceChildren(
+    ...mine.map((city) => {
+      const row = cityRow(city);
+      markRow(row, city);
+      return row.item;
+    })
+  );
 }
 
 function openIndex() {
@@ -605,6 +632,7 @@ async function show(city, { scroll = true, warmed = null } = {}) {
   renderFacts(city);
   renderPass();
   renderBack();
+  renderWant();
 
   if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
 
@@ -946,6 +974,62 @@ async function shuffle() {
   history.replaceState(null, "", `#${next.id}`);
   await show(next, { warmed });
 }
+
+/* ── Want to go ──────────────────────────────────────────── */
+
+/* A shuffle shows you somewhere you did not choose, and some of those you
+   will want to find again. Starring one keeps it on a list at the top of the
+   index. The list outlives the tab, like the pass, and like the pass it is
+   shared between tabs — but it is not merged the same way. A merge can only
+   add, so a city taken off the list in one tab would be put straight back by
+   the other. Instead each toggle reads what is stored, changes that one city,
+   and writes it back, so the only thing a tab ever says is what it was asked. */
+
+const WANT_KEY = "atlas-shuffle:want:v1";
+
+function loadWanted() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(WANT_KEY));
+    if (!Array.isArray(raw)) return new Set();
+    const known = new Set(CITIES.map((c) => c.id));
+    return new Set(raw.filter((id) => known.has(id)));   // a removed city just drops off
+  } catch (err) {
+    return new Set();
+  }
+}
+
+let wanted = loadWanted();
+
+function toggleWant(id) {
+  wanted = loadWanted();   // what another tab stored since, not what we last saw
+  if (wanted.has(id)) wanted.delete(id);
+  else wanted.add(id);
+  try {
+    localStorage.setItem(WANT_KEY, JSON.stringify([...wanted]));
+  } catch (err) {
+    /* Storage unavailable: the star holds for this tab and no longer. */
+  }
+  renderWant();
+  if (indexBuilt) markIndex();
+}
+
+/** The toggle states the city on screen: a pressed button, not a changing label. */
+function renderWant() {
+  const on = !!current && wanted.has(current.id);
+  el("want").setAttribute("aria-pressed", on ? "true" : "false");
+  el("want-icon").textContent = on ? "★" : "☆";
+}
+
+el("want").addEventListener("click", () => {
+  if (current) toggleWant(current.id);
+});
+
+window.addEventListener("storage", (e) => {
+  if (e.key !== WANT_KEY) return;
+  wanted = loadWanted();
+  renderWant();
+  if (indexBuilt) markIndex();
+});
 
 /* ── Boot ────────────────────────────────────────────────── */
 

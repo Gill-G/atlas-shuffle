@@ -191,6 +191,7 @@ eye.
 | `#tokyo` | link straight to one city |
 | Shuffle button | top right, and at the foot of the page |
 | Back button | beside it, once there is somewhere to go back to |
+| Want to go | under the city's name; stars it for the index |
 | All cities | opens the index |
 
 ## The index
@@ -236,6 +237,18 @@ the next one up.
 The trail lives in memory, not `localStorage`. A reload starts a new one while
 the pass carries on: the pass is about what you have seen, the trail about
 where you just were.
+
+## Want to go
+
+A shuffle shows you places you did not choose, and some of them you will want
+to find again. "Want to go" under the city's name stars it; starred cities are
+listed at the top of the index and marked ★ in their regions.
+
+The list is kept in `localStorage` and shared between tabs, but not merged the
+way the pass is. A merge can only add, so a city unstarred in one tab would be
+put straight back by the other. Each toggle instead reads what is stored,
+changes that one city and writes it back, so a tab only ever says what it was
+asked to.
 
 ## Credits
 

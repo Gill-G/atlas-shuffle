@@ -213,6 +213,9 @@ addEventListener("load", async () => {
     report("every city has a row",
       document.querySelectorAll(".index__city").length === CITIES.length,
       document.querySelectorAll(".index__city").length + " rows");
+    // Nobody has starred anything in a fresh profile, so the section is empty
+    // and must not take up room — it sits in a class that could set display.
+    report("an empty want-to-go list is not shown", displayOf("index-want") === "none", "display=" + displayOf("index-want"));
     report("the count is filled in", /deck/.test(document.getElementById("index-note").textContent),
       document.getElementById("index-note").textContent);
 
@@ -286,6 +289,7 @@ const NAMES = [
   "back is hidden until there is somewhere to go",
   "opens when asked",
   "every city has a row",
+  "an empty want-to-go list is not shown",
   "the count is filled in",
   "closes again",
   "Escape closes it",

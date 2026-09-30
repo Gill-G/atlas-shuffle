@@ -378,6 +378,60 @@ test("a local name is shown in its own language, and only where there is one", a
   t.equal(local.attrs.lang, undefined, "no language left behind");
 });
 
+/* ── Want to go ─────────────────────────────────────────── */
+
+const WANT = "atlas-shuffle:want:v1";
+
+test("a starred city stays starred across a reload, and heads the index", async (t) => {
+  const store = new Map();
+  const first = boot(store, { hash: "#kyoto" });
+  await settle();
+  first.elements.want.click();
+  t.equal(first.elements.want.attrs["aria-pressed"], "true", "pressed once starred");
+
+  const second = boot(store, { hash: "#tokyo" });
+  await settle();
+  t.equal(second.elements.want.attrs["aria-pressed"], "false", "another city is not starred");
+  second.elements["index-open"].click();
+  await tick(20);
+  const list = second.elements["index-want-list"];
+  t.equal(second.elements["index-want"].hidden, false, "want-to-go section shown");
+  t.equal(list.children.length, 1, "cities on the list");
+  t.match(list.textContent, /Kyoto/, "the city on the list");
+});
+
+test("unstarring takes a city off the list, and an empty list is not shown", async (t) => {
+  const store = new Map();
+  const tab = boot(store, { hash: "#kyoto" });
+  await settle();
+  tab.elements.want.click();
+  tab.elements.want.click();
+  t.equal(tab.elements.want.attrs["aria-pressed"], "false", "pressed after two presses");
+  t.equal(store.get(WANT), "[]", "stored list");
+  tab.elements["index-open"].click();
+  await tick(20);
+  t.equal(tab.elements["index-want"].hidden, true, "want-to-go section hidden");
+});
+
+test("a star in one tab does not erase another tab's", async (t) => {
+  // Written behind this tab's back, as when its storage event is missed or
+  // has not arrived. A tab that saved what it last saw would drop Rome.
+  const store = new Map();
+  const tab = boot(store, { hash: "#kyoto" });
+  await settle();
+  store.set(WANT, JSON.stringify(["rome"]));
+  tab.elements.want.click();
+  const saved = JSON.parse(store.get(WANT));
+  t.ok(saved.includes("rome") && saved.includes("kyoto"), `stored list: ${saved.join(", ")}`);
+});
+
+test("a starred city no longer in the deck drops off the list", async (t) => {
+  const store = new Map([[WANT, JSON.stringify(["atlantis", "kyoto"])]]);
+  const tab = boot(store);
+  await settle();
+  t.equal(tab.read("[...wanted].join()"), "kyoto", "cities on the list");
+});
+
 /* ── Going back ─────────────────────────────────────────── */
 
 test("going back walks the trail in reverse and stops at its start", async (t) => {

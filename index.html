@@ -65,6 +65,10 @@
       <h1 class="hero__name" id="hero-name">&nbsp;</h1>
       <p class="hero__local" id="hero-local" dir="auto"></p>
       <p class="hero__tagline" id="hero-tagline"></p>
+      <button id="want" class="want" type="button" aria-pressed="false">
+        <span class="want__icon" id="want-icon" aria-hidden="true">☆</span>
+        <span>Want to go</span>
+      </button>
     </div>
     <p class="hero__credit" id="hero-credit"></p>
     <a class="hero__cue" href="#dossier" aria-label="Scroll to the city dossier">
@@ -135,6 +139,10 @@
       <p class="index__note" id="index-note"></p>
       <button class="index__close" id="index-close" type="button" aria-label="Close the index">✕</button>
     </header>
+    <section class="index__region index__want" id="index-want" hidden>
+      <h3 class="index__heading"><span>Want to go</span></h3>
+      <ul class="index__list" id="index-want-list"></ul>
+    </section>
     <div class="index__body" id="index-body"></div>
   </div>
 </div>
