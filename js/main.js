@@ -821,15 +821,18 @@ function setRegion(next) {
 }
 
 
-/** Reading storage throws outright in some privacy modes, so never assume. */
-function loadSeen() {
+/**
+ * A stored list of city ids — the pass, or the want-to-go list.
+ * Reading storage throws outright in some privacy modes, so never assume.
+ */
+function loadIds(key) {
   try {
-    const raw = JSON.parse(localStorage.getItem(PASS_KEY));
+    const raw = JSON.parse(localStorage.getItem(key));
     if (!Array.isArray(raw)) return new Set();
-    // Keep only cities that still exist. A record written before an entry was
+    // Keep only cities that still exist. A pass written before an entry was
     // removed would otherwise be counted by renderPass() but ignored by
     // freshDeck(), which filters against CITIES — and the two would disagree
-    // about whether the pass was finished.
+    // about whether the pass was finished. A starred one just drops off.
     const known = new Set(CITIES.map((c) => c.id));
     return new Set(raw.filter((id) => known.has(id)));
   } catch (err) {
@@ -848,14 +851,14 @@ function loadSeen() {
  */
 function saveSeen({ merge = true } = {}) {
   try {
-    if (merge) for (const id of loadSeen()) seen.add(id);
+    if (merge) for (const id of loadIds(PASS_KEY)) seen.add(id);
     localStorage.setItem(PASS_KEY, JSON.stringify([...seen]));
   } catch (err) {
     /* Storage full, blocked or unavailable: the pass just won't survive the tab. */
   }
 }
 
-let seen = loadSeen();
+let seen = loadIds(PASS_KEY);
 let deck = freshDeck();
 
 function shuffled(list) {
@@ -987,21 +990,10 @@ async function shuffle() {
 
 const WANT_KEY = "atlas-shuffle:want:v1";
 
-function loadWanted() {
-  try {
-    const raw = JSON.parse(localStorage.getItem(WANT_KEY));
-    if (!Array.isArray(raw)) return new Set();
-    const known = new Set(CITIES.map((c) => c.id));
-    return new Set(raw.filter((id) => known.has(id)));   // a removed city just drops off
-  } catch (err) {
-    return new Set();
-  }
-}
-
-let wanted = loadWanted();
+let wanted = loadIds(WANT_KEY);
 
 function toggleWant(id) {
-  wanted = loadWanted();   // what another tab stored since, not what we last saw
+  wanted = loadIds(WANT_KEY);   // what another tab stored since, not what we last saw
   if (wanted.has(id)) wanted.delete(id);
   else wanted.add(id);
   try {
@@ -1026,7 +1018,7 @@ el("want").addEventListener("click", () => {
 
 window.addEventListener("storage", (e) => {
   if (e.key !== WANT_KEY) return;
-  wanted = loadWanted();
+  wanted = loadIds(WANT_KEY);
   renderWant();
   if (indexBuilt) markIndex();
 });
@@ -1107,7 +1099,7 @@ function reconcileCardInHand() {
 
 window.addEventListener("storage", (e) => {
   if (e.key !== PASS_KEY) return;
-  const theirs = loadSeen();
+  const theirs = loadIds(PASS_KEY);
 
   // Ids we hold that the record no longer has mean the other tab started over.
   const restarted = [...seen].some((id) => !theirs.has(id));

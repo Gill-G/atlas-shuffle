@@ -85,7 +85,8 @@ kbd {
    the middle of the bar to itself. */
 .topbar__actions { display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
 
-.shuffle {
+/* Back is New city's quieter sibling: the same pill, in the muted ink. */
+.shuffle, .backbtn {
   display: inline-flex; align-items: center; gap: 0.55rem;
   font: inherit; font-size: 0.86rem; font-weight: 600;
   color: var(--paper);
@@ -95,7 +96,7 @@ kbd {
   padding: 0.45rem 0.75rem 0.45rem 0.85rem;
   cursor: pointer;
   backdrop-filter: blur(8px);
-  transition: border-color 0.2s ease, background 0.2s ease;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 .shuffle:hover { border-color: var(--accent); background: rgba(20,20,24,0.85); }
 .shuffle__icon { color: var(--accent); font-size: 1.05em; transition: transform 0.5s cubic-bezier(.3,1.4,.4,1); }
@@ -104,19 +105,7 @@ body.is-loading .shuffle__icon { animation: spin 0.9s linear infinite; }
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* New city's quieter sibling: the same pill, in the muted ink. */
-.backbtn {
-  display: inline-flex; align-items: center; gap: 0.45rem;
-  font: inherit; font-size: 0.86rem; font-weight: 600;
-  color: var(--muted);
-  background: rgba(20,20,24,0.55);
-  border: 1px solid var(--rule);
-  border-radius: 999px;
-  padding: 0.45rem 0.75rem 0.45rem 0.85rem;
-  cursor: pointer;
-  backdrop-filter: blur(8px);
-  transition: color 0.2s ease, border-color 0.2s ease;
-}
+.backbtn { color: var(--muted); }
 .backbtn:hover { color: var(--paper); border-color: var(--accent); }
 /* It sets its own display, which beats the hidden attribute — the same trap
    that once left the index covering the site. */
