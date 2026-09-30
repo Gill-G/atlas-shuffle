@@ -36,11 +36,18 @@
     <span class="indexbtn__icon" aria-hidden="true">☰</span>
     <span class="indexbtn__label">All cities</span>
   </button>
-  <button id="shuffle" class="shuffle" type="button">
-    <span class="shuffle__icon" aria-hidden="true">↻</span>
-    <span class="shuffle__label">New city</span>
-    <kbd aria-hidden="true">R</kbd>
-  </button>
+  <div class="topbar__actions">
+    <button id="back" class="backbtn" type="button" hidden>
+      <span aria-hidden="true">←</span>
+      <span class="backbtn__label">Back</span>
+      <kbd aria-hidden="true">B</kbd>
+    </button>
+    <button id="shuffle" class="shuffle" type="button">
+      <span class="shuffle__icon" aria-hidden="true">↻</span>
+      <span class="shuffle__label">New city</span>
+      <kbd aria-hidden="true">R</kbd>
+    </button>
+  </div>
 </header>
 
 <p id="announcer" class="visually-hidden" role="status" aria-live="polite"></p>
@@ -135,7 +142,7 @@
   <div class="wrap">
     <p>Photographs from Wikimedia Commons via the Wikipedia API, fetched live, and
       credited to their photographers beneath each one. Text written by hand.</p>
-    <p class="foot__meta">Press <kbd>R</kbd> for a new city · link to a specific one with <code id="foot-hash">#city</code></p>
+    <p class="foot__meta">Press <kbd>R</kbd> for a new city, <kbd>B</kbd> to go back · link to a specific one with <code id="foot-hash">#city</code></p>
   </div>
 </footer>
 

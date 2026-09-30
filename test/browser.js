@@ -204,6 +204,9 @@ addEventListener("load", async () => {
   await ready();
   try {
     report("index is hidden on load", displayOf("index") === "none", "display=" + displayOf("index"));
+    // One city shown means nowhere to go back to — and the button sets its own
+    // display, which is exactly what once beat the index's hidden attribute.
+    report("back is hidden until there is somewhere to go", displayOf("back") === "none", "display=" + displayOf("back"));
 
     document.getElementById("index-open").click();
     report("opens when asked", displayOf("index") !== "none", "display=" + displayOf("index"));
@@ -280,6 +283,7 @@ const NAMES = [
   // failing with "no result" and the one line carrying the reason discarded
   "the driver ran to the end",
   "index is hidden on load",
+  "back is hidden until there is somewhere to go",
   "opens when asked",
   "every city has a row",
   "the count is filled in",

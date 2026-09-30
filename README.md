@@ -177,9 +177,11 @@ eye.
 | | |
 |---|---|
 | `R` | new city |
+| `B` | back to the city before |
 | `Esc` | close the index |
 | `#tokyo` | link straight to one city |
 | Shuffle button | top right, and at the foot of the page |
+| Back button | beside it, once there is somewhere to go back to |
 | All cities | opens the index |
 
 ## The index
@@ -212,6 +214,19 @@ shows all 50 before any of them comes round again — picking uniformly repeated
 after about nine presses. The pass is kept in `localStorage`, so it survives a
 reload and is shared between tabs; the outro says how far through it you are and
 offers to start it over. A city reached by `#fragment` counts as dealt.
+
+## Going back
+
+The deck only moves forward, so a stray `R` used to lose the city being read —
+it already counted as seen, and the only way back was to find it in the index.
+Each tab now keeps a trail of the cities it has shown, and `B` or the Back
+button walks back along it. Going back deals nothing, since every city on the
+trail was counted when it was first shown, and the card already in hand stays
+the next one up.
+
+The trail lives in memory, not `localStorage`. A reload starts a new one while
+the pass carries on: the pass is about what you have seen, the trail about
+where you just were.
 
 ## Credits
 

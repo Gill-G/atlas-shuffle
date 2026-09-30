@@ -589,6 +589,7 @@ async function show(city, { scroll = true, warmed = null } = {}) {
   }
 
   dealtWith(city.id);   // shown at last — a deep link counts as playing that card
+  if (trail[trail.length - 1] !== city.id) trail.push(city.id);   // not when stepping back onto it
 
   renderHero(city);
   renderIntro(city);
@@ -596,6 +597,7 @@ async function show(city, { scroll = true, warmed = null } = {}) {
   renderGallery(city);
   renderFacts(city);
   renderPass();
+  renderBack();
 
   if (scroll) window.scrollTo({ top: 0, behavior: "instant" });
 
@@ -874,6 +876,48 @@ function pickCity(exceptId) {
 
 let current = null;
 
+/* ── Going back ──────────────────────────────────────────── */
+
+/* The deck only moves forward, so a stray R lost the city being read: it had
+   already counted as seen, and the only way back to it was to find it in the
+   index. So this tab remembers what it has shown, in order, and B walks back
+   through it.
+
+   It lives in memory only. A reload starts a new trail while the pass carries
+   on, which is the right way round: the pass is about what you have seen, the
+   trail about where you just were. Going back deals nothing — every city on
+   the trail was counted when it was first shown. */
+const trail = [];
+
+function renderBack() {
+  const button = el("back");
+  const prev = trail.length > 1 && CITIES.find((c) => c.id === trail[trail.length - 2]);
+  button.hidden = !prev;
+  if (!prev) return;
+  // Starts with the visible word, so saying "back" to voice control still works.
+  button.setAttribute("aria-label", `Back to ${prev.name}`);
+  button.title = `Back to ${prev.name}`;
+}
+
+async function back({ fromButton = false } = {}) {
+  const state = document.body.classList;
+  if (trail.length < 2 || state.contains("is-loading") || state.contains("is-swapping")) return;
+
+  trail.pop();   // the city on screen
+  const prev = CITIES.find((c) => c.id === trail[trail.length - 1]);
+  renderBack();
+  // Stepping onto the start of the trail hides the button, and a hidden
+  // control cannot keep focus — the next Tab would start from the top of the
+  // page. Hand it to the obvious next action instead.
+  if (fromButton && el("back").hidden) el("shuffle").focus();
+
+  state.add("is-swapping");
+  await new Promise((r) => setTimeout(r, 220));   // the same fade as a shuffle
+  current = prev;
+  history.replaceState(null, "", `#${prev.id}`);
+  await show(prev);
+}
+
 async function shuffle() {
   if (document.body.classList.contains("is-loading")) return;
   document.body.classList.add("is-swapping");
@@ -908,6 +952,7 @@ function initialCity() {
 el("city-count").textContent = CITIES.length;
 el("shuffle").addEventListener("click", shuffle);
 el("shuffle-2").addEventListener("click", shuffle);
+el("back").addEventListener("click", () => back({ fromButton: true }));
 
 // A button rather than <a href="#top">: the fragment holds the current city,
 // so an anchor would overwrite #toronto and break the deep link.
@@ -1011,6 +1056,10 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "r" || e.key === "R") {
     e.preventDefault();
     shuffle();
+  }
+  if (e.key === "b" || e.key === "B") {
+    e.preventDefault();
+    back();
   }
 });
 

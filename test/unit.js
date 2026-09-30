@@ -362,6 +362,65 @@ test("the index lists every city, grouped, and marks the pass", async (t) => {
   t.ok(tab.elements["index-open"].focused, "focus returned to the opener");
 });
 
+/* ── Going back ─────────────────────────────────────────── */
+
+test("going back walks the trail in reverse and stops at its start", async (t) => {
+  const tab = boot();
+  await settle();
+  const shown = [tab.read("current.id")];
+  for (let i = 0; i < 2; i++) {
+    await tab.run("shuffle()");
+    shown.push(tab.read("current.id"));
+    await tick(3);
+  }
+  t.equal(tab.elements.back.hidden, false, "back is offered once there is somewhere to go");
+
+  await tab.run("back()");
+  t.equal(tab.read("current.id"), shown[1], "city after one step back");
+  await tick(3);
+  await tab.run("back()");
+  t.equal(tab.read("current.id"), shown[0], "city after two steps back");
+  t.equal(tab.elements.back.hidden, true, "back is withdrawn at the start of the trail");
+  await tick(3);
+  await tab.run("back()");
+  t.equal(tab.read("current.id"), shown[0], "city after a third step, with nowhere to go");
+});
+
+test("going back deals nothing and loses nothing", async (t) => {
+  // Every city on the trail was counted when it was first shown. Showing one
+  // again must not deal a card, count one twice, or drop the card in hand.
+  const tab = boot();
+  await settle();
+  for (let i = 0; i < 3; i++) { await tab.run("shuffle()"); await tick(3); }
+  const seenBefore = tab.read("seen.size");
+
+  await tab.run("back()");
+  await tick(3);
+  const deck = tab.read("deck.map(c => c.id)");
+  const hand = tab.read("nextCity && nextCity.id");
+  t.equal(tab.read("seen.size"), seenBefore, "cities counted as seen");
+  t.equal(deck.filter((id, i) => deck.indexOf(id) !== i).length, 0, "duplicates in the deck");
+  t.equal(deck.length + seenBefore + (hand ? 1 : 0), tab.read("CITIES.length"), "cards accounted for");
+});
+
+test("B goes back, and the button hands focus on when it hides", async (t) => {
+  const tab = boot();
+  await settle();
+  const first = tab.read("current.id");
+  await tab.run("shuffle()");
+  await tick(3);
+  tab.press("b");
+  await tick(300);
+  t.equal(tab.read("current.id"), first, "city after pressing B");
+
+  await tab.run("shuffle()");
+  await tick(3);
+  tab.elements.back.click();
+  await tick(300);
+  t.equal(tab.elements.back.hidden, true, "back withdrawn");
+  t.ok(tab.elements.shuffle.focused, "focus handed to New city");
+});
+
 /* ── Shuffling one region ─────────────────────────────────
 
    The filter narrows the pool the deck is dealt from, which is the machinery

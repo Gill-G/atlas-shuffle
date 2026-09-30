@@ -81,6 +81,10 @@ kbd {
 }
 .wordmark em { font-style: italic; color: var(--accent); transition: color 0.5s ease; }
 
+/* Back and New city travel together on the right, so the index button keeps
+   the middle of the bar to itself. */
+.topbar__actions { display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
+
 .shuffle {
   display: inline-flex; align-items: center; gap: 0.55rem;
   font: inherit; font-size: 0.86rem; font-weight: 600;
@@ -99,6 +103,41 @@ kbd {
 body.is-loading .shuffle__icon { animation: spin 0.9s linear infinite; }
 
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* New city's quieter sibling: the same pill, in the muted ink. */
+.backbtn {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font: inherit; font-size: 0.86rem; font-weight: 600;
+  color: var(--muted);
+  background: rgba(20,20,24,0.55);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 0.45rem 0.75rem 0.45rem 0.85rem;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.backbtn:hover { color: var(--paper); border-color: var(--accent); }
+/* It sets its own display, which beats the hidden attribute — the same trap
+   that once left the index covering the site. */
+.backbtn[hidden] { display: none; }
+
+/* A phone has no R or B to press and no room for every label in one bar, so
+   the key hints go and Back drops to its arrow — its accessible name still
+   says where it goes. */
+@media (max-width: 560px) {
+  .topbar kbd { display: none; }
+  .backbtn__label { display: none; }
+}
+/* Narrower still, All cities keeps only its icon. Clipped rather than
+   removed, because that text is the button's only name. */
+@media (max-width: 420px) {
+  .indexbtn__label {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap;
+  }
+  .indexbtn { margin-right: 0; }
+}
 
 /* ── Hero ──────────────────────────────────────────────── */
 
