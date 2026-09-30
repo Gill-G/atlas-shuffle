@@ -399,7 +399,7 @@ function renderPass() {
 
 /* ── The index ───────────────────────────────────────────── */
 
-/* Fifty cities reachable only by shuffling or by knowing a #fragment is a
+/* Cities reachable only by shuffling or by knowing a #fragment make a
    deck with no lid. The index opens it, grouped by region — which is the
    first thing that field has ever been used for — and marks what the current
    pass has already dealt, so it answers "what have I not seen yet". */

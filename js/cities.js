@@ -1653,5 +1653,269 @@ const CITIES = [
       "Best time": "October–November, March–April",
       "Order this": "Momos"
     }
+  },
+  {
+    id: "dubrovnik",
+    name: "Dubrovnik",
+    country: "Croatia",
+    region: "Balkans",
+    accent: "#b15424",
+    tagline: "The republic that bought its freedom",
+    intro:
+      "For four and a half centuries Dubrovnik was the Republic of Ragusa, a city-state of merchants that kept its independence with diplomacy, tribute and a merchant fleet rather than an army. Its walls were built to be looked at as much as fought from, and the town inside them is mostly Baroque, rebuilt on the medieval plan after the earthquake of 1667 flattened it. The roofs keep a newer record: the tiles come in two shades, because so many had to be replaced after the shelling of 1991 and 1992.",
+    famousFor: ["City walls", "The Republic of Ragusa", "Stradun", "Game of Thrones locations", "Swimming off the rocks"],
+    thingsToDo: [
+      { title: "Walk the walls when they open", text: "The circuit is nearly two kilometres of steps and ramparts with no shade at all. Go first thing, before the cruise passengers come up from the port, and you get the roofs and the sea to yourself." },
+      { title: "Swim from the rocks outside the walls", text: "Two small bars are wedged into the cliffs on the seaward side, reached through openings in the wall itself. People swim straight off the rocks below them, so bring a towel." },
+      { title: "Take the boat to Lokrum", text: "The island is a short ferry ride from the old harbour. It has no cars and nobody stays overnight — just pine woods, a small salt lake for swimming, and the peacocks Maximilian of Habsburg brought in the 1850s." },
+      { title: "Ride the cable car up Srđ", text: "It lifts you to the ridge above the town in a few minutes. The Napoleonic fort at the top held out through the 1991 siege and is now a museum of it, and the view down explains why the siege was possible." }
+    ],
+    gallery: [
+      { article: "Walls of Dubrovnik", caption: "The walls run for almost two kilometres around the old town, up to twenty-five metres high on the landward side." },
+      { article: "Stradun (street)", caption: "The Stradun was a marsh channel between two settlements until it was filled in, and it has been the main street ever since." },
+      { article: "Rector's Palace, Dubrovnik", caption: "The Rector was elected for one month at a time, and could not leave the palace during it, so that no one could make the post a throne." },
+      { article: "Fort Lovrijenac", caption: "Lovrijenac stands on a sea rock outside the walls; the inscription over its gate says freedom is not sold for all the gold in the world." },
+      { article: "Lokrum", caption: "Lokrum is a car-free island of pine woods a few minutes offshore, still ruled by Maximilian's peacocks." },
+      { article: "Dubrovnik Cathedral", caption: "The cathedral was rebuilt in Baroque after the 1667 earthquake brought down its Romanesque predecessor." }
+    ],
+    facts: {
+      Population: "41,500",
+      Founded: "7th century",
+      Language: "Croatian",
+      Currency: "Euro (€)",
+      "Best time": "May–June, September",
+      "Order this": "Black risotto"
+    }
+  },
+  {
+    id: "tallinn",
+    name: "Tallinn",
+    country: "Estonia",
+    region: "Baltic",
+    accent: "#ab4e4e",
+    tagline: "A medieval town running a digital state",
+    intro:
+      "Tallinn's old town is one of the best-preserved medieval towns in northern Europe: a Hanseatic merchant city of guild halls, towers and red roofs below a limestone hill where the nobles and bishops lived apart. The hill and the town had separate governments for centuries and were joined only by two steep lanes. The country run from that hill now does almost everything online — Estonians vote, sign contracts and file their taxes from a laptop — and Skype was written here.",
+    famousFor: ["Medieval old town", "Hanseatic guild halls", "E-government", "Kadriorg", "Rye bread"],
+    thingsToDo: [
+      { title: "Climb Toompea by the Short Leg", text: "Two lanes join the lower town to the hill: Pikk jalg and Lühike jalg, the Long Leg and the Short Leg. Go up the short, steep one, come down the long one, and stop at the viewing platforms in between." },
+      { title: "Go up St Olaf's tower", text: "In the sixteenth century it may have been the tallest building in the world. The climb is a narrow stone spiral of more than two hundred steps, open in the warmer months." },
+      { title: "Walk out to Kadriorg", text: "Peter the Great built the palace for Catherine in 1718, and the park around it is where Tallinn goes on a Sunday. Kumu, the national art museum, is at its far end." },
+      { title: "Eat around Telliskivi", text: "The old factory buildings behind the Baltic Station are now studios, bars and a weekend flea market. The station market next door is the best cheap lunch in town." }
+    ],
+    gallery: [
+      { article: "Tallinn Town Hall", caption: "The Gothic town hall is the oldest in northern Europe, and Old Thomas has kept watch from its spire since 1530." },
+      { article: "Tallinn Old Town", caption: "The old town kept its walls, towers and street plan through every war that passed over it." },
+      { article: "Toompea Castle", caption: "Toompea Castle has housed the Estonian parliament since the 1920s, behind a pink Baroque front." },
+      { article: "Alexander Nevsky Cathedral, Tallinn", caption: "The Orthodox cathedral went up in the 1890s under Russian rule, placed squarely opposite the seat of power." },
+      { article: "St. Olaf's Church, Tallinn", caption: "St Olaf's spire has been struck by lightning about ten times and burned down three." },
+      { article: "Kadriorg Palace", caption: "Kadriorg was begun in 1718 by Peter the Great, and named for Catherine — Catherine's valley." }
+    ],
+    facts: {
+      Population: "460,000",
+      Founded: "1248 (town rights)",
+      Language: "Estonian",
+      Currency: "Euro (€)",
+      "Best time": "June–August; December for the market",
+      "Order this": "Sprats on black bread"
+    }
+  },
+  {
+    id: "san-juan",
+    name: "San Juan",
+    country: "Puerto Rico",
+    region: "Caribbean",
+    accent: "#6387a8",
+    tagline: "Five centuries behind the ramparts",
+    intro:
+      "Spain moved its settlement onto this islet in 1521 and spent the next two and a half centuries walling it in, because whoever held the harbour held a gateway to the Caribbean. The forts turned back Drake in 1595 and a British fleet in 1797, and they are still the first thing you see from the sea. Inside them, Old San Juan is a few dozen blocks of blue cobbles and painted houses; outside, it is a modern American city with the beaches to prove it.",
+    famousFor: ["El Morro", "Blue cobblestones", "The colonial old town", "Piña colada", "Salsa and bomba"],
+    thingsToDo: [
+      { title: "Fly a kite on the Morro lawn", text: "The great lawn in front of El Morro is where San Juan goes on a windy afternoon, and kite sellers work the path up to it. The fort itself is run by the US National Park Service." },
+      { title: "Walk the Paseo de la Princesa", text: "The promenade runs outside the city wall along the bay, past the old prison and a big fountain, to the San Juan Gate, where arriving governors used to come ashore." },
+      { title: "Settle the piña colada argument", text: "The Caribe Hilton says its bartender invented it in 1954; a restaurant on Calle Fortaleza says it was theirs. Both will make you one, which is the only way to judge." },
+      { title: "Go out to Piñones for fritters", text: "East of the airport, a strip of beach kiosks fries alcapurrias and bacalaítos in open kitchens. Go on a weekend afternoon, when the whole city seems to." }
+    ],
+    gallery: [
+      { article: "Castillo San Felipe del Morro", caption: "El Morro guards the harbour mouth on six levels of stone, begun in 1539 and built up for two and a half centuries." },
+      { article: "Casa Blanca (San Juan)", caption: "Casa Blanca was built in 1521 for Ponce de León, who died before he could move in; his descendants stayed for 250 years." },
+      { article: "Castillo San Cristóbal (San Juan)", caption: "San Cristóbal, guarding the landward side, was the largest fort Spain built in the Americas." },
+      { article: "La Fortaleza", caption: "La Fortaleza has housed the island's governors since the sixteenth century, the oldest executive mansion in use in the Americas." },
+      { article: "Paseo de la Princesa", caption: "The Paseo de la Princesa follows the old wall to the San Juan Gate, the ceremonial way into the city." },
+      { article: "Capitol of Puerto Rico", caption: "The Capitol, finished in 1929 and clad in marble, stands just outside the old city walls." }
+    ],
+    facts: {
+      Population: "340,000 (2m metro)",
+      Founded: "1521",
+      Language: "Spanish and English",
+      Currency: "US dollar ($)",
+      "Best time": "December–April",
+      "Order this": "Mofongo"
+    }
+  },
+  {
+    id: "yerevan",
+    name: "Yerevan",
+    country: "Armenia",
+    region: "Caucasus",
+    accent: "#cf8a87",
+    tagline: "The pink city under Ararat",
+    intro:
+      "Yerevan is older than Rome — the Urartian fortress of Erebuni was founded on its edge in 782 BC, and the city counts its birthday from the inscription that says so. But almost everything you see is twentieth-century: a capital planned by Alexander Tamanian in the 1920s and built of tuff, the volcanic stone that turns the whole city pink, apricot and grey as the light changes. On a clear day Mount Ararat stands over it, just across the border in Turkey, which is not a fact anyone here forgets.",
+    famousFor: ["Pink tuff architecture", "Views of Ararat", "The Cascade", "Armenian brandy", "Ancient manuscripts"],
+    thingsToDo: [
+      { title: "Climb the Cascade at dusk", text: "The giant stairway was begun in Soviet times and finished as an art centre; escalators run up inside it past the sculpture collection. From the top, Ararat is behind the city if the haze allows." },
+      { title: "See the Matenadaran", text: "Tens of thousands of manuscripts, one of the great collections anywhere, in a building cut into the hillside at the top of the main avenue. The illuminated gospels are the reason to go." },
+      { title: "Walk up to Tsitsernakaberd", text: "The memorial to the 1915 genocide stands on a hill above the city: twelve leaning slabs around an eternal flame, and a museum beneath. Go early, and quietly." },
+      { title: "Tour the brandy distillery", text: "The Ararat brandy works above the Hrazdan gorge has been running since 1887. Churchill is said to have been kept supplied with it by Stalin." }
+    ],
+    gallery: [
+      { article: "Republic Square (Yerevan)", caption: "Republic Square is an oval of pink and yellow tuff, laid out by Tamanian and finished in the 1950s." },
+      { article: "Yerevan Cascade", caption: "The Cascade climbs the hill in a stack of terraces and gardens, with escalators hidden inside." },
+      { article: "Matenadaran", caption: "The Matenadaran — the word means a repository of manuscripts — keeps more than twenty thousand of them." },
+      { article: "Tsitsernakaberd", caption: "Tsitsernakaberd, the swallows' fortress, has marked the 1915 genocide since 1967." },
+      { article: "Erebuni Fortress", caption: "Erebuni was founded by the Urartian king Argishti I in 782 BC, and Yerevan counts its age from here." },
+      { article: "Mount Ararat", caption: "Ararat is Armenia's national symbol, though it has stood on the Turkish side of the border since 1921." }
+    ],
+    facts: {
+      Population: "1.1 million",
+      Founded: "782 BC (Erebuni)",
+      Language: "Armenian (Russian widely)",
+      Currency: "Dram (֏)",
+      "Best time": "May–June, September–October",
+      "Order this": "Khorovats"
+    }
+  },
+  {
+    id: "bukhara",
+    name: "Bukhara",
+    country: "Uzbekistan",
+    region: "Central Asia",
+    accent: "#27a2a8",
+    tagline: "A holy city of the Silk Road",
+    intro:
+      "Bukhara was a centre of Islamic learning for a thousand years, and it still has the shape of a city built around its schools: a lived-in old town of madrasas, mosques and pools that was never cleared and rebuilt as a showpiece. The Samanids made it a capital of Persian culture in the ninth and tenth centuries. Genghis Khan burned it in 1220 but left the great Kalyan minaret standing — because, the story goes, it was the first thing that ever made him look up.",
+    famousFor: ["Kalyan Minaret", "Madrasas", "Lyab-i Hauz", "Domed bazaars", "Carpets and suzani"],
+    thingsToDo: [
+      { title: "End the day at Lyab-i Hauz", text: "The pool at the heart of the old town is ringed by old mulberry trees and teahouses. It is where Bukhara finishes its evening, over green tea and plov." },
+      { title: "Walk through the trading domes", text: "Three domed crossroads bazaars survive from the sixteenth century, each once given to one trade — jewellers, hat makers, money changers. They still sell, mostly carpets and knives now." },
+      { title: "See the Kalyan square at dusk", text: "The minaret has stood since 1127. Stand in the square between the mosque and the Mir-i-Arab madrasa as the lights come on and the tilework goes from turquoise to gold." },
+      { title: "Find the Samanid Mausoleum", text: "In a park west of the centre, a tenth-century tomb of baked brick laid in patterns so fine the walls look woven. It came through the Mongols because it was half buried in silt." }
+    ],
+    gallery: [
+      { article: "Kalyan Minaret", caption: "The Kalyan Minaret has stood over Bukhara since 1127, a watchtower as well as a call to prayer." },
+      { article: "Ark of Bukhara", caption: "The Ark was the rulers' fortress for over a thousand years, until the Red Army took it in 1920." },
+      { article: "Lyab-i Hauz", caption: "The madrasa beside Lyab-i Hauz breaks with custom: two great birds carry off deer under a sun with a human face." },
+      { article: "Samanid Mausoleum", caption: "The Samanid Mausoleum, from the tenth century, is one of the oldest monuments of Islamic Central Asia." },
+      { article: "Chor Minor", caption: "Chor Minor was built in 1807 as a gatehouse, and each of its four towers is decorated differently." },
+      { article: "Bolo Haouz Mosque", caption: "Bolo Haouz's porch rests on twenty wooden columns — forty, counting their reflections in the pool." }
+    ],
+    facts: {
+      Population: "280,000",
+      Founded: "Over 2,500 years ago",
+      Language: "Uzbek and Tajik",
+      Currency: "Som",
+      "Best time": "April–May, September–October",
+      "Order this": "Plov"
+    }
+  },
+  {
+    id: "nairobi",
+    name: "Nairobi",
+    country: "Kenya",
+    region: "East Africa",
+    accent: "#b49c3c",
+    tagline: "A capital with lions at the edge",
+    intro:
+      "Nairobi began in 1899 as a supply depot on the Uganda Railway, pitched on swampy ground because it was the last level, watered place before the line climbed the escarpment. The name comes from the Maasai for cool water. Within a few years it was the colonial capital, and it is now the business hub of East Africa — and a city with a national park inside its limits, where giraffe graze against a skyline of office towers.",
+    famousFor: ["Nairobi National Park", "Safari gateway", "Matatu culture", "Tech start-ups", "Kenyan coffee"],
+    thingsToDo: [
+      { title: "Go on safari before breakfast", text: "Nairobi National Park opens at dawn, a short drive from the centre. Lions, rhino, giraffe and buffalo, with the city's towers on the horizon behind them." },
+      { title: "Visit the elephant orphanage", text: "The Sheldrick Wildlife Trust raises orphaned elephants on the edge of the park and opens for an hour a day, when the keepers bring them out to feed." },
+      { title: "Meet the giraffes in Langata", text: "At the Giraffe Centre you feed endangered Rothschild's giraffes eye to eye from a raised platform. The breeding programme here helped bring them back." },
+      { title: "Ride a matatu, once", text: "The minibuses are painted, lit and fitted with sound systems by their owners, each one a rolling piece of pop art. The ride is the point." }
+    ],
+    gallery: [
+      { article: "Nairobi", caption: "Nairobi grew from a railway depot in 1899 to a city of more than four million in a little over a century." },
+      { article: "Nairobi National Park", caption: "Nairobi National Park was Kenya's first, opened in 1946, with the city's edge along its fence." },
+      { article: "Giraffe Centre", caption: "The Giraffe Centre was set up in 1979 to save the Rothschild's giraffe, and visitors feed them from a tower." },
+      { article: "Nairobi Arboretum", caption: "The arboretum was planted in 1907 to find out which trees would grow fast enough to fuel the railway." },
+      { article: "Uhuru Park", caption: "Uhuru Park is the city's central green, saved from a skyscraper in 1989 by Wangari Maathai." },
+      { article: "Nairobi Railway Museum", caption: "The railway is why Nairobi exists; its museum keeps the carriage from which a lion took a police superintendent in 1900." }
+    ],
+    facts: {
+      Population: "4.4 million",
+      Founded: "1899",
+      Language: "Swahili and English",
+      Currency: "Kenyan shilling (KSh)",
+      "Best time": "July–October, January–February",
+      "Order this": "Nyama choma"
+    }
+  },
+  {
+    id: "muscat",
+    name: "Muscat",
+    country: "Oman",
+    region: "Middle East",
+    accent: "#c6a878",
+    tagline: "A white city between the mountains and the sea",
+    intro:
+      "Muscat is a string of old harbour towns pressed into the gaps between bare brown mountains and the Gulf of Oman, and for most of its history it looked out to sea rather than inland — its sultans ruled Zanzibar and the Swahili coast until 1856. The Portuguese held it for well over a century and left the two forts that still guard the old harbour. The modern city is kept low and pale by decree, so that almost nothing interrupts the mountains.",
+    famousFor: ["Sultan Qaboos Grand Mosque", "Mutrah Corniche", "Frankincense", "Portuguese forts", "Dhows"],
+    thingsToDo: [
+      { title: "Visit the Grand Mosque in the morning", text: "Non-Muslim visitors are welcome most mornings except Friday. The prayer hall's carpet was hand-woven in one piece, by around six hundred weavers over four years." },
+      { title: "Walk the Mutrah Corniche at dusk", text: "The seafront curves past the dhow harbour and the fish market, with the back entrance to the souq halfway along. Frankincense smoulders in the stalls inside." },
+      { title: "Go to the Royal Opera House", text: "It opened in 2011, the first opera house in the Gulf. The building is worth a tour even on a night without a ticket." },
+      { title: "Take a boat out to the dolphins", text: "Morning boats leave from the marinas for the coast and islands east of the city, where spinner dolphins often run with the bow." }
+    ],
+    gallery: [
+      { article: "Sultan Qaboos Grand Mosque", caption: "The Grand Mosque opened in 2001, and its main prayer hall holds some 6,500 worshippers." },
+      { article: "Mutrah", caption: "Mutrah was Muscat's trading port, and its souq has been selling frankincense for centuries." },
+      { article: "Al Jalali Fort", caption: "Al Jalali and its twin, Al Mirani, were built by the Portuguese in the 1580s to hold the harbour." },
+      { article: "Royal Opera House Muscat", caption: "The Royal Opera House opened in 2011, the first of its kind in the Gulf." },
+      { article: "Al Alam Palace", caption: "Al Alam is the Sultan's ceremonial palace, a blue-and-gold front between the two Portuguese forts." },
+      { article: "Bait Al Zubair", caption: "Bait Al Zubair is a family museum of Omani daggers, dress and old Muscat, in a house built in 1914." }
+    ],
+    facts: {
+      Population: "1.4 million",
+      Founded: "Known since the 1st century AD",
+      Language: "Arabic (English widely)",
+      Currency: "Omani rial",
+      "Best time": "October–March",
+      "Order this": "Shuwa"
+    }
+  },
+  {
+    id: "johannesburg",
+    name: "Johannesburg",
+    country: "South Africa",
+    region: "Southern Africa",
+    accent: "#d2a506",
+    tagline: "The city built on a gold reef",
+    intro:
+      "Johannesburg exists because of a reef of gold-bearing rock found on the Witwatersrand in 1886. Within ten years the prospectors' camp was the biggest town in South Africa, and the yellow mine dumps it left behind still stand around the city. It is also where apartheid was fought hardest — Soweto, Constitution Hill and the Apartheid Museum are all here — and it remains the country's economic engine, sprawling, restless and far greener than its reputation.",
+    famousFor: ["Gold mining", "Soweto", "The Apartheid Museum", "Street art in Maboneng", "Shisa nyama"],
+    thingsToDo: [
+      { title: "Give the Apartheid Museum half a day", text: "You enter through one of two doors, marked white or non-white, assigned at random on your ticket. It is the most serious museum in the country, and it does not hurry you." },
+      { title: "Go to Vilakazi Street in Soweto", text: "Two Nobel Peace Prize winners lived on this one street. Nelson Mandela's house is a museum; Desmond Tutu's is still a family home." },
+      { title: "Visit Constitution Hill", text: "The Old Fort prison held both Gandhi and Mandela. The Constitutional Court was built on the site, partly from the bricks of the demolished cells." },
+      { title: "Spend a Sunday in Maboneng", text: "The old warehouse district east of the centre is murals, markets and rooftop bars, and it shows what the inner city is trying to become." }
+    ],
+    gallery: [
+      { article: "Nelson Mandela Bridge", caption: "The Nelson Mandela Bridge crosses forty-two railway lines to join Braamfontein to Newtown." },
+      { article: "Apartheid Museum", caption: "The Apartheid Museum assigns every visitor a racial category at the door, at random." },
+      { article: "Constitution Hill, Johannesburg", caption: "Constitution Hill was a prison for most of a century; South Africa's highest court now sits on the site." },
+      { article: "Mandela House", caption: "Mandela's house on Vilakazi Street still carries the marks of the apartheid years on its walls." },
+      { article: "Orlando Towers", caption: "The cooling towers of the old Orlando power station were painted after it closed, and people now bungee jump between them." },
+      { article: "Carlton Centre", caption: "The Carlton Centre was Africa's tallest building for over forty years, and its top floor is still called the Top of Africa." }
+    ],
+    facts: {
+      Population: "4.8 million",
+      Founded: "1886",
+      Language: "English, Zulu, Sotho and more",
+      Currency: "Rand (R)",
+      "Best time": "March–May, September–November",
+      "Order this": "Kota"
+    }
   }
 ];

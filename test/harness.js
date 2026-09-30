@@ -84,7 +84,7 @@ const tabs = [];
  */
 function boot(store = new Map(), { hash = "", respond = null, connection = null, realTime = false } = {}) {
   /* shuffle() waits 220ms for the fade before it shows anything, and a full
-     pass is fifty of those, so the site's timers are capped to keep the suite
+     pass is one of those per city, so the site's timers are capped to keep the suite
      in seconds rather than a minute.
 
      This is not order-preserving. The fade, whenIdle's 400ms fallback and

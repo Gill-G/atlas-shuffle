@@ -22,7 +22,7 @@ avoids that.
 ```
 index.html      # page skeleton — sections are filled in by JS
 css/style.css   # all styling; per-city accent colour is a CSS variable
-js/cities.js    # the dataset: 50 cities, hand-written
+js/cities.js    # the dataset: 58 cities, hand-written
 js/main.js      # picks a city, fetches photos, renders the page
 check.js        # verifies the shape of the dataset and every gallery article
 test/           # the behaviour of main.js, and of the page in a real browser
@@ -84,7 +84,7 @@ If the request fails — offline, blocked, rate-limited — every word on the pa
 still renders and the image slots fall back to a coloured wash. The site is never
 blank.
 
-All 300 image slots are checked against the live API by `check.js` — every one
+All 348 image slots are checked against the live API by `check.js` — every one
 resolves, and every one is an actual photograph. That second check matters:
 plenty of articles lead with a locator map, a logo or a coat of arms instead
 (`Old Havana` and `Van Gogh Museum` both did), which looks broken in a gallery.
@@ -186,7 +186,7 @@ eye.
 
 ## The index
 
-Fifty cities reachable only by shuffling or by knowing a fragment is a deck with
+Cities reachable only by shuffling or by knowing a fragment make a deck with
 no lid, so "All cities" opens one, grouped by region — the first thing that field
 has ever been used for, and the reason `region` had to be normalised into the
 closed set `check.js` now enforces. Cities the current pass has already dealt are
@@ -210,7 +210,7 @@ to East Asia would be whatever was queued before it.
 ## The shuffle
 
 Cities are dealt from a shuffled deck rather than picked at random, so a pass
-shows all 50 before any of them comes round again — picking uniformly repeated
+shows every city before any of them comes round again — picking uniformly repeated
 after about nine presses. The pass is kept in `localStorage`, so it survives a
 reload and is shared between tabs; the outro says how far through it you are and
 offers to start it over. A city reached by `#fragment` counts as dealt.
