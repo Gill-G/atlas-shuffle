@@ -379,7 +379,9 @@ test("shuffling one region deals that region, once each", async (t) => {
   const region = biggestRegion(tab);
   await tab.run(`setRegion(${JSON.stringify(region)})`);
 
-  const size = tab.read("pool().length");
+  // What is left to deal, not the size of the region: the page may have
+  // opened on one of its cities, and that one is already seen this pass.
+  const size = tab.read("remaining()");
   const drawn = [];
   for (let i = 0; i < size; i++) {
     await tab.run("shuffle()");
