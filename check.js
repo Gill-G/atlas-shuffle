@@ -177,6 +177,16 @@ function checkShape(cities, all) {
     if (!/^#[0-9a-fA-F]{6}$/.test(c.accent || "")) say(where, `accent "${c.accent}" is not a six-digit hex colour`);
     if (c.region && !REGIONS.has(c.region)) say(where, `region "${c.region}" is not one the index knows`);
 
+    // Optional. When present it is shown and spoken, so it has to be whole.
+    if (c.local !== undefined) {
+      const { name, lang } = c.local || {};
+      if (!filled(name)) say(where, "local.name is missing or empty");
+      else if (name === c.name) say(where, `local.name repeats the name — leave local out when they are the same`);
+      if (!/^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$/.test(lang || "")) {
+        say(where, `local.lang "${lang}" is not a language tag like "ja" or "zh-HK"`);
+      }
+    }
+
     for (const [key, [min, max]] of Object.entries(SHAPE)) {
       const list = c[key];
       const n = key === "facts" ? Object.keys(list || {}).length : (list || []).length;

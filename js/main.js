@@ -266,6 +266,13 @@ function renderHero(city) {
   el("hero-country").textContent = city.country;
   el("hero-region").textContent = city.region;
   el("hero-name").textContent = city.name;
+
+  /* The name as it is written there. Tagged with its language, or a screen
+     reader reads 東京 in an English voice — or skips it altogether. */
+  const local = el("hero-local");
+  local.textContent = city.local ? city.local.name : "";
+  if (city.local) local.setAttribute("lang", city.local.lang);
+  else local.removeAttribute("lang");
   el("hero-tagline").textContent = city.tagline;
 
   const lead = city.gallery[0];

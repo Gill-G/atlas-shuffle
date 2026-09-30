@@ -105,6 +105,7 @@ the count in the footer, the shuffle pool, the accent colour.
 {
   id: "porto",              // also the URL fragment: /#porto
   name: "Porto",
+  local: { name: "…", lang: "…" },   // optional, and Porto itself would leave it out
   country: "Portugal",
   region: "Western Europe",
   accent: "#a8703f",        // drives headings, numerals, rules, the loading wash
@@ -124,6 +125,12 @@ Kingdom, and Hong Kong, New Caledonia and Monaco stand as their own answers.
 Nothing groups or counts by it; `region` is the field with rules, because the
 index groups by that one.
 
+`local` is the city's name as it is written there — 東京, Praha, Te
+Whanganui-a-Tara — shown under the English one and tagged with its language, so
+a screen reader says it in the right voice rather than spelling out characters
+in the wrong one. Leave it out where the two names are the same, and where there is no single local answer: Cape Town is Kaapstad in Afrikaans and
+iKapa in Xhosa, and choosing one would be making a statement.
+
 Two rules worth keeping: `gallery[0]` is the hero image, and every `article` must
 be an exact English Wikipedia title that has a lead photo. Check the new entry
 before committing it:
@@ -136,8 +143,10 @@ node check.js --shape    # structure only, no network
 
 It checks the **shape** of every entry first — the counts above, plus the things
 that keep the deck coherent: ids kebab-case and unique, accents valid hex and
-unique, no article used by two cities, no empty strings. That part needs no
-network, so `--shape` works offline and a failed API call still reports it.
+unique, no article used by two cities, no empty strings, and a `local` name,
+where there is one, that differs from `name` and carries a language tag. That
+part needs no network, so `--shape` works offline and a failed API call still
+reports it.
 
 It then checks every **article**, and names the city and article for each of:
 

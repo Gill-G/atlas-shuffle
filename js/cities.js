@@ -7,6 +7,7 @@ const CITIES = [
   {
     id: "rome",
     name: "Rome",
+    local: { name: "Roma", lang: "it" },
     country: "Italy",
     region: "Southern Europe",
     accent: "#d08447",
@@ -40,6 +41,7 @@ const CITIES = [
   {
     id: "tokyo",
     name: "Tokyo",
+    local: { name: "東京", lang: "ja" },
     country: "Japan",
     region: "East Asia",
     accent: "#e0556b",
@@ -73,6 +75,7 @@ const CITIES = [
   {
     id: "marrakesh",
     name: "Marrakesh",
+    local: { name: "مراكش", lang: "ar" },
     country: "Morocco",
     region: "North Africa",
     accent: "#d9694a",
@@ -106,6 +109,7 @@ const CITIES = [
   {
     id: "istanbul",
     name: "Istanbul",
+    local: { name: "İstanbul", lang: "tr" },
     country: "Türkiye",
     region: "Europe / Asia",
     accent: "#3f8fa8",
@@ -139,6 +143,7 @@ const CITIES = [
   {
     id: "kyoto",
     name: "Kyoto",
+    local: { name: "京都", lang: "ja" },
     country: "Japan",
     region: "East Asia",
     accent: "#b8604f",
@@ -172,6 +177,7 @@ const CITIES = [
   {
     id: "lisbon",
     name: "Lisbon",
+    local: { name: "Lisboa", lang: "pt" },
     country: "Portugal",
     region: "Southern Europe",
     accent: "#3e9c8f",
@@ -238,6 +244,7 @@ const CITIES = [
   {
     id: "mexico-city",
     name: "Mexico City",
+    local: { name: "Ciudad de México", lang: "es" },
     country: "Mexico",
     region: "North America",
     accent: "#cf5d8a",
@@ -337,6 +344,7 @@ const CITIES = [
   {
     id: "hanoi",
     name: "Hanoi",
+    local: { name: "Hà Nội", lang: "vi" },
     country: "Vietnam",
     region: "Southeast Asia",
     accent: "#c8863d",
@@ -370,6 +378,7 @@ const CITIES = [
   {
     id: "varanasi",
     name: "Varanasi",
+    local: { name: "वाराणसी", lang: "hi" },
     country: "India",
     region: "South Asia",
     accent: "#cc7a33",
@@ -403,6 +412,7 @@ const CITIES = [
   {
     id: "prague",
     name: "Prague",
+    local: { name: "Praha", lang: "cs" },
     country: "Czech Republic",
     region: "Central Europe",
     accent: "#a8703f",
@@ -469,6 +479,7 @@ const CITIES = [
   {
     id: "cusco",
     name: "Cusco",
+    local: { name: "Qosqo", lang: "qu" },
     country: "Peru",
     region: "South America",
     accent: "#c26644",
@@ -535,6 +546,7 @@ const CITIES = [
   {
     id: "seoul",
     name: "Seoul",
+    local: { name: "서울", lang: "ko" },
     country: "South Korea",
     region: "East Asia",
     accent: "#5f7fd0",
@@ -568,6 +580,7 @@ const CITIES = [
   {
     id: "cairo",
     name: "Cairo",
+    local: { name: "القاهرة", lang: "ar" },
     country: "Egypt",
     region: "North Africa",
     accent: "#c99a3c",
@@ -700,6 +713,7 @@ const CITIES = [
   {
     id: "jaipur",
     name: "Jaipur",
+    local: { name: "जयपुर", lang: "hi" },
     country: "India",
     region: "South Asia",
     accent: "#d1683f",
@@ -733,6 +747,7 @@ const CITIES = [
   {
     id: "havana",
     name: "Havana",
+    local: { name: "La Habana", lang: "es" },
     country: "Cuba",
     region: "Caribbean",
     accent: "#3f9bb0",
@@ -766,6 +781,7 @@ const CITIES = [
   {
     id: "tbilisi",
     name: "Tbilisi",
+    local: { name: "თბილისი", lang: "ka" },
     country: "Georgia",
     region: "Caucasus",
     accent: "#9a6fb0",
@@ -832,6 +848,7 @@ const CITIES = [
   {
     id: "xian",
     name: "Xi'an",
+    local: { name: "西安", lang: "zh" },
     country: "China",
     region: "East Asia",
     accent: "#b04a3c",
@@ -865,6 +882,7 @@ const CITIES = [
   {
     id: "samarkand",
     name: "Samarkand",
+    local: { name: "Samarqand", lang: "uz" },
     country: "Uzbekistan",
     region: "Central Asia",
     accent: "#3f6fb5",
@@ -931,6 +949,7 @@ const CITIES = [
   {
     id: "wellington",
     name: "Wellington",
+    local: { name: "Te Whanganui-a-Tara", lang: "mi" },
     country: "New Zealand",
     region: "Oceania",
     accent: "#6d9b3c",
@@ -1195,6 +1214,7 @@ const CITIES = [
   {
     id: "riga",
     name: "Riga",
+    local: { name: "Rīga", lang: "lv" },
     country: "Latvia",
     region: "Baltic",
     accent: "#9e3039",
@@ -1228,6 +1248,7 @@ const CITIES = [
   {
     id: "belgrade",
     name: "Belgrade",
+    local: { name: "Београд", lang: "sr" },
     country: "Serbia",
     region: "Balkans",
     accent: "#4a6f8a",
@@ -1261,6 +1282,7 @@ const CITIES = [
   {
     id: "naha",
     name: "Naha",
+    local: { name: "那覇", lang: "ja" },
     country: "Japan",
     region: "East Asia",
     accent: "#cf4a26",
@@ -1294,6 +1316,7 @@ const CITIES = [
   {
     id: "sapporo",
     name: "Sapporo",
+    local: { name: "札幌", lang: "ja" },
     country: "Japan",
     region: "East Asia",
     accent: "#4b56a8",
@@ -1327,6 +1350,7 @@ const CITIES = [
   {
     id: "isfahan",
     name: "Isfahan",
+    local: { name: "اصفهان", lang: "fa" },
     country: "Iran",
     region: "Middle East",
     accent: "#0f8ca0",
@@ -1492,6 +1516,7 @@ const CITIES = [
   {
     id: "auckland",
     name: "Auckland",
+    local: { name: "Tāmaki Makaurau", lang: "mi" },
     country: "New Zealand",
     region: "Oceania",
     accent: "#5fa88f",
@@ -1558,6 +1583,7 @@ const CITIES = [
   {
     id: "luang-prabang",
     name: "Luang Prabang",
+    local: { name: "ຫຼວງພະບາງ", lang: "lo" },
     country: "Laos",
     region: "Southeast Asia",
     accent: "#e08a2a",
@@ -1591,6 +1617,7 @@ const CITIES = [
   {
     id: "hong-kong",
     name: "Hong Kong",
+    local: { name: "香港", lang: "zh-HK" },
     country: "Hong Kong",
     region: "East Asia",
     accent: "#e04a4a",
@@ -1624,6 +1651,7 @@ const CITIES = [
   {
     id: "kathmandu",
     name: "Kathmandu",
+    local: { name: "काठमाडौं", lang: "ne" },
     country: "Nepal",
     region: "South Asia",
     accent: "#8f3a52",
@@ -1756,6 +1784,7 @@ const CITIES = [
   {
     id: "yerevan",
     name: "Yerevan",
+    local: { name: "Երևան", lang: "hy" },
     country: "Armenia",
     region: "Caucasus",
     accent: "#cf8a87",
@@ -1789,6 +1818,7 @@ const CITIES = [
   {
     id: "bukhara",
     name: "Bukhara",
+    local: { name: "Buxoro", lang: "uz" },
     country: "Uzbekistan",
     region: "Central Asia",
     accent: "#27a2a8",
@@ -1855,6 +1885,7 @@ const CITIES = [
   {
     id: "muscat",
     name: "Muscat",
+    local: { name: "مسقط", lang: "ar" },
     country: "Oman",
     region: "Middle East",
     accent: "#c6a878",

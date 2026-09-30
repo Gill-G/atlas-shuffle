@@ -223,6 +223,22 @@ body.is-loading .shuffle__icon { animation: spin 0.9s linear infinite; }
   text-wrap: balance;
 }
 
+/* The city's own name, under the English one. Upright whatever the script:
+   an oblique Devanagari or Arabic is the browser inventing one. Not in the
+   accent, which is picked to read on the dark bands, not on a photograph.
+   Held to the left even when the script runs right to left — dir="auto" in
+   the markup would otherwise send مراكش to the far side of the hero. */
+.hero__local {
+  font-family: var(--display);
+  font-size: clamp(1.25rem, 2.8vw, 1.9rem);
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  opacity: 0.9;
+  text-align: left;
+  margin: 0.7rem 0 0;
+}
+.hero__local:empty { display: none; }
+
 .hero__tagline {
   font-family: var(--display);
   font-style: italic;

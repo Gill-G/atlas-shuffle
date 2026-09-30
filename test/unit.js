@@ -362,6 +362,22 @@ test("the index lists every city, grouped, and marks the pass", async (t) => {
   t.ok(tab.elements["index-open"].focused, "focus returned to the opener");
 });
 
+/* ── Local names ────────────────────────────────────────── */
+
+test("a local name is shown in its own language, and only where there is one", async (t) => {
+  const withLocal = boot(new Map(), { hash: "#tokyo" });
+  await settle();
+  const local = withLocal.elements["hero-local"];
+  t.equal(local.textContent, "東京", "local name shown");
+  t.equal(local.attrs.lang, "ja", "tagged with its language");
+
+  // Onto a city without one: the name and, above all, the language must go,
+  // or the next city's English is read in a Japanese voice.
+  await withLocal.run(`(() => { const c = CITIES.find(x => !x.local); current = c; return show(c); })()`);
+  t.equal(local.textContent, "", "no local name left behind");
+  t.equal(local.attrs.lang, undefined, "no language left behind");
+});
+
 /* ── Going back ─────────────────────────────────────────── */
 
 test("going back walks the trail in reverse and stops at its start", async (t) => {
